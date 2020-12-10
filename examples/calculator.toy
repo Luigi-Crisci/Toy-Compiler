@@ -1,0 +1,50 @@
+proc makeMaths(int op)float :	
+	float primo, secondo, res;
+
+	write("Inserire il primo argomento (int o float): ");
+	readln(primo);
+	write("Inserire il secondo argomento (int o float): ");
+	readln(secondo);
+
+
+	if op = 1
+	then 
+		res := primo + secondo;
+	elif op = 2
+	then
+		res := primo - secondo;
+	elif op = 3
+	then
+		res := primo * secondo;
+	elif op = 4  
+	then
+		res := primo / secondo;
+	fi;
+
+	-> res
+corp;
+
+
+proc main()void :
+
+	int op := 0;
+	float res;
+	while 
+		write("Scegli l'operazione da eseguire: 
+			   1) Addizione;
+			   2) Sottrazione;
+			   3) Moltiplicazione;
+			   4) Divisione;
+			   0) Esci.
+			   ");
+		readln(op);
+		-> op <> 0
+		do
+			if op >= 1 || op <= 4
+			then
+				res := makeMaths(op);
+				write("Il risulato è ", res,"\n");
+			fi;
+	od;
+	->
+corp;

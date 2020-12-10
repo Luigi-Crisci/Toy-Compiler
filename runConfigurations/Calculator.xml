@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Calculator" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="main.App" />
+    <module name="Crisci-Cuccurullo_es4_CUP" />
+    <option name="PROGRAM_PARAMETERS" value="$ContentRoot$/examples/calculator.toy" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
