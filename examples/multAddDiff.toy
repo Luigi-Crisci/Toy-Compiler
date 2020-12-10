@@ -25,7 +25,7 @@ proc writeNewLines(int n)void :
 corp;
 
 
-proc main()void :
+proc main()int :
 	int a, b, c := 0;
 	a, b, c := multAddDiff();
 	write ("Ciao ", nome);
@@ -34,3 +34,4 @@ proc main()void :
 		" per la somma, e \n", c, " per la differenza");
 	->
 corp;
+

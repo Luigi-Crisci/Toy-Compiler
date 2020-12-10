@@ -68,9 +68,10 @@ COMMENT_TEXT = ([^*]|\*+[^/])*
 
   "proc"          {return symbol("PROC", PROC); }
   "corp"          {return symbol("CORP", CORP); }
+  "main"          {return symbol("MAIN", MAIN); }
   
 //Type
-  "int"             { return symbol("INT",INT,  ); }
+  "int"             { return symbol("INT",INT, new Integer(INT) ); }
   "float"           { return symbol("FLOAT",FLOAT, new Integer(FLOAT)); }
   "bool"            { return symbol("BOOL",BOOL, new Integer(BOOL)); }
   "string"          { return symbol("STRING",STRING, new Integer(STRING)); }
