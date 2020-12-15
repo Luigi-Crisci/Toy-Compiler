@@ -14,7 +14,7 @@ public class ParameterDeclarationNode extends TypedNode implements Visitable {
 
 	public ParameterDeclarationNode(Integer type, List<IdentifierExpression> idList) {
 		super();
-		this.type.add(type);
+		this.typeList.add(type);
 		this.idList = idList;
 	}
 

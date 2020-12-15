@@ -46,7 +46,7 @@ public class ToyVisitor implements Visitor {
 
 	public Object visit(VariableDeclarationNode item) throws SemanticException {
 		writer.println("<VariableDeclaration>");
-		writer.println("<Type>" + Symbols.terminalNames[item.type.get(0)] + "</Type>");
+		writer.println("<Type>" + Symbols.terminalNames[item.typeList.get(0)] + "</Type>");
 
 		for (IdInitializerNode node : item.IdInitializerList)
 			node.accept(this);
@@ -81,7 +81,7 @@ public class ToyVisitor implements Visitor {
 
 	public Object visit(ParameterDeclarationNode item) throws SemanticException {
 		writer.println("<ParameterDeclarations>");
-		writer.println("<Type>" + Symbols.terminalNames[item.type.get(0)] + "</Type>");
+		writer.println("<Type>" + Symbols.terminalNames[item.typeList.get(0)] + "</Type>");
 		for (IdentifierExpression i : item.idList)
 			i.accept(this);
 		writer.println("</ParameterDeclarations>");
@@ -192,7 +192,7 @@ public class ToyVisitor implements Visitor {
 		writer.println("<BinaryExpression>");
 		item.leftExpression.accept(this);
 		writer.println("<Operation> " + Symbols.terminalNames[item.operation] + "</Operation>");
-		item.rightExpresion.accept(this);
+		item.rightExpression.accept(this);
 		writer.println("</BinaryExpression>");
 		return null;
 	}

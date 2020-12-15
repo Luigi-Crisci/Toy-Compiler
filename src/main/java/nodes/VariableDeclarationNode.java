@@ -13,7 +13,7 @@ public class VariableDeclarationNode extends TypedNode implements Visitable {
 
 	public VariableDeclarationNode(Integer type, List<IdInitializerNode> idInitializerList) {
 		super();
-		this.type.add(type);
+		this.typeList.add(type);
 		IdInitializerList = idInitializerList;
 	}
 

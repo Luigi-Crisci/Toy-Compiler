@@ -4,9 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 public abstract class TypedNode {
-	public List<Integer> type;
+	public List<Integer> typeList;
 
 	public TypedNode(){
-		type = new LinkedList<>();
+		typeList = new LinkedList<>();
 	}
 }

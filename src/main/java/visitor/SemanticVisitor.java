@@ -32,7 +32,7 @@ public class SemanticVisitor implements Visitor {
 		
 		//TODO: Collapse IdInitializerNode into VariableDeclarationNode
 		for (IdInitializerNode id : item.IdInitializerList){
-			id.type = item.type;
+			id.typeList = item.typeList;
 			id.accept(this);
 		}
 
@@ -44,16 +44,16 @@ public class SemanticVisitor implements Visitor {
 		if ( stack.probe(item.id.value) )
 			throw new MultipleDeclarationException();
 		
-		stack.addId(new Symbol(item.id.value, SymbolTypes.VAR, item.type.get(0)));
+		stack.addId(new Symbol(item.id.value, SymbolTypes.VAR, item.typeList.get(0)));
 		
 		if (item.expression != null){
 			item.expression.accept(this);
 			
-			if(item.expression.type.size() > 1)
+			if(item.expression.typeList.size() > 1)
 				throw new InvalidAssignmentException("Too many values returned from expression");
 
-			if( item.expression.type.get(0) == Symbols.BOOL && item.id.type.get(0) != Symbols.BOOL)
-				throw new TypeMismatch("Invalid assignment of BOOLEAN to" + item.id.type.get(0) );
+			if( item.expression.typeList.get(0) == Symbols.BOOL && item.id.typeList.get(0) != Symbols.BOOL)
+				throw new TypeMismatch("Invalid assignment of BOOLEAN to" + item.id.typeList.get(0) );
 
 		}
 
@@ -94,7 +94,7 @@ public class SemanticVisitor implements Visitor {
 			e.accept(this);
 		
 		List<Integer> expressionTypes = item.expressionList.stream()
-											.map(expression->expression.type)
+											.map(expression->expression.typeList)
 											.flatMap(list->list.stream())
 											.collect(Collectors.toList());
 		
@@ -102,8 +102,8 @@ public class SemanticVisitor implements Visitor {
 			throw new InvalidAssignmentException("Id list size is different from expression list size");
 		
 		for(int i = 0; i < expressionTypes.size(); i++)
-			if( TypeCheck.checkType(Symbols.ASSIGN, item.idList.get(i).type.get(0),expressionTypes.get(i)) == -1)
-				throw new TypeMismatch("Trying to assign " + item.idList.get(i).type.get(0) + " to " + expressionTypes.get(i));
+			if( TypeCheck.checkType(Symbols.ASSIGN, item.idList.get(i).typeList.get(0),expressionTypes.get(i)) == -1)
+				throw new TypeMismatch("Trying to assign " + item.idList.get(i).typeList.get(0) + " to " + expressionTypes.get(i));
 	
 		return null;
 	}
@@ -123,8 +123,8 @@ public class SemanticVisitor implements Visitor {
 			statement.accept(this);
 		item.conditionExpression.accept(this);
 		
-		if ( item.conditionExpression.type.size() != 1 && item.conditionExpression.type.get(0) != Symbols.BOOL )
-			throw new InvalidConditionException("Condition error: type is " + item.conditionExpression.type.get(0)+ ", expected BOOLEAN");
+		if ( item.conditionExpression.typeList.size() != 1 && item.conditionExpression.typeList.get(0) != Symbols.BOOL )
+			throw new InvalidConditionException("Condition error: type is " + item.conditionExpression.typeList.get(0)+ ", expected BOOLEAN");
 		return null;
 	}
 
@@ -133,8 +133,8 @@ public class SemanticVisitor implements Visitor {
 		
 		item.conditionExpression.accept(this);
 		
-		if(item.conditionExpression.type.get(0) == Symbols.BOOL )
-			throw new InvalidConditionException("Condition error: type is " + item.conditionExpression.type.get(0)+ ", expected BOOLEAN");
+		if(item.conditionExpression.typeList.get(0) == Symbols.BOOL )
+			throw new InvalidConditionException("Condition error: type is " + item.conditionExpression.typeList.get(0)+ ", expected BOOLEAN");
 
 		for (StatementNode e : item.ifBodyStatatementList)
 			e.accept(this);
@@ -151,8 +151,8 @@ public class SemanticVisitor implements Visitor {
 		
 		item.expression.accept(this);
 
-		if(item.expression.type.get(0) == Symbols.BOOL )
-			throw new InvalidConditionException("Condition error: type is " + Symbols.terminalNames[item.expression.type.get(0)]+ ", expected BOOLEAN");
+		if(item.expression.typeList.get(0) == Symbols.BOOL )
+			throw new InvalidConditionException("Condition error: type is " + Symbols.terminalNames[item.expression.typeList.get(0)]+ ", expected BOOLEAN");
 
 		for (StatementNode elif : item.elifBodyStatementList)
 			elif.accept(this);
@@ -164,16 +164,16 @@ public class SemanticVisitor implements Visitor {
 	public Object visit(BinaryExpression item) throws SemanticException {
 		
 		item.leftExpression.accept(this);
-		item.rightExpresion.accept(this);
+		item.rightExpression.accept(this);
 
-		if(item.leftExpression.type.size() > 1 || item.rightExpresion.type.size() > 1)
+		if(item.leftExpression.typeList.size() > 1 || item.rightExpression.typeList.size() > 1)
 			throw new InvalidExpressionException("Cannot apply " + Symbols.terminalNames[item.operation] + " to more than one element");
 
-		item.type.add(TypeCheck.checkType(item.operation, item.leftExpression.type.get(0) , item.rightExpresion.type.get(0)));
-		if ( item.type.get(0) == -1 )
+		item.typeList.add(TypeCheck.checkType(item.operation, item.leftExpression.typeList.get(0) , item.rightExpression.typeList.get(0)));
+		if ( item.typeList.get(0) == -1 )
 			throw new InvalidExpressionException("Operation " + Symbols.terminalNames[item.operation] + 
-												" not applicable to " + Symbols.terminalNames[item.rightExpresion.type.get(0)] + 
-												" and " + Symbols.terminalNames[item.leftExpression.type.get(0)]);
+												" not applicable to " + Symbols.terminalNames[item.rightExpression.typeList.get(0)] + 
+												" and " + Symbols.terminalNames[item.leftExpression.typeList.get(0)]);
 		
 		return null;
 	}
@@ -183,12 +183,12 @@ public class SemanticVisitor implements Visitor {
 		
 		item.rightExpression.accept(this);
 
-		if(item.rightExpression.type.size() > 1)
+		if(item.rightExpression.typeList.size() > 1)
 			throw new InvalidExpressionException("Cannot apply " + Symbols.terminalNames[item.operation] + " to more than one element");
 		
-		item.type.add(TypeCheck.checkType(item.operation, item.rightExpression.type.get(0), null));
-		if ( item.type.get(0) == -1 )
-			throw new InvalidExpressionException("Operation " + Symbols.terminalNames[item.operation] + " not applicable to " + Symbols.terminalNames[item.rightExpression.type.get(0)]);
+		item.typeList.add(TypeCheck.checkType(item.operation, item.rightExpression.typeList.get(0), null));
+		if ( item.typeList.get(0) == -1 )
+			throw new InvalidExpressionException("Operation " + Symbols.terminalNames[item.operation] + " not applicable to " + Symbols.terminalNames[item.rightExpression.typeList.get(0)]);
 
 		return null;
 	}

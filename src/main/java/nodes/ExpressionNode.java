@@ -13,13 +13,13 @@ public abstract class ExpressionNode extends TypedNode implements Visitable {
 
 		public ExpressionNode leftExpression;
 		public int operation;
-		public ExpressionNode rightExpresion;
+		public ExpressionNode rightExpression;
 
 		public BinaryExpression(ExpressionNode leftExpression, int operation, ExpressionNode rightExpresion) {
 			super();
 			this.leftExpression = leftExpression;
 			this.operation = operation;
-			this.rightExpresion = rightExpresion;
+			this.rightExpression = rightExpression;
 		}
 
 		@Override
