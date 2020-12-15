@@ -20,7 +20,7 @@ public class App {
 
             
         BufferedReader in = new BufferedReader(new FileReader(args[1]));
-        //BufferedReader in = new BufferedReader(new FileReader("/home/luigi/compilatori/crisci-cuccurullo_es4_tlp/examples/multAddDiff.toy"));
+        // BufferedReader in = new BufferedReader(new FileReader("D:\\Alessio_Cuccurullo\\gitrepo\\crisci-cuccurullo_es5_scg\\examples\\multAddDiff.toy"));
         ComplexSymbolFactory f = new ComplexSymbolFactory();
         Lexer l = new Lexer(in,f);
         Parser p = new Parser(l,f);

@@ -20,7 +20,7 @@ parser code {:
 
 
 /* Terminals (tokens returned by the scanner). */
-terminal            PROC, CORP; 
+terminal            PROC, CORP, MAIN; 
 terminal Integer 	INT, FLOAT, BOOL, STRING, VOID; //Type
 terminal			WRITE, DO, OD, READ, ASSIGN, WHILE, IF, THEN, FI, ELSE, ELIF; //Statements
 terminal            LPAR, RPAR, COLON, COMMA, SEMI; //Separators
@@ -41,6 +41,7 @@ non terminal	List<VariableDeclarationNode>	VarDeclList;
 non terminal    List<ExpressionNode>        	ExprList;
 non terminal	CallProcedureStatement			CallProc;
 non terminal	ProcedureNode					Proc;
+non terminal	ProcedureNode					Main;    //this might change
 non terminal	List<IdInitializerNode>			IdListInit;
 non terminal    ExpressionNode        			Expr;
 non terminal	List<ProcedureNode>				ProcList;
@@ -82,7 +83,7 @@ VarDeclList ::= /* empty */ 					{: RESULT = new LinkedList<VariableDeclarationN
 VarDecl ::= Type:t IdListInit:idl SEMI			{: RESULT = new VariableDeclarationNode(t,idl); :}
     ;
 
-ProcList ::= Proc:p 							{: List<ProcedureNode> pl = new LinkedList<ProcedureNode>(); pl.add(p); RESULT = pl; :}						
+ProcList ::= Main:m 							{: List<ProcedureNode> pl = new LinkedList<ProcedureNode>(); pl.add(m); RESULT = pl; :}						
 	| Proc:p ProcList:pl						{: pl.add(0,p); RESULT = pl; :}
 	;
 
@@ -108,6 +109,17 @@ Proc ::= PROC ID:i LPAR ParamDeclList:pdl RPAR ResultTypeList:rtl COLON
 	| PROC ID:i LPAR RPAR ResultTypeList:rtl COLON 
 		VarDeclList:vdl RETURN ReturnExprs:rexpr CORP SEMI						{: ProcedureBodyNode body = new ProcedureBodyNode(vdl,rexpr);  RESULT = new ProcedureNode( new IdentifierExpression(ileft,i,iright),rtl,body); :}
 	;    
+
+
+Main ::= PROC MAIN LPAR ParamDeclList:pdl RPAR INT COLON
+		VarDeclList:vdl StatList:stl RETURN ReturnExprs:rexpr CORP SEMI			{: ProcedureBodyNode body = new ProcedureBodyNode(vdl,stl,rexpr); List<Integer> rlt = new LinkedList<Integer>(); rlt.add(Symbols.INT); RESULT = new ProcedureNode( new IdentifierExpression(0,"main",0),pdl,rlt,body); :}
+	| PROC MAIN LPAR RPAR INT COLON 									
+		VarDeclList:vdl StatList:stl RETURN ReturnExprs:rexpr CORP SEMI			{: ProcedureBodyNode body = new ProcedureBodyNode(vdl,stl,rexpr); List<Integer> rlt = new LinkedList<Integer>(); rlt.add(Symbols.INT); RESULT = new ProcedureNode( new IdentifierExpression(0,"main",0),rlt,body); :}
+	|	PROC MAIN LPAR ParamDeclList:pdl RPAR INT COLON 
+		VarDeclList:vdl RETURN ReturnExprs:rexpr CORP SEMI						{: ProcedureBodyNode body = new ProcedureBodyNode(vdl,rexpr); List<Integer> rlt = new LinkedList<Integer>(); rlt.add(Symbols.INT); RESULT = new ProcedureNode( new IdentifierExpression(0,"main",0),pdl,rlt,body); :}
+	| PROC MAIN LPAR RPAR INT COLON 
+		VarDeclList:vdl RETURN ReturnExprs:rexpr CORP SEMI						{: ProcedureBodyNode body = new ProcedureBodyNode(vdl,rexpr); List<Integer> rlt = new LinkedList<Integer>(); rlt.add(Symbols.INT); RESULT = new ProcedureNode( new IdentifierExpression(0,"main",0),rlt,body); :}
+	;
 
 ResultTypeList ::= ResultType:rt					{: List<Integer> rlt = new LinkedList<Integer>(); rlt.add(rt); RESULT = rlt; :}
 	| ResultType:rt COMMA ResultTypeList:rlt		{: rlt.add(0,rt); RESULT = rlt; :}
