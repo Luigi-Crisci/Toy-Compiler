@@ -3,6 +3,7 @@ package visitor;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import common.exceptions.SemanticException;
 import intefaces.Visitor;
 import nodes.ExpressionNode;
 import nodes.IdInitializerNode;
@@ -33,7 +34,7 @@ public class ToyVisitor implements Visitor {
 		writer.close();
 	}
 
-	public Object visit(ProgramNode item) {
+	public Object visit(ProgramNode item) throws SemanticException {
 		writer.println("<ProgramNode>");
 		for (VariableDeclarationNode v : item.vars)
 			v.accept(this);
@@ -43,9 +44,9 @@ public class ToyVisitor implements Visitor {
 		return null;
 	}
 
-	public Object visit(VariableDeclarationNode item) {
+	public Object visit(VariableDeclarationNode item) throws SemanticException {
 		writer.println("<VariableDeclaration>");
-		writer.println("<Type>" + Symbols.terminalNames[item.type] + "</Type>");
+		writer.println("<Type>" + Symbols.terminalNames[item.type.get(0)] + "</Type>");
 
 		for (IdInitializerNode node : item.IdInitializerList)
 			node.accept(this);
@@ -55,7 +56,7 @@ public class ToyVisitor implements Visitor {
 		return null;
 	}
 
-	public Object visit(IdInitializerNode item) {
+	public Object visit(IdInitializerNode item) throws SemanticException {
 		writer.println("<IdInitialization>");
 		item.id.accept(this);
 		if (item.expression != null)
@@ -64,7 +65,7 @@ public class ToyVisitor implements Visitor {
 		return null;
 	}
 
-	public Object visit(ProcedureNode item) {
+	public Object visit(ProcedureNode item) throws SemanticException {
 		writer.println("<ProcedureNode>");
 		item.id.accept(this);
 		for (ParameterDeclarationNode parameterDeclarationNode : item.paramList)
@@ -78,16 +79,16 @@ public class ToyVisitor implements Visitor {
 		return null;
 	}
 
-	public Object visit(ParameterDeclarationNode item) {
+	public Object visit(ParameterDeclarationNode item) throws SemanticException {
 		writer.println("<ParameterDeclarations>");
-		writer.println("<Type>" + Symbols.terminalNames[item.type] + "</Type>");
+		writer.println("<Type>" + Symbols.terminalNames[item.type.get(0)] + "</Type>");
 		for (IdentifierExpression i : item.idList)
 			i.accept(this);
 		writer.println("</ParameterDeclarations>");
 		return null;
 	}
 
-	public Object visit(ProcedureBodyNode item) {
+	public Object visit(ProcedureBodyNode item) throws SemanticException {
 		writer.println("<ProcedureBody>");
 		for (VariableDeclarationNode v : item.varList)
 			v.accept(this);
@@ -99,7 +100,7 @@ public class ToyVisitor implements Visitor {
 		return null;
 	}
 
-	public Object visit(ReadStatement item) {
+	public Object visit(ReadStatement item) throws SemanticException {
 		writer.println("<ReadStatement>");
 
 		for (IdentifierExpression e : item.idList)
@@ -109,7 +110,7 @@ public class ToyVisitor implements Visitor {
 		return null;
 	}
 
-	public Object visit(WriteStatement item) {
+	public Object visit(WriteStatement item) throws SemanticException {
 		writer.print("<WriteStatement>");
 
 		for (ExpressionNode e : item.expressionList)
@@ -120,7 +121,7 @@ public class ToyVisitor implements Visitor {
 		return null;
 	}
 
-	public Object visit(AssignStatement item) {
+	public Object visit(AssignStatement item) throws SemanticException {
 		writer.println("<AssignStatement>");
 
 		for (IdentifierExpression i : item.idList)
@@ -133,7 +134,7 @@ public class ToyVisitor implements Visitor {
 		return null;
 	}
 
-	public Object visit(CallProcedureStatement item) {
+	public Object visit(CallProcedureStatement item) throws SemanticException {
 		writer.println("<CallProcedureStatement>");
 
 		for (ExpressionNode e : item.expressionList)
@@ -144,7 +145,7 @@ public class ToyVisitor implements Visitor {
 		return null;
 	}
 
-	public Object visit(WhileStatement item) {
+	public Object visit(WhileStatement item) throws SemanticException {
 		writer.println("<WhileStatement>");
 
 		for (StatementNode st : item.conditionStatementList)
@@ -158,7 +159,7 @@ public class ToyVisitor implements Visitor {
 		return null;
 	}
 
-	public Object visit(IfStatement item) {
+	public Object visit(IfStatement item) throws SemanticException {
 		writer.println("<IfStatement>");
 
 		item.conditionExpression.accept(this);
@@ -174,7 +175,7 @@ public class ToyVisitor implements Visitor {
 		return null;
 	}
 
-	public Object visit(ElifStatement item) {
+	public Object visit(ElifStatement item) throws SemanticException {
 
 		writer.println("<ElifStatement>");
 		item.expression.accept(this);
@@ -187,7 +188,7 @@ public class ToyVisitor implements Visitor {
 
 	}
 
-	public Object visit(BinaryExpression item) {
+	public Object visit(BinaryExpression item) throws SemanticException {
 		writer.println("<BinaryExpression>");
 		item.leftExpression.accept(this);
 		writer.println("<Operation> " + Symbols.terminalNames[item.operation] + "</Operation>");
@@ -196,7 +197,7 @@ public class ToyVisitor implements Visitor {
 		return null;
 	}
 
-	public Object visit(UnaryExpression item) {
+	public Object visit(UnaryExpression item) throws SemanticException {
 		writer.println("<UnaryExpression>");
 		writer.println("<Operation> " + Symbols.terminalNames[item.operation] + "</Operation>");
 		item.rightExpression.accept(this);
@@ -204,32 +205,32 @@ public class ToyVisitor implements Visitor {
 		return null;
 	}
 
-	public Object visit(IntegerConstant item) {
+	public Object visit(IntegerConstant item) throws SemanticException {
 		writer.println("<IntegerConstant> " + item.value + "</IntegerConstant>");
 		return null;
 	}
 
-	public Object visit(FloatConstant item) {
+	public Object visit(FloatConstant item) throws SemanticException {
 		writer.println("<FloatConstant> " + item.value + "</FloatConstant>");
 		return null;
 	}
 
-	public Object visit(StringConstant item) {
+	public Object visit(StringConstant item) throws SemanticException {
 		writer.println("<StringConstant> " + item.value + "</StringConstant>");
 		return null;
 	}
 
-	public Object visit(BooleanConstant item) {
+	public Object visit(BooleanConstant item) throws SemanticException {
 		writer.println("<BooleanConstant> " + item.value + "</BooleanConstant>");
 		return null;
 	}
 
-	public Object visit(NullConstant item) {
+	public Object visit(NullConstant item) throws SemanticException {
 		writer.println("<NullConstant> null </NullConstant>");
 		return null;
 	}
 
-	public Object visit(IdentifierExpression item) {
+	public Object visit(IdentifierExpression item) throws SemanticException {
 		writer.println("<IdentifierExpression>");
 
 		writer.println("<xleft> " + item.xleft + "</xleft>");
@@ -240,7 +241,7 @@ public class ToyVisitor implements Visitor {
 		return null;
 	}
 
-	public Object visit(CallProcedureExpression item) {
+	public Object visit(CallProcedureExpression item) throws SemanticException {
 		writer.println("<CallProcedureExpression>");
 		item.id.accept(this);
 		for (ExpressionNode e : item.expressionList) {

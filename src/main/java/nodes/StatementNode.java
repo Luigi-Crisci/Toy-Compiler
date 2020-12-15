@@ -3,23 +3,25 @@ package nodes;
 import java.util.Collections;
 import java.util.List;
 
+import common.exceptions.SemanticException;
 import intefaces.Visitable;
 import intefaces.Visitor;
 
 import nodes.ExpressionNode.IdentifierExpression;
 
-public abstract class StatementNode implements Visitable {
+public abstract class StatementNode extends TypedNode implements Visitable {
 
 	public static class ReadStatement extends StatementNode {
 
 		public List<IdentifierExpression> idList;
 
 		public ReadStatement(List<IdentifierExpression> idList) {
+			super();
 			this.idList = idList;
 		}
 
 		@Override
-		public Object accept(Visitor visitor) {
+		public Object accept(Visitor visitor) throws SemanticException {
 			return visitor.visit(this);
 		}
 	}
@@ -29,11 +31,12 @@ public abstract class StatementNode implements Visitable {
 		public List<ExpressionNode> expressionList;
 
 		public WriteStatement(List<ExpressionNode> expressionList) {
+			super();
 			this.expressionList = expressionList;
 		}
 
 		@Override
-		public Object accept(Visitor visitor) {
+		public Object accept(Visitor visitor) throws SemanticException {
 			return visitor.visit(this);
 		}
 	}
@@ -44,12 +47,13 @@ public abstract class StatementNode implements Visitable {
 		public List<ExpressionNode> expressionList;
 
 		public AssignStatement(List<IdentifierExpression> idList, List<ExpressionNode> expressionList) {
+			super();
 			this.idList = idList;
 			this.expressionList = expressionList;
 		}
 
 		@Override
-		public Object accept(Visitor visitor) {
+		public Object accept(Visitor visitor) throws SemanticException {
 			return visitor.visit(this);
 		}
 	}
@@ -60,17 +64,19 @@ public abstract class StatementNode implements Visitable {
 		public List<ExpressionNode> expressionList;
 
 		public CallProcedureStatement(IdentifierExpression id, List<ExpressionNode> expressionList) {
+			super();
 			this.id = id;
 			this.expressionList = expressionList;
 		}
 
 		public CallProcedureStatement(IdentifierExpression id) {
+			super();
 			this.id = id;
 			this.expressionList = Collections.emptyList();
 		}
 
 		@Override
-		public Object accept(Visitor visitor) {
+		public Object accept(Visitor visitor) throws SemanticException {
 		
 			return visitor.visit(this);
 
@@ -85,19 +91,21 @@ public abstract class StatementNode implements Visitable {
 
 		public WhileStatement(List<StatementNode> conditionStatementList, ExpressionNode conditionExpression,
 				List<StatementNode> bodyStatementList) {
-			this.conditionStatementList = conditionStatementList;
+					super();
+					this.conditionStatementList = conditionStatementList;
 			this.conditionExpression = conditionExpression;
 			this.bodyStatementList = bodyStatementList;
 		}
 
 		public WhileStatement(ExpressionNode conditionExpression, List<StatementNode> bodyStatementList) {
+			super();
 			this.conditionStatementList = Collections.emptyList();
 			this.conditionExpression = conditionExpression;
 			this.bodyStatementList = bodyStatementList;
 		}
 
 		@Override
-		public Object accept(Visitor visitor) {
+		public Object accept(Visitor visitor) throws SemanticException {
 			return visitor.visit(this);
 
 		}
@@ -112,14 +120,15 @@ public abstract class StatementNode implements Visitable {
 
 		public IfStatement(ExpressionNode conditionExpression, List<StatementNode> ifBodyStatatementList,
 				List<ElifStatement> elifStatementList, List<StatementNode> elseStatementList) {
-			this.conditionExpression = conditionExpression;
+					super();
+					this.conditionExpression = conditionExpression;
 			this.elifStatementList = elifStatementList;
 			this.ifBodyStatatementList = ifBodyStatatementList;
 			this.elseStatementList = elseStatementList;
 		}
 
 		@Override
-		public Object accept(Visitor visitor) {
+		public Object accept(Visitor visitor) throws SemanticException {
 			return visitor.visit(this);
 
 		}
@@ -132,12 +141,13 @@ public abstract class StatementNode implements Visitable {
 		public List<StatementNode> elifBodyStatementList;
 
 		public ElifStatement(ExpressionNode expression, List<StatementNode> elifBodyStatementList) {
+			super();
 			this.expression = expression;
 			this.elifBodyStatementList = elifBodyStatementList;
 		}
 
 		@Override
-		public Object accept(Visitor visitor) {
+		public Object accept(Visitor visitor) throws SemanticException {
 			return visitor.visit(this);
 		}
 	}

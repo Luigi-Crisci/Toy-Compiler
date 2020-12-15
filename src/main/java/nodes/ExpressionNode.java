@@ -3,11 +3,11 @@ package nodes;
 import java.util.Collections;
 import java.util.List;
 
+import common.exceptions.SemanticException;
 import intefaces.Visitable;
 import intefaces.Visitor;
 
-
-public abstract class ExpressionNode implements Visitable {
+public abstract class ExpressionNode extends TypedNode implements Visitable {
 
 	public static class BinaryExpression extends ExpressionNode {
 
@@ -16,13 +16,14 @@ public abstract class ExpressionNode implements Visitable {
 		public ExpressionNode rightExpresion;
 
 		public BinaryExpression(ExpressionNode leftExpression, int operation, ExpressionNode rightExpresion) {
+			super();
 			this.leftExpression = leftExpression;
 			this.operation = operation;
 			this.rightExpresion = rightExpresion;
 		}
 
 		@Override
-		public Object accept(Visitor visitor) {
+		public Object accept(Visitor visitor) throws SemanticException {
 			return visitor.visit(this);
 		}
 	}
@@ -33,12 +34,13 @@ public abstract class ExpressionNode implements Visitable {
 		public ExpressionNode rightExpression;
 
 		public UnaryExpression(int operation, ExpressionNode rightExpression) {
+			super();
 			this.operation = operation;
 			this.rightExpression = rightExpression;
 		}
 
 		@Override
-		public Object accept(Visitor visitor) {
+		public Object accept(Visitor visitor) throws SemanticException {
 			return visitor.visit(this);
 		}
 
@@ -49,11 +51,12 @@ public abstract class ExpressionNode implements Visitable {
 		public int value;
 
 		public IntegerConstant(int value) {
+			super();
 			this.value = value;
 		}
 
 		@Override
-		public Object accept(Visitor visitor) {
+		public Object accept(Visitor visitor) throws SemanticException {
 			return visitor.visit(this);
 		}
 	}
@@ -67,7 +70,7 @@ public abstract class ExpressionNode implements Visitable {
 		}
 
 		@Override
-		public Object accept(Visitor visitor) {
+		public Object accept(Visitor visitor) throws SemanticException {
 			return visitor.visit(this);
 		}
 	}
@@ -77,11 +80,12 @@ public abstract class ExpressionNode implements Visitable {
 		public String value;
 
 		public StringConstant(String value) {
+			super();
 			this.value = value;
 		}
 
 		@Override
-		public Object accept(Visitor visitor) {
+		public Object accept(Visitor visitor) throws SemanticException {
 			return visitor.visit(this);
 		}
 	}
@@ -91,21 +95,27 @@ public abstract class ExpressionNode implements Visitable {
 		public boolean value;
 
 		public BooleanConstant(boolean value) {
+			super();
 			this.value = value;
 		}
 
 		@Override
-		public Object accept(Visitor visitor) {
+		public Object accept(Visitor visitor) throws SemanticException {
 			return visitor.visit(this);
 		}
 	}
 
 	public static class NullConstant extends ExpressionNode {
 
+		public NullConstant() {
+			super();
+		}
+		
 		@Override
-		public Object accept(Visitor visitor) {
+		public Object accept(Visitor visitor) throws SemanticException {
 			return visitor.visit(this);
 		}
+
 	}
 
 	public static class IdentifierExpression extends ExpressionNode {
@@ -114,13 +124,14 @@ public abstract class ExpressionNode implements Visitable {
 		public String value;
 
 		public IdentifierExpression(int xleft, String value, int xright) {
+			super();
 			this.xleft = xleft;
 			this.value = value;
 			this.xright = xright;
 		}
 
 		@Override
-		public Object accept(Visitor visitor) {
+		public Object accept(Visitor visitor) throws SemanticException {
 			return visitor.visit(this);
 		}
 	}
@@ -131,17 +142,19 @@ public abstract class ExpressionNode implements Visitable {
 		public List<ExpressionNode> expressionList;
 
 		public CallProcedureExpression(IdentifierExpression id, List<ExpressionNode> expressionList) {
+			super();
 			this.id = id;
 			this.expressionList = expressionList;
 		}
 
 		public CallProcedureExpression(IdentifierExpression id) {
+			super();
 			this.id = id;
 			this.expressionList = Collections.emptyList();
 		}
 
 		@Override
-		public Object accept(Visitor visitor) {
+		public Object accept(Visitor visitor) throws SemanticException {
 			return visitor.visit(this);
 		}
 	}

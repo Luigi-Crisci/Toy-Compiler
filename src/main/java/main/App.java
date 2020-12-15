@@ -18,6 +18,7 @@ public class App {
         if(args.length < 2)
             return;
 
+            
         BufferedReader in = new BufferedReader(new FileReader(args[1]));
         //BufferedReader in = new BufferedReader(new FileReader("/home/luigi/compilatori/crisci-cuccurullo_es4_tlp/examples/multAddDiff.toy"));
         ComplexSymbolFactory f = new ComplexSymbolFactory();
