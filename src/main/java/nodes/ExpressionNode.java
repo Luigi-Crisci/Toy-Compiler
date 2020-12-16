@@ -15,7 +15,7 @@ public abstract class ExpressionNode extends TypedNode implements Visitable {
 		public int operation;
 		public ExpressionNode rightExpression;
 
-		public BinaryExpression(ExpressionNode leftExpression, int operation, ExpressionNode rightExpresion) {
+		public BinaryExpression(ExpressionNode leftExpression, int operation, ExpressionNode rightExpression) {
 			super();
 			this.leftExpression = leftExpression;
 			this.operation = operation;
