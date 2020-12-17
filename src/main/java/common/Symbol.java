@@ -18,9 +18,9 @@ public class Symbol {
 		typeList.add(type);
 	}
 
-	public Symbol(String id,Integer entryType, List<Integer> paramList, List<Integer> returnList) {
+	public Symbol(String id, List<Integer> paramList, List<Integer> returnList) {
 		identifier = id;
-		this.entryType = entryType;
+		this.entryType = SymbolTypes.METHOD;
 		typeList = new LinkedList<>();	
 		
 		if (paramList != null)

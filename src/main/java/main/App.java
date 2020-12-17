@@ -13,12 +13,16 @@ import visitor.ToyVisitor;
 public class App {
 
 
+    public void x(){
+
+    }
+
+
     public static void main(String[] args) throws Exception
     {
         if(args.length < 2)
             return;
-
-            
+        
         BufferedReader in = new BufferedReader(new FileReader(args[1]));
         // BufferedReader in = new BufferedReader(new FileReader("D:\\Alessio_Cuccurullo\\gitrepo\\crisci-cuccurullo_es5_scg\\examples\\multAddDiff.toy"));
         ComplexSymbolFactory f = new ComplexSymbolFactory();
