@@ -6,6 +6,13 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "Launch test",
+			"request": "launch",
+			"mainClass": "main.test",
+			"projectName": "Crisci-Cuccurullo_es4_CUP"
+		},
+		{
+			"type": "java",
 			"name": "Debug (Launch) - Current File",
 			"request": "launch",
 			"mainClass": "${file}"
@@ -23,7 +30,6 @@
 			"request": "launch",
 			"mainClass": "main.App",
 			"projectName": "Crisci-Cuccurullo_es4_CUP"
-			
 		}
 	]
 }
