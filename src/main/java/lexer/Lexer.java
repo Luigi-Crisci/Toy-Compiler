@@ -108,12 +108,12 @@ public class Lexer implements Symbols, java_cup.runtime.Scanner {
     "\1\26\1\0\1\27\1\30\1\31\1\32\3\22\1\33"+
     "\2\22\1\34\1\22\1\35\3\22\1\36\10\22\1\37"+
     "\1\0\1\40\7\22\1\41\12\22\1\26\1\22\1\42"+
-    "\1\43\1\44\1\45\2\22\1\46\1\47\1\50\1\51"+
-    "\1\22\1\52\1\53\1\54\2\22\1\26\1\22\1\55"+
-    "\1\56\1\22\1\57\1\60\1\2\1\27\1\61";
+    "\1\43\1\44\1\45\2\22\1\46\1\47\1\50\2\22"+
+    "\1\51\1\52\1\53\2\22\1\26\1\22\1\54\1\55"+
+    "\2\22\1\56\1\57\1\2\1\27\1\60\1\61";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[118];
+    int [] result = new int[120];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -150,12 +150,12 @@ public class Lexer implements Symbols, java_cup.runtime.Scanner {
     "\0\u0898\0\u08c4\0\u08f0\0\u091c\0\u0948\0\u0974\0\u09a0\0\u0210"+
     "\0\u09cc\0\u09f8\0\u0a24\0\u0a50\0\u0a7c\0\u0aa8\0\u0ad4\0\u0b00"+
     "\0\u0b2c\0\u0b58\0\u0b84\0\u0bb0\0\u0210\0\u0210\0\u0210\0\u0210"+
-    "\0\u0bdc\0\u0c08\0\u0210\0\u0210\0\u0210\0\u0210\0\u0c34\0\u0210"+
-    "\0\u0210\0\u0210\0\u0c60\0\u0c8c\0\u0cb8\0\u0ce4\0\u0210\0\u0210"+
-    "\0\u0d10\0\u0210\0\u0210\0\u0528\0\u0210\0\u0210";
+    "\0\u0bdc\0\u0c08\0\u0210\0\u0210\0\u0210\0\u0c34\0\u0c60\0\u0210"+
+    "\0\u0210\0\u0210\0\u0c8c\0\u0cb8\0\u0ce4\0\u0d10\0\u0210\0\u0210"+
+    "\0\u0d3c\0\u0d68\0\u0210\0\u0210\0\u0528\0\u0210\0\u0210\0\u0210";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[118];
+    int [] result = new int[120];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -230,14 +230,16 @@ public class Lexer implements Symbols, java_cup.runtime.Scanner {
     "\21\26\1\154\3\26\1\0\11\53\1\155\42\53\17\0"+
     "\2\26\5\0\7\26\1\156\15\26\20\0\2\26\5\0"+
     "\5\26\1\157\17\26\20\0\2\26\5\0\21\26\1\160"+
-    "\3\26\20\0\2\26\5\0\14\26\1\161\10\26\20\0"+
-    "\2\26\5\0\5\26\1\162\17\26\20\0\2\26\5\0"+
-    "\5\26\1\163\17\26\1\0\11\53\1\155\4\53\1\164"+
-    "\35\53\17\0\2\26\5\0\14\26\1\165\10\26\20\0"+
-    "\2\26\5\0\7\26\1\166\15\26\1\0";
+    "\3\26\20\0\2\26\5\0\12\26\1\161\12\26\20\0"+
+    "\2\26\5\0\14\26\1\162\10\26\20\0\2\26\5\0"+
+    "\5\26\1\163\17\26\20\0\2\26\5\0\5\26\1\164"+
+    "\17\26\1\0\11\53\1\155\4\53\1\165\35\53\17\0"+
+    "\2\26\5\0\14\26\1\166\10\26\20\0\2\26\5\0"+
+    "\14\26\1\167\10\26\20\0\2\26\5\0\7\26\1\170"+
+    "\15\26\1\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[3388];
+    int [] result = new int[3476];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -282,10 +284,10 @@ public class Lexer implements Symbols, java_cup.runtime.Scanner {
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
     "\1\0\2\11\1\1\1\11\2\1\5\11\5\1\1\11"+
     "\1\1\1\11\23\1\3\11\1\1\1\0\4\11\25\1"+
-    "\1\11\1\0\57\1";
+    "\1\11\1\0\61\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[118];
+    int [] result = new int[120];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -1000,42 +1002,42 @@ public class Lexer implements Symbols, java_cup.runtime.Scanner {
             // fall through
           case 89: break;
           case 41:
-            { return symbol("READ",READ);
+            { return symbol("THEN",THEN);
             }
             // fall through
           case 90: break;
           case 42:
-            { return symbol("THEN",THEN);
+            { return symbol("TRUE",TRUE);
             }
             // fall through
           case 91: break;
           case 43:
-            { return symbol("TRUE",TRUE);
+            { return symbol("VOID",VOID, new Integer(VOID));
             }
             // fall through
           case 92: break;
           case 44:
-            { return symbol("VOID",VOID, new Integer(VOID));
+            { return symbol("FALSE",FALSE);
             }
             // fall through
           case 93: break;
           case 45:
-            { return symbol("FALSE",FALSE);
+            { return symbol("FLOAT",FLOAT, new Integer(FLOAT));
             }
             // fall through
           case 94: break;
           case 46:
-            { return symbol("FLOAT",FLOAT, new Integer(FLOAT));
+            { return symbol("WHILE",WHILE);
             }
             // fall through
           case 95: break;
           case 47:
-            { return symbol("WHILE",WHILE);
+            { return symbol("WRITE",WRITE);
             }
             // fall through
           case 96: break;
           case 48:
-            { return symbol("WRITE",WRITE);
+            { return symbol("READ",READ);
             }
             // fall through
           case 97: break;

@@ -27,11 +27,11 @@ corp;
 
 proc main()int :
 	int a, b, c := 0;
-	a, b, c := multAddDiff();
+	a, b, c := multAddDiff(333);
 	write ("Ciao ", nome);
-	writeNewLines(2);
+	writeNewLines(2,3);
 	write("I tuoi valori sono:\n", a, " per la moltiplicazione\n", b, 
 		" per la somma, e \n", c, " per la differenza");
-	->
+	-> 0
 corp;
 

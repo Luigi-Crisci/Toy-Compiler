@@ -21,6 +21,8 @@ public class SymbolTableStack {
 
 		for (SymbolTable current : stack){
 			found = current.get(item);
+			if(found != null)
+				break;
 		}
 
 		return found;

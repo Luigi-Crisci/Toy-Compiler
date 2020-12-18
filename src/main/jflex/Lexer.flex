@@ -81,7 +81,7 @@ COMMENT_TEXT = ([^*]|\*+[^/])*
   "while"           {return symbol("WHILE",WHILE);  }
   "do"              {return symbol("DO",DO);        }     
   "od"              {return symbol("OD",OD);        }
-  "read"            {return symbol("READ",READ);    }
+  "readln"            {return symbol("READ",READ);    }
   "write"           {return symbol("WRITE",WRITE);  }
   "assign"          {return symbol("ASSIGN",ASSIGN); }                  
   "if"              {return symbol("IF",IF); }          

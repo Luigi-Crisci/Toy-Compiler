@@ -1,5 +1,6 @@
 package visitor;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +16,11 @@ import parser.Symbols;
 public class SemanticVisitor implements Visitor {
 
 	private SymbolTableStack stack;
+
+	public SemanticVisitor(){
+		stack = new SymbolTableStack();
+	}
+
 
 	@Override
 	public Object visit(ProgramNode item) throws SemanticException {
@@ -64,36 +70,44 @@ public class SemanticVisitor implements Visitor {
 		Symbol s;
 		if ((s = stack.lookup(item.id.value)) != null && s.entryType == SymbolTypes.METHOD)
 			throw new MultipleDeclarationException();
-
-		stack.enterScope();
-
+		//Type-check on formal parameters
 		for (ParameterDeclarationNode e : item.paramList)
 			e.accept(this);
+		//Get flat list of all parameter types
+		List<Integer> paramTypeList = item.paramList.stream()
+													.map(p -> p.idList.stream()
+																	  .map(id -> p.typeList.get(0))
+																	  .collect(Collectors.toList()))
+													.flatMap(list -> list.stream())
+													.collect(Collectors.toList());
+		//Add the function to the symbol table
+		stack.addId(new Symbol(item.id.value, paramTypeList, item.returnTypes));
+		//Enter new scope
+		stack.enterScope();
+		//Add all formal parameters to function symbol table
+		for (ParameterDeclarationNode pd : item.paramList)
+			for (IdentifierExpression id : pd.idList)
+				stack.addId(new Symbol(id.value, SymbolTypes.VAR, pd.typeList.get(0)));
+
 
 		item.procBody.accept(this);
 		if (item.procBody.typeList.size() != item.returnTypes.size())
 			throw new TooManyArgumentsException();
-		for (int i = 0; i < item.returnTypes.size(); i++) {
+		for (int i = 0; i < item.returnTypes.size(); i++) 
 			if (TypeCheck.checkType(Symbols.CORP, item.procBody.typeList.get(0), item.returnTypes.get(0)) == -1)
 				throw new TypeMismatch("");
-		}
 
-		List<Integer> paramTypeList = item.paramList.stream()
-				.map(p -> p.idList.stream().map(id -> p.typeList.get(0)).collect(Collectors.toList()))
-				.flatMap(list -> list.stream()).collect(Collectors.toList());
-
-		stack.addId(new Symbol(item.id.value, paramTypeList, item.typeList));
-
+		stack.exitScope();
 		return null;
 	}
 
 	@Override
 	public Object visit(ParameterDeclarationNode item) throws SemanticException {
-		for (IdentifierExpression id : item.idList) {
+		for (IdentifierExpression id : item.idList) 
 			if (stack.probe(id.value))
 				throw new MultipleDeclarationException();
-			stack.addId(new Symbol(id.value, SymbolTypes.VAR, item.typeList.get(0)));
-		}
+		
+		
 
 		return null;
 	}
@@ -110,8 +124,10 @@ public class SemanticVisitor implements Visitor {
 			e.accept(this);
 			returnTypes.addAll(e.typeList);
 		}
-
-		item.typeList = returnTypes;
+		if(returnTypes.size() == 0)
+			item.typeList.add(Symbols.VOID);
+		else
+			item.typeList = returnTypes;
 
 		return null;
 	}
@@ -159,7 +175,7 @@ public class SemanticVisitor implements Visitor {
 
 		for (StatementNode statement : item.conditionStatementList)
 			statement.accept(this);
-		for (StatementNode statement : item.conditionStatementList)
+		for (StatementNode statement : item.bodyStatementList)
 			statement.accept(this);
 		item.conditionExpression.accept(this);
 
@@ -213,8 +229,12 @@ public class SemanticVisitor implements Visitor {
 			throw new InvalidExpressionException(
 					"Cannot apply " + Symbols.terminalNames[item.operation] + " to more than one element");
 
-		item.typeList.add(TypeCheck.checkType(item.operation, item.leftExpression.typeList.get(0),
-				item.rightExpression.typeList.get(0)));
+		Integer type = TypeCheck.checkType(item.operation, item.leftExpression.typeList.get(0),
+		item.rightExpression.typeList.get(0));
+		if(type == -1)
+			throw new TypeMismatch("");
+		item.typeList.add(type);
+		
 		if (item.typeList.get(0) == -1)
 			throw new InvalidExpressionException("Operation " + Symbols.terminalNames[item.operation]
 					+ " not applicable to " + Symbols.terminalNames[item.rightExpression.typeList.get(0)] + " and "
@@ -232,7 +252,11 @@ public class SemanticVisitor implements Visitor {
 			throw new InvalidExpressionException(
 					"Cannot apply " + Symbols.terminalNames[item.operation] + " to more than one element");
 
-		item.typeList.add(TypeCheck.checkType(item.operation, item.rightExpression.typeList.get(0), null));
+		Integer type = TypeCheck.checkType(item.operation, item.rightExpression.typeList.get(0), null);
+		if(type == -1)
+			throw new TypeMismatch("");
+		item.typeList.add(type);
+
 		if (item.typeList.get(0) == -1)
 			throw new InvalidExpressionException("Operation " + Symbols.terminalNames[item.operation]
 					+ " not applicable to " + Symbols.terminalNames[item.rightExpression.typeList.get(0)]);
@@ -293,9 +317,9 @@ public class SemanticVisitor implements Visitor {
 			callTypes.addAll(e.typeList);
 		}
 
-		List<Integer> parameterAndReturnTypes[] = rootFunction.getParamAndReturnTypes();
-		List<Integer> functionParameterTypes = parameterAndReturnTypes[0];
-		List<Integer> functionReturnTypes = parameterAndReturnTypes[1];
+		ArrayList<List<Integer>> parameterAndReturnTypes = rootFunction.getParamAndReturnTypes();
+		List<Integer> functionParameterTypes = parameterAndReturnTypes.get(0);
+		List<Integer> functionReturnTypes = parameterAndReturnTypes.get(1);
 
 		if (callTypes.size() != functionParameterTypes.size())
 			throw new TooManyArgumentsException();
@@ -322,9 +346,9 @@ public class SemanticVisitor implements Visitor {
 			callTypes.addAll(e.typeList);
 		}
 
-		List<Integer> parameterAndReturnTypes[] = rootFunction.getParamAndReturnTypes();
-		List<Integer> functionParameterTypes = parameterAndReturnTypes[0];
-		List<Integer> functionReturnTypes = parameterAndReturnTypes[1];
+		ArrayList<List<Integer>> parameterAndReturnTypes = rootFunction.getParamAndReturnTypes();
+		List<Integer> functionParameterTypes = parameterAndReturnTypes.get(0);
+		List<Integer> functionReturnTypes = parameterAndReturnTypes.get(1);
 
 		if (callTypes.size() != functionParameterTypes.size())
 			throw new TooManyArgumentsException();

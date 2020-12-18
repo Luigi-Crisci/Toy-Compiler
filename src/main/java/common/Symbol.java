@@ -1,5 +1,6 @@
 package common;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ public class Symbol {
 	
 	public String identifier;
 	public Integer entryType;
-	public List<Integer> typeList;
+	public LinkedList<Integer> typeList;
 
 	public Symbol(String id,Integer entryType, Integer type) {
 		identifier = id;
@@ -30,15 +31,15 @@ public class Symbol {
 
 	}
 
-	public List<Integer>[] getParamAndReturnTypes(){
+	public ArrayList<List<Integer>> getParamAndReturnTypes(){
 		if (entryType != SymbolTypes.METHOD)
 			return null;
 
-		List<Integer>[] lists = new LinkedList[2];
+		ArrayList<List<Integer>> lists = new ArrayList<>();
 
 		int sep = typeList.indexOf(-1);
-		lists[0] = typeList.subList(0, sep);
-		lists[1] = typeList.subList(sep + 1, typeList.size());
+		lists.add(typeList.subList(0, sep));
+		lists.add(typeList.subList(sep + 1, typeList.size()));
 
 		return lists;
 	}
