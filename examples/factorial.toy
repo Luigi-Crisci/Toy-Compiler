@@ -6,7 +6,7 @@
 proc factorial(int n)int:
     int result := 0;
 
-    if n = 0 then
+    if n=0 then
 	result := 1;
     else
 	result := n * factorial(n - 1);
@@ -14,7 +14,7 @@ proc factorial(int n)int:
     -> result
 corp;
 
-proc main()void:
+proc main()int:
 
     while
 	write("Enter n, or >= 10 to exit: ");
@@ -24,5 +24,5 @@ proc main()void:
     do
 	write("Factorial of ", n, " is ", factorial(n), "\n");
     od;
-    ->
+    -> 0
 corp;

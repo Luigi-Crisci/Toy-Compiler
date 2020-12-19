@@ -3,18 +3,18 @@
 <Type>STRING</Type>
 <IdInitialization>
 <IdentifierExpression>
-<xleft> 65</xleft>
+<xleft> 69</xleft>
 <value> nome</value>
-<xright> 69</xright>
+<xright> 73</xright>
 </IdentifierExpression>
 <StringConstant> Michele</StringConstant>
 </IdInitialization>
 </VariableDeclaration>
 <ProcedureNode>
 <IdentifierExpression>
-<xleft> 90</xleft>
+<xleft> 96</xleft>
 <value> multAddDiff</value>
-<xright> 101</xright>
+<xright> 107</xright>
 </IdentifierExpression>
 <ResultTypes>
 <Type>INT</Type>
@@ -26,37 +26,37 @@
 <Type>INT</Type>
 <IdInitialization>
 <IdentifierExpression>
-<xleft> 125</xleft>
-<value> primo</value>
-<xright> 130</xright>
-</IdentifierExpression>
-</IdInitialization>
-<IdInitialization>
-<IdentifierExpression>
 <xleft> 132</xleft>
+<value> primo</value>
+<xright> 137</xright>
+</IdentifierExpression>
+</IdInitialization>
+<IdInitialization>
+<IdentifierExpression>
+<xleft> 139</xleft>
 <value> secondo</value>
-<xright> 139</xright>
+<xright> 146</xright>
 </IdentifierExpression>
 </IdInitialization>
 <IdInitialization>
 <IdentifierExpression>
-<xleft> 141</xleft>
+<xleft> 148</xleft>
 <value> mul</value>
-<xright> 144</xright>
+<xright> 151</xright>
 </IdentifierExpression>
 </IdInitialization>
 <IdInitialization>
 <IdentifierExpression>
-<xleft> 146</xleft>
+<xleft> 153</xleft>
 <value> add</value>
-<xright> 149</xright>
+<xright> 156</xright>
 </IdentifierExpression>
 </IdInitialization>
 <IdInitialization>
 <IdentifierExpression>
-<xleft> 151</xleft>
+<xleft> 158</xleft>
 <value> diff</value>
-<xright> 155</xright>
+<xright> 162</xright>
 </IdentifierExpression>
 </IdInitialization>
 </VariableDeclaration>
@@ -64,105 +64,105 @@
 </WriteStatement>
 <ReadStatement>
 <IdentifierExpression>
-<xleft> 209</xleft>
+<xleft> 219</xleft>
 <value> primo</value>
-<xright> 214</xright>
+<xright> 224</xright>
 </IdentifierExpression>
 </ReadStatement>
 <WriteStatement><StringConstant> Inserire il secondo argomento:\n</StringConstant>
 </WriteStatement>
 <ReadStatement>
 <IdentifierExpression>
-<xleft> 269</xleft>
+<xleft> 281</xleft>
 <value> secondo</value>
-<xright> 276</xright>
+<xright> 288</xright>
 </IdentifierExpression>
 </ReadStatement>
 <AssignStatement>
 <IdentifierExpression>
-<xleft> 280</xleft>
+<xleft> 293</xleft>
 <value> mul</value>
-<xright> 283</xright>
+<xright> 296</xright>
 </IdentifierExpression>
 <IdentifierExpression>
-<xleft> 285</xleft>
+<xleft> 298</xleft>
 <value> add</value>
-<xright> 288</xright>
+<xright> 301</xright>
 </IdentifierExpression>
 <IdentifierExpression>
-<xleft> 290</xleft>
+<xleft> 303</xleft>
 <value> diff</value>
-<xright> 294</xright>
+<xright> 307</xright>
 </IdentifierExpression>
 <BinaryExpression>
 <IdentifierExpression>
-<xleft> 298</xleft>
+<xleft> 311</xleft>
 <value> primo</value>
-<xright> 303</xright>
+<xright> 316</xright>
 </IdentifierExpression>
 <Operation> TIMES</Operation>
 <IdentifierExpression>
-<xleft> 304</xleft>
+<xleft> 317</xleft>
 <value> secondo</value>
-<xright> 311</xright>
+<xright> 324</xright>
 </IdentifierExpression>
 </BinaryExpression>
 <BinaryExpression>
 <IdentifierExpression>
-<xleft> 313</xleft>
+<xleft> 326</xleft>
 <value> primo</value>
-<xright> 318</xright>
+<xright> 331</xright>
 </IdentifierExpression>
 <Operation> PLUS</Operation>
 <IdentifierExpression>
-<xleft> 321</xleft>
+<xleft> 334</xleft>
 <value> secondo</value>
-<xright> 328</xright>
+<xright> 341</xright>
 </IdentifierExpression>
 </BinaryExpression>
 <BinaryExpression>
 <IdentifierExpression>
-<xleft> 330</xleft>
+<xleft> 343</xleft>
 <value> primo</value>
-<xright> 335</xright>
+<xright> 348</xright>
 </IdentifierExpression>
 <Operation> MINUS</Operation>
 <IdentifierExpression>
-<xleft> 338</xleft>
+<xleft> 351</xleft>
 <value> secondo</value>
-<xright> 345</xright>
+<xright> 358</xright>
 </IdentifierExpression>
 </BinaryExpression>
 </AssignStatement>
 <IdentifierExpression>
-<xleft> 351</xleft>
+<xleft> 365</xleft>
 <value> mul</value>
-<xright> 354</xright>
+<xright> 368</xright>
 </IdentifierExpression>
 <IdentifierExpression>
-<xleft> 356</xleft>
+<xleft> 370</xleft>
 <value> add</value>
-<xright> 359</xright>
+<xright> 373</xright>
 </IdentifierExpression>
 <IdentifierExpression>
-<xleft> 361</xleft>
+<xleft> 375</xleft>
 <value> diff</value>
-<xright> 365</xright>
+<xright> 379</xright>
 </IdentifierExpression>
 </ProcedureBody>
 </ProcedureNode>
 <ProcedureNode>
 <IdentifierExpression>
-<xleft> 379</xleft>
+<xleft> 395</xleft>
 <value> writeNewLines</value>
-<xright> 392</xright>
+<xright> 408</xright>
 </IdentifierExpression>
 <ParameterDeclarations>
 <Type>INT</Type>
 <IdentifierExpression>
-<xleft> 397</xleft>
+<xleft> 413</xleft>
 <value> n</value>
-<xright> 398</xright>
+<xright> 414</xright>
 </IdentifierExpression>
 </ParameterDeclarations>
 <ResultTypes>
@@ -172,9 +172,9 @@
 <WhileStatement>
 <BinaryExpression>
 <IdentifierExpression>
-<xleft> 413</xleft>
+<xleft> 430</xleft>
 <value> n</value>
-<xright> 414</xright>
+<xright> 431</xright>
 </IdentifierExpression>
 <Operation> GT</Operation>
 <IntegerConstant> 0</IntegerConstant>
@@ -183,15 +183,15 @@
 </WriteStatement>
 <AssignStatement>
 <IdentifierExpression>
-<xleft> 438</xleft>
+<xleft> 458</xleft>
 <value> n</value>
-<xright> 439</xright>
+<xright> 459</xright>
 </IdentifierExpression>
 <BinaryExpression>
 <IdentifierExpression>
-<xleft> 443</xleft>
+<xleft> 463</xleft>
 <value> n</value>
-<xright> 444</xright>
+<xright> 464</xright>
 </IdentifierExpression>
 <Operation> MINUS</Operation>
 <IntegerConstant> 1</IntegerConstant>
@@ -214,80 +214,78 @@
 <Type>INT</Type>
 <IdInitialization>
 <IdentifierExpression>
-<xleft> 488</xleft>
+<xleft> 515</xleft>
 <value> a</value>
-<xright> 489</xright>
+<xright> 516</xright>
 </IdentifierExpression>
 </IdInitialization>
 <IdInitialization>
 <IdentifierExpression>
-<xleft> 491</xleft>
+<xleft> 518</xleft>
 <value> b</value>
-<xright> 492</xright>
+<xright> 519</xright>
 </IdentifierExpression>
 </IdInitialization>
 <IdInitialization>
 <IdentifierExpression>
-<xleft> 494</xleft>
+<xleft> 521</xleft>
 <value> c</value>
-<xright> 495</xright>
+<xright> 522</xright>
 </IdentifierExpression>
 <IntegerConstant> 0</IntegerConstant>
 </IdInitialization>
 </VariableDeclaration>
 <AssignStatement>
 <IdentifierExpression>
-<xleft> 503</xleft>
+<xleft> 538</xleft>
 <value> a</value>
-<xright> 504</xright>
+<xright> 539</xright>
 </IdentifierExpression>
 <IdentifierExpression>
-<xleft> 506</xleft>
+<xleft> 541</xleft>
 <value> b</value>
-<xright> 507</xright>
+<xright> 542</xright>
 </IdentifierExpression>
 <IdentifierExpression>
-<xleft> 509</xleft>
+<xleft> 544</xleft>
 <value> c</value>
-<xright> 510</xright>
+<xright> 545</xright>
 </IdentifierExpression>
 <CallProcedureExpression>
 <IdentifierExpression>
-<xleft> 514</xleft>
+<xleft> 549</xleft>
 <value> multAddDiff</value>
-<xright> 525</xright>
+<xright> 560</xright>
 </IdentifierExpression>
-<IntegerConstant> 333</IntegerConstant>
 </CallProcedureExpression>
 </AssignStatement>
 <WriteStatement><StringConstant> Ciao </StringConstant>
 <IdentifierExpression>
-<xleft> 549</xleft>
+<xleft> 582</xleft>
 <value> nome</value>
-<xright> 553</xright>
+<xright> 586</xright>
 </IdentifierExpression>
 </WriteStatement>
 <CallProcedureStatement>
 <IntegerConstant> 2</IntegerConstant>
-<IntegerConstant> 3</IntegerConstant>
 </CallProcedureStatement>
 <WriteStatement><StringConstant> I tuoi valori sono:\n</StringConstant>
 <IdentifierExpression>
-<xleft> 609</xleft>
+<xleft> 642</xleft>
 <value> a</value>
-<xright> 610</xright>
+<xright> 643</xright>
 </IdentifierExpression>
 <StringConstant>  per la moltiplicazione\n</StringConstant>
 <IdentifierExpression>
-<xleft> 641</xleft>
+<xleft> 674</xleft>
 <value> b</value>
-<xright> 642</xright>
+<xright> 675</xright>
 </IdentifierExpression>
 <StringConstant>  per la somma, e \n</StringConstant>
 <IdentifierExpression>
-<xleft> 670</xleft>
+<xleft> 704</xleft>
 <value> c</value>
-<xright> 671</xright>
+<xright> 705</xright>
 </IdentifierExpression>
 <StringConstant>  per la differenza</StringConstant>
 </WriteStatement>
