@@ -102,7 +102,7 @@ public class SemanticVisitor implements Visitor {
 					": type " + Symbols.terminalNames[item.procBody.typeList.get(i)] +
 					" incompatible with " + Symbols.terminalNames[item.returnTypes.get(i)]);
 
-		stack	.exitScope();
+		stack.exitScope();
 		return null;
 	}
 
@@ -182,7 +182,7 @@ public class SemanticVisitor implements Visitor {
 			statement.accept(this);
 		item.conditionExpression.accept(this);
 
-		if (item.conditionExpression.typeList.size() != 1 && item.conditionExpression.typeList.get(0) != Symbols.BOOL)
+		if (item.conditionExpression.typeList.size() != 1 || item.conditionExpression.typeList.get(0) != Symbols.BOOL)
 			throw new InvalidConditionException(
 					"Condition error: type is " + Symbols.terminalNames[item.conditionExpression.typeList.get(0)] + ", expected BOOLEAN");
 		return null;
@@ -193,9 +193,9 @@ public class SemanticVisitor implements Visitor {
 
 		item.conditionExpression.accept(this);
 
-		if (item.conditionExpression.typeList.get(0) == Symbols.BOOL)
+		if (item.conditionExpression.typeList.get(0) != Symbols.BOOL)
 			throw new InvalidConditionException(
-					"Condition error: type is " + item.conditionExpression.typeList.get(0) + ", expected BOOLEAN");
+					"Condition error: type is " + Symbols.terminalNames[item.conditionExpression.typeList.get(0)] + ", expected BOOLEAN");
 
 		for (StatementNode e : item.ifBodyStatatementList)
 			e.accept(this);
@@ -331,7 +331,7 @@ public class SemanticVisitor implements Visitor {
 		for (int i = 0; i < callTypes.size(); i++)
 			if (TypeCheck.checkType(Symbols.CORP, callTypes.get(i), functionParameterTypes.get(i)) == -1)
 				throw new TypeMismatch(
-						"Incompatible type " + callTypes.get(i) + ": expected " + functionParameterTypes.get(i));
+						"Incompatible type " + Symbols.terminalNames[callTypes.get(i)] + ": expected " + Symbols.terminalNames[functionParameterTypes.get(i)]);
 		
 		item.typeList = functionReturnTypes;
 
@@ -361,7 +361,7 @@ public class SemanticVisitor implements Visitor {
 		for (int i = 0; i < callTypes.size(); i++)
 			if (TypeCheck.checkType(Symbols.CORP, callTypes.get(i), functionParameterTypes.get(i)) == -1)
 				throw new TypeMismatch(
-						"Incompatible type " + callTypes.get(i) + ": expected " + functionParameterTypes.get(i));
+						"Incompatible type " + Symbols.terminalNames[callTypes.get(i)] + ": expected " + Symbols.terminalNames[functionParameterTypes.get(i)]);
 		
 		item.typeList = functionReturnTypes;
 
