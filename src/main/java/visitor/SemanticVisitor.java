@@ -255,7 +255,7 @@ public class SemanticVisitor implements Visitor {
 			throw new InvalidExpressionException(
 					"Cannot apply " + Symbols.terminalNames[item.operation] + " to more than one element");
 
-		Integer type = TypeCheck.checkType(item.operation, item.rightExpression.typeList.get(0), null);
+		Integer type = TypeCheck.checkType(item.operation, item.rightExpression.typeList.get(0));
 		if(type == -1)
 			throw new TypeMismatch(""); //TODO
 		item.typeList.add(type);
