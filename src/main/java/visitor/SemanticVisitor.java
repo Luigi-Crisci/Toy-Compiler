@@ -49,19 +49,19 @@ public class SemanticVisitor implements Visitor {
 		if (stack.probe(item.id.value))
 			throw new MultipleDeclarationException("Symbol "+ item.id.value + " has been previously used");
 
-		stack.addId(new Symbol(item.id.value, SymbolTypes.VAR, item.typeList.get(0)));
-
+			
 		if (item.expression != null) {
 			item.expression.accept(this);
-
+			
 			if (item.expression.typeList.size() > 1)
-				throw new InvalidAssignmentException("Too many values returned from expression");
-
-			if (item.expression.typeList.get(0) == Symbols.BOOL && item.id.typeList.get(0) != Symbols.BOOL)
-				throw new TypeMismatch("Invalid assignment of BOOLEAN to " + item.id.typeList.get(0));
-
+			throw new InvalidAssignmentException("Too many values returned from expression");
+			
+			if (TypeCheck.checkType(Symbols.ASSIGN, item.typeList.get(0), item.expression.typeList.get(0)) == -1)
+				throw new TypeMismatch("Invalid assignment of " + Symbols.terminalNames[item.expression.typeList.get(0)] + " to " + Symbols.terminalNames[item.typeList.get(0)]);
+			
 		}
-
+			stack.addId(new Symbol(item.id.value, SymbolTypes.VAR, item.typeList.get(0)));
+			
 		return null;
 	}
 
@@ -239,11 +239,6 @@ public class SemanticVisitor implements Visitor {
 									Symbols.terminalNames[item.leftExpression.typeList.get(0)] + " and " +
 									Symbols.terminalNames[item.rightExpression.typeList.get(0)]);
 		item.typeList.add(type);
-		
-		if (item.typeList.get(0) == -1)
-			throw new InvalidExpressionException("Operation " + Symbols.terminalNames[item.operation]
-					+ " not applicable to " + Symbols.terminalNames[item.rightExpression.typeList.get(0)] + " and "
-					+ Symbols.terminalNames[item.leftExpression.typeList.get(0)]);
 
 		return null;
 	}
@@ -262,10 +257,6 @@ public class SemanticVisitor implements Visitor {
 			throw new TypeMismatch("Cannot apply the unary operator " + Symbols.terminalNames[item.operation] +
 									" to " + Symbols.terminalNames[item.rightExpression.typeList.get(0)]);
 		item.typeList.add(type);
-
-		if (item.typeList.get(0) == -1)
-			throw new InvalidExpressionException("Operation " + Symbols.terminalNames[item.operation]
-					+ " not applicable to " + Symbols.terminalNames[item.rightExpression.typeList.get(0)]);
 
 		return null;
 	}

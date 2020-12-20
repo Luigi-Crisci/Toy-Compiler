@@ -9,4 +9,8 @@ public abstract class TypedNode {
 	public TypedNode(){
 		typeList = new LinkedList<>();
 	}
+
+	public Integer getType(){
+		return typeList.get(0);
+	}
 }
