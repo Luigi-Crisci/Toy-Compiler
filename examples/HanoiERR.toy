@@ -2,6 +2,7 @@
  * hanoi.t - standard "Towers of Hanoi" in toy.
  */
 
+int numero := 5;
 
 
 proc printPeg(int peg)void:
@@ -32,6 +33,7 @@ corp;
 
 proc main()int:
     int n := 0;
+    string numero := numero;
 
     write("How many pegs? ");
     readln(n);

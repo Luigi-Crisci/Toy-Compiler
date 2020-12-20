@@ -212,7 +212,7 @@ public class SemanticVisitor implements Visitor {
 
 		item.expression.accept(this);
 
-		if (item.expression.typeList.get(0) == Symbols.BOOL)
+		if (item.expression.typeList.get(0) != Symbols.BOOL)
 			throw new InvalidConditionException("Condition error: type is "
 					+ Symbols.terminalNames[item.expression.typeList.get(0)] + ", expected BOOLEAN");
 
@@ -235,7 +235,9 @@ public class SemanticVisitor implements Visitor {
 		Integer type = TypeCheck.checkType(item.operation, item.leftExpression.typeList.get(0),
 		item.rightExpression.typeList.get(0));
 		if(type == -1)
-			throw new TypeMismatch(""); //TODO
+			throw new TypeMismatch("Cannot use the operation " + Symbols.terminalNames[item.operation] + " on " + 
+									Symbols.terminalNames[item.leftExpression.typeList.get(0)] + " and " +
+									Symbols.terminalNames[item.rightExpression.typeList.get(0)]);
 		item.typeList.add(type);
 		
 		if (item.typeList.get(0) == -1)
@@ -257,7 +259,8 @@ public class SemanticVisitor implements Visitor {
 
 		Integer type = TypeCheck.checkType(item.operation, item.rightExpression.typeList.get(0));
 		if(type == -1)
-			throw new TypeMismatch(""); //TODO
+			throw new TypeMismatch("Cannot apply the unary operator " + Symbols.terminalNames[item.operation] +
+									" to " + Symbols.terminalNames[item.rightExpression.typeList.get(0)]);
 		item.typeList.add(type);
 
 		if (item.typeList.get(0) == -1)

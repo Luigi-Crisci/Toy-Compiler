@@ -33,7 +33,7 @@ public class SymbolTableStack {
 	}
 
 	public boolean probe(String item){
-		return stack.peek().contains(item);
+		return stack.peek().containsKey(item);
 	}
 
 	public boolean addId(Symbol item){

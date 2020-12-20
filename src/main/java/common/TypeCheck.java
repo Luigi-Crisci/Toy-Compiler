@@ -56,7 +56,7 @@ public class TypeCheck {
 	}
 
 	public static boolean isRelationalOperator(Integer op) {
-		return op == Symbols.LE || op == Symbols.LT || op == Symbols.EQ || op == Symbols.GT || op == Symbols.GE;
+		return op == Symbols.LE || op == Symbols.LT || op == Symbols.EQ || op == Symbols.NE || op == Symbols.GT || op == Symbols.GE;
 	}
 
 	public static boolean isLogicalOperator(Integer op) {
