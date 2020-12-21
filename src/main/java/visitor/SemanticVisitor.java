@@ -66,27 +66,25 @@ public class SemanticVisitor implements Visitor {
 
 	@Override
 	public Object visit(ProcedureNode item) throws SemanticException {
-		Symbol s;
-		if ((s = stack.lookup(item.id.value)) != null && s.entryType == SymbolTypes.METHOD)
+		Symbol functionSymbol;
+		if ((functionSymbol = stack.lookup(item.id.value)) != null && functionSymbol.entryType == SymbolTypes.METHOD)
 			throw new MultipleDeclarationException("Procedure " + item.id.value + " has been already declared");
 
+		item.typeList = item.returnTypes;
+		if(item.typeList.size() > 1 && item.typeList.contains(Symbols.VOID))
+			throw new InvalidReturnTypeException("Cannot have VOID with multiple return types");
+		
 		stack.enterScope();
 		// Type-check on formal parameters
+		// Get flat list of all parameter types
 		for (ParameterDeclarationNode e : item.paramList)
 			e.accept(this);
-		// Get flat list of all parameter types
 		List<Integer> paramTypeList = item.paramList.stream()
 				.map(p -> p.idList.stream().map(id -> p.typeList.get(0)).collect(Collectors.toList()))
 				.flatMap(list -> list.stream()).collect(Collectors.toList());
 		// Add the function to the symbol table
-		stack.addId(new Symbol(item.id.value, paramTypeList, item.returnTypes));
-		// Enter new scope
-		stack.enterScope();
-		// Add all formal parameters to function symbol table
-		for (ParameterDeclarationNode pd : item.paramList)
-			for (IdentifierExpression id : pd.idList)
-				if (!stack.addId(new Symbol(id.value, SymbolTypes.VAR, pd.typeList.get(0))))
-					throw new MultipleDeclarationException("Redefinition of parameter " + id.value);
+		functionSymbol = new Symbol(item.id.value, paramTypeList, item.returnTypes);
+		stack.addId(functionSymbol);
 
 		item.procBody.accept(this);
 		if (item.procBody.typeList.size() != item.returnTypes.size())
@@ -100,14 +98,18 @@ public class SemanticVisitor implements Visitor {
 						+ Symbols.terminalNames[item.returnTypes.get(i)]);
 
 		stack.exitScope();
+		stack.addId(functionSymbol);
 		return null;
 	}
 
 	@Override
 	public Object visit(ParameterDeclarationNode item) throws SemanticException {
-		for (IdentifierExpression id : item.idList)
+		for (IdentifierExpression id : item.idList){
 			if (stack.probe(id.value))
 				throw new MultipleDeclarationException("Redefinition of parameter " + id.value);
+			id.typeList.add(item.getType());
+			stack.addId(new Symbol(id.value, SymbolTypes.VAR,id.getType()));
+		}
 
 		return null;
 	}

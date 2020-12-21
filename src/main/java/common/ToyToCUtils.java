@@ -1,11 +1,17 @@
 package common;
 
 import java.util.List;
+import java.util.UUID;
 
+import nodes.ExpressionNode;
+import nodes.ExpressionNode.CallProcedureExpression;
 import nodes.ExpressionNode.IdentifierExpression;
 import parser.Symbols;
 
 public class ToyToCUtils {
+
+	public static final String FUNCTION_STRUCT_PREFIX = "function_struct_";
+	public static final String FUNCTION_STRUCT_VARIABLE_PREFIX = "returnFunctionParameters_";
 	
 	public static String typeConverter(int type){
 		if(type == Symbols.STRING)
@@ -28,7 +34,7 @@ public class ToyToCUtils {
 		return placeholderString;
 	}
 
-	private static String getPlaceholder(Integer type) {
+	public static String getPlaceholder(Integer type) {
 		if(type == Symbols.STRING)
 			return "%s";
 		if(type == Symbols.BOOL || type == Symbols.INT)
@@ -36,6 +42,10 @@ public class ToyToCUtils {
 		if(type == Symbols.FLOAT)
 			return "%f";
 		return "";
+	}
+
+	public static String getUniqueFunctionVariabletName(String functionStructName){
+		return functionStructName + UUID.randomUUID().toString().replace("-", "");
 	}
 
 }
