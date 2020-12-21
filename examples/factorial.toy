@@ -15,7 +15,7 @@ proc factorial(int n)int:
 corp;
 
 proc main()int:
-
+    int n := 0;
     while 
 	write("Enter n, or >= 10 to exit: ");
 	readln(n);

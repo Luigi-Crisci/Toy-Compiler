@@ -37,7 +37,7 @@ public class SymbolTableStack {
 	}
 
 	public boolean addId(Symbol item){
-		if(probe(item))
+		if(probe(item.identifier))
 			return false;
 		
 		stack.peek().put(item.identifier,item);

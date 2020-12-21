@@ -90,7 +90,7 @@ public class ToyToCVisitor implements Visitor {
 
 	public Object visit(ProcedureNode item) throws SemanticException {
 
-		if(item.returnTypes.size() )
+		// if(item.returnTypes.size() )
 
 		item.id.accept(this);
 		for (ParameterDeclarationNode parameterDeclarationNode : item.paramList)

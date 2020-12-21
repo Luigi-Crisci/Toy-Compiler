@@ -17,17 +17,16 @@ public class SemanticVisitor implements Visitor {
 
 	private SymbolTableStack stack;
 
-	public SemanticVisitor(){
+	public SemanticVisitor() {
 		stack = new SymbolTableStack();
 	}
-
 
 	@Override
 	public Object visit(ProgramNode item) throws SemanticException {
 		stack.enterScope();
-		for(VariableDeclarationNode vd : item.vars )
+		for (VariableDeclarationNode vd : item.vars)
 			vd.accept(this);
-		for(ProcedureNode p : item.procs)
+		for (ProcedureNode p : item.procs)
 			p.accept(this);
 		return null;
 	}
@@ -47,21 +46,21 @@ public class SemanticVisitor implements Visitor {
 	@Override
 	public Object visit(IdInitializerNode item) throws SemanticException {
 		if (stack.probe(item.id.value))
-			throw new MultipleDeclarationException("Symbol "+ item.id.value + " has been previously used");
+			throw new MultipleDeclarationException("Symbol " + item.id.value + " has been previously used");
 
-			
 		if (item.expression != null) {
 			item.expression.accept(this);
-			
+
 			if (item.expression.typeList.size() > 1)
-			throw new InvalidAssignmentException("Too many values returned from expression");
-			
+				throw new InvalidAssignmentException("Too many values returned from expression");
+
 			if (TypeCheck.checkType(Symbols.ASSIGN, item.typeList.get(0), item.expression.typeList.get(0)) == -1)
-				throw new TypeMismatch("Invalid assignment of " + Symbols.terminalNames[item.expression.typeList.get(0)] + " to " + Symbols.terminalNames[item.typeList.get(0)]);
-			
+				throw new TypeMismatch("Invalid assignment of " + Symbols.terminalNames[item.expression.typeList.get(0)]
+						+ " to " + Symbols.terminalNames[item.typeList.get(0)]);
+
 		}
-			stack.addId(new Symbol(item.id.value, SymbolTypes.VAR, item.typeList.get(0)));
-			
+		stack.addId(new Symbol(item.id.value, SymbolTypes.VAR, item.typeList.get(0)));
+
 		return null;
 	}
 
@@ -70,37 +69,35 @@ public class SemanticVisitor implements Visitor {
 		Symbol s;
 		if ((s = stack.lookup(item.id.value)) != null && s.entryType == SymbolTypes.METHOD)
 			throw new MultipleDeclarationException("Procedure " + item.id.value + " has been already declared");
-		//Type-check on formal parameters
+
+		stack.enterScope();
+		// Type-check on formal parameters
 		for (ParameterDeclarationNode e : item.paramList)
 			e.accept(this);
-		//Get flat list of all parameter types
+		// Get flat list of all parameter types
 		List<Integer> paramTypeList = item.paramList.stream()
-													.map(p -> p.idList.stream()
-																	  .map(id -> p.typeList.get(0))
-																	  .collect(Collectors.toList()))
-													.flatMap(list -> list.stream())
-													.collect(Collectors.toList());
-		//Add the function to the symbol table
+				.map(p -> p.idList.stream().map(id -> p.typeList.get(0)).collect(Collectors.toList()))
+				.flatMap(list -> list.stream()).collect(Collectors.toList());
+		// Add the function to the symbol table
 		stack.addId(new Symbol(item.id.value, paramTypeList, item.returnTypes));
-		//Enter new scope
+		// Enter new scope
 		stack.enterScope();
-		//Add all formal parameters to function symbol table
+		// Add all formal parameters to function symbol table
 		for (ParameterDeclarationNode pd : item.paramList)
 			for (IdentifierExpression id : pd.idList)
-				stack.addId(new Symbol(id.value, SymbolTypes.VAR, pd.typeList.get(0)));
-
+				if (!stack.addId(new Symbol(id.value, SymbolTypes.VAR, pd.typeList.get(0))))
+					throw new MultipleDeclarationException("Redefinition of parameter " + id.value);
 
 		item.procBody.accept(this);
 		if (item.procBody.typeList.size() != item.returnTypes.size())
 			throw new MisnumberedArgumentsException(
-					"Attempting to make the procedure " + item.id.value + " return " + item.procBody.typeList.size() + " arguments." +
-					" Expecting " + item.returnTypes.size() + " elements to be returned");
-		for (int i = 0; i < item.returnTypes.size(); i++) 
+					"Attempting to make the procedure " + item.id.value + " return " + item.procBody.typeList.size()
+							+ " arguments." + " Expecting " + item.returnTypes.size() + " elements to be returned");
+		for (int i = 0; i < item.returnTypes.size(); i++)
 			if (TypeCheck.checkType(Symbols.CORP, item.procBody.typeList.get(i), item.returnTypes.get(i)) == -1)
-				throw new TypeMismatch(
-					"Error under " + item.id.value + " on returned element number "+ (i+1) +
-					": type " + Symbols.terminalNames[item.procBody.typeList.get(i)] +
-					" incompatible with " + Symbols.terminalNames[item.returnTypes.get(i)]);
+				throw new TypeMismatch("Error under " + item.id.value + " on returned element number " + (i + 1)
+						+ ": type " + Symbols.terminalNames[item.procBody.typeList.get(i)] + " incompatible with "
+						+ Symbols.terminalNames[item.returnTypes.get(i)]);
 
 		stack.exitScope();
 		return null;
@@ -108,9 +105,9 @@ public class SemanticVisitor implements Visitor {
 
 	@Override
 	public Object visit(ParameterDeclarationNode item) throws SemanticException {
-		for (IdentifierExpression id : item.idList) 
+		for (IdentifierExpression id : item.idList)
 			if (stack.probe(id.value))
-				throw new MultipleDeclarationException("Symbol "+ id.value + " has been already declared");
+				throw new MultipleDeclarationException("Redefinition of parameter " + id.value);
 
 		return null;
 	}
@@ -127,7 +124,7 @@ public class SemanticVisitor implements Visitor {
 			e.accept(this);
 			returnTypes.addAll(e.typeList);
 		}
-		if(returnTypes.size() == 0)
+		if (returnTypes.size() == 0)
 			item.typeList.add(Symbols.VOID);
 		else
 			item.typeList = returnTypes;
@@ -163,12 +160,13 @@ public class SemanticVisitor implements Visitor {
 				.flatMap(list -> list.stream()).collect(Collectors.toList());
 
 		if (expressionTypes.size() != item.idList.size())
-			throw new InvalidAssignmentException("Attempting to assign "+ item.idList.size() + " arguments to " + expressionTypes.size());
+			throw new InvalidAssignmentException(
+					"Attempting to assign " + item.idList.size() + " arguments to " + expressionTypes.size());
 
 		for (int i = 0; i < expressionTypes.size(); i++)
 			if (TypeCheck.checkType(Symbols.ASSIGN, item.idList.get(i).typeList.get(0), expressionTypes.get(i)) == -1)
-				throw new TypeMismatch(
-						"Trying to assign " + Symbols.terminalNames[item.idList.get(i).typeList.get(0)] + " to " + Symbols.terminalNames[expressionTypes.get(i)]);
+				throw new TypeMismatch("Trying to assign " + Symbols.terminalNames[item.idList.get(i).typeList.get(0)]
+						+ " to " + Symbols.terminalNames[expressionTypes.get(i)]);
 
 		return null;
 	}
@@ -183,8 +181,8 @@ public class SemanticVisitor implements Visitor {
 		item.conditionExpression.accept(this);
 
 		if (item.conditionExpression.typeList.size() != 1 || item.conditionExpression.typeList.get(0) != Symbols.BOOL)
-			throw new InvalidConditionException(
-					"Condition error: type is " + Symbols.terminalNames[item.conditionExpression.typeList.get(0)] + ", expected BOOLEAN");
+			throw new InvalidConditionException("Condition error: type is "
+					+ Symbols.terminalNames[item.conditionExpression.typeList.get(0)] + ", expected BOOLEAN");
 		return null;
 	}
 
@@ -194,8 +192,8 @@ public class SemanticVisitor implements Visitor {
 		item.conditionExpression.accept(this);
 
 		if (item.conditionExpression.typeList.get(0) != Symbols.BOOL)
-			throw new InvalidConditionException(
-					"Condition error: type is " + Symbols.terminalNames[item.conditionExpression.typeList.get(0)] + ", expected BOOLEAN");
+			throw new InvalidConditionException("Condition error: type is "
+					+ Symbols.terminalNames[item.conditionExpression.typeList.get(0)] + ", expected BOOLEAN");
 
 		for (StatementNode e : item.ifBodyStatatementList)
 			e.accept(this);
@@ -233,11 +231,11 @@ public class SemanticVisitor implements Visitor {
 					"Cannot apply " + Symbols.terminalNames[item.operation] + " to more than one element");
 
 		Integer type = TypeCheck.checkType(item.operation, item.leftExpression.typeList.get(0),
-		item.rightExpression.typeList.get(0));
-		if(type == -1)
-			throw new TypeMismatch("Cannot use the operation " + Symbols.terminalNames[item.operation] + " on " + 
-									Symbols.terminalNames[item.leftExpression.typeList.get(0)] + " and " +
-									Symbols.terminalNames[item.rightExpression.typeList.get(0)]);
+				item.rightExpression.typeList.get(0));
+		if (type == -1)
+			throw new TypeMismatch("Cannot use the operation " + Symbols.terminalNames[item.operation] + " on "
+					+ Symbols.terminalNames[item.leftExpression.typeList.get(0)] + " and "
+					+ Symbols.terminalNames[item.rightExpression.typeList.get(0)]);
 		item.typeList.add(type);
 
 		return null;
@@ -253,9 +251,9 @@ public class SemanticVisitor implements Visitor {
 					"Cannot apply " + Symbols.terminalNames[item.operation] + " to more than one element");
 
 		Integer type = TypeCheck.checkType(item.operation, item.rightExpression.typeList.get(0));
-		if(type == -1)
-			throw new TypeMismatch("Cannot apply the unary operator " + Symbols.terminalNames[item.operation] +
-									" to " + Symbols.terminalNames[item.rightExpression.typeList.get(0)]);
+		if (type == -1)
+			throw new TypeMismatch("Cannot apply the unary operator " + Symbols.terminalNames[item.operation] + " to "
+					+ Symbols.terminalNames[item.rightExpression.typeList.get(0)]);
 		item.typeList.add(type);
 
 		return null;
@@ -319,14 +317,14 @@ public class SemanticVisitor implements Visitor {
 		List<Integer> functionReturnTypes = parameterAndReturnTypes.get(1);
 
 		if (callTypes.size() != functionParameterTypes.size())
-		throw new MisnumberedArgumentsException(
-			"Attempting to call "+ item.id.value + " using " + callTypes.size() +" arguments. Expecting "+functionParameterTypes.size());
+			throw new MisnumberedArgumentsException("Attempting to call " + item.id.value + " using " + callTypes.size()
+					+ " arguments. Expecting " + functionParameterTypes.size());
 
 		for (int i = 0; i < callTypes.size(); i++)
 			if (TypeCheck.checkType(Symbols.CORP, callTypes.get(i), functionParameterTypes.get(i)) == -1)
-				throw new TypeMismatch(
-						"Incompatible type " + Symbols.terminalNames[callTypes.get(i)] + ": expected " + Symbols.terminalNames[functionParameterTypes.get(i)]);
-		
+				throw new TypeMismatch("Incompatible type " + Symbols.terminalNames[callTypes.get(i)] + ": expected "
+						+ Symbols.terminalNames[functionParameterTypes.get(i)]);
+
 		item.typeList = functionReturnTypes;
 
 		return null;
@@ -349,14 +347,14 @@ public class SemanticVisitor implements Visitor {
 		List<Integer> functionReturnTypes = parameterAndReturnTypes.get(1);
 
 		if (callTypes.size() != functionParameterTypes.size())
-			throw new MisnumberedArgumentsException(
-				"Attempting to call "+ item.id.value + " using " + callTypes.size() +" arguments. Expecting "+functionParameterTypes.size());
+			throw new MisnumberedArgumentsException("Attempting to call " + item.id.value + " using " + callTypes.size()
+					+ " arguments. Expecting " + functionParameterTypes.size());
 
 		for (int i = 0; i < callTypes.size(); i++)
 			if (TypeCheck.checkType(Symbols.CORP, callTypes.get(i), functionParameterTypes.get(i)) == -1)
-				throw new TypeMismatch(
-						"Incompatible type " + Symbols.terminalNames[callTypes.get(i)] + ": expected " + Symbols.terminalNames[functionParameterTypes.get(i)]);
-		
+				throw new TypeMismatch("Incompatible type " + Symbols.terminalNames[callTypes.get(i)] + ": expected "
+						+ Symbols.terminalNames[functionParameterTypes.get(i)]);
+
 		item.typeList = functionReturnTypes;
 
 		return null;

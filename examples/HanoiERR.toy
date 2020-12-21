@@ -34,9 +34,9 @@ corp;
 proc main()int:
     int n := 0;
     
-    /*
+    
     string numero := numero;
-    */
+    
     string numero := "Azz";
 
     write("How many pegs? ");
