@@ -67,7 +67,7 @@ public class SemanticVisitor implements Visitor {
 	@Override
 	public Object visit(ProcedureNode item) throws SemanticException {
 		Symbol functionSymbol;
-		if ((functionSymbol = stack.lookup(item.id.value)) != null && functionSymbol.entryType == SymbolTypes.METHOD)
+		if ((functionSymbol = stack.lookup(item.id.value)) != null)
 			throw new MultipleDeclarationException("Procedure " + item.id.value + " has been already declared");
 
 		item.typeList = item.returnTypes;
