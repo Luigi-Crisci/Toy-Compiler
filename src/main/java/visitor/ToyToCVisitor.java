@@ -3,9 +3,7 @@ package visitor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import common.*;
 import common.exceptions.*;
@@ -14,7 +12,6 @@ import nodes.ExpressionNode.*;
 import nodes.*;
 import nodes.StatementNode.*;
 import parser.Symbols;
-import common.ToyToCUtils.*;
 
 public class ToyToCVisitor implements Visitor {
 
@@ -25,9 +22,15 @@ public class ToyToCVisitor implements Visitor {
 		currentFunctionName = "";
 		try {
 			writer = new PrintWriter(filename + ".c");
+			writeCommonInclude();
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
+	}
+
+	private void writeCommonInclude() {
+		writer.println("#include<stdlib.h>");
+		writer.println("#include<stdio.h>");
 	}
 
 	public void flush() {
@@ -62,7 +65,10 @@ public class ToyToCVisitor implements Visitor {
 	private void addSemicolon() {
 		writer.print(";");
 	}
-
+	
+	private void addAssign() {
+		writer.print("=");
+	}
 	private void addSemicolonAndNewline() {
 		writer.print(";\n");
 	}
@@ -97,8 +103,9 @@ public class ToyToCVisitor implements Visitor {
 
 	// DONE
 	public Object visit(IdInitializerNode item) throws SemanticException {
-		writer.print(item.id.value);
 		item.id.accept(this);
+		if(item.getType() == Symbols.STRING)
+			writer.print("[" + ToyToCUtils.STRING_DIMENSION + "]");
 		if (item.expression != null) {
 			writer.print("=");
 			item.expression.accept(this);
@@ -181,6 +188,8 @@ public class ToyToCVisitor implements Visitor {
 		writer.print(ToyToCUtils.createPlaceholderString(item.idList));
 		addComma();
 		for (int i = 0; i < item.idList.size(); i++) {
+			if(item.idList.get(i).getType() != Symbols.STRING)
+				writer.print("&");
 			item.idList.get(i).accept(this);
 			if (i < item.idList.size() - 1)
 				addComma();
@@ -191,7 +200,6 @@ public class ToyToCVisitor implements Visitor {
 		return null;
 	}
 
-	// TODO: add support to variableNames
 	public Object visit(WriteStatement item) throws SemanticException {
 		String[] variableNames = writeFunctionStruct(item.expressionList);
 
@@ -202,29 +210,186 @@ public class ToyToCVisitor implements Visitor {
 		for (ExpressionNode currentExpressionNode : item.expressionList) {
 			if (currentExpressionNode.typeList.size() > 1) {
 				for (Integer type : currentExpressionNode.typeList)
-					writer.print(ToyToCUtils.getPlaceholder(type));
-			} else
+				writer.print(ToyToCUtils.getPlaceholder(type));
+			} 
+			else
 				writer.print(ToyToCUtils.getPlaceholder(currentExpressionNode.getType()));
 		}
 		writer.print("\"");
 		addComma();
-
+		
 		// Handle variable list
+		int count = 0;
 		for (int i = 0; i < item.expressionList.size(); i++) {
 			ExpressionNode currentExpressionNode = item.expressionList.get(i);
 			if (currentExpressionNode.typeList.size() > 1) {
 				CallProcedureExpression callProcedureExpression = (CallProcedureExpression) currentExpressionNode;
-				String structName = ToyToCUtils.FUNCTION_STRUCT_VARIABLE_PREFIX + callProcedureExpression.id.value;
+				String structName = variableNames[count++]; //Get the name from list
 
 				for (int j = 0; j < callProcedureExpression.typeList.size(); j++) {
 					writer.print(structName + ".p_" + j);
 					if (j < callProcedureExpression.typeList.size() - 1)
 						addComma();
 				}
-
-			} else
+			} 
+			else
 				currentExpressionNode.accept(this);
 			if (i < item.expressionList.size() - 1)
+				addComma();
+		}
+
+		closeRoundBracket();
+		addSemicolonAndNewline();
+		return null;
+	}
+
+	public Object visit(AssignStatement item) throws SemanticException {
+		String[] variableNames = writeFunctionStruct(item.expressionList);
+
+		int i = 0,currentName = 0;
+		for (ExpressionNode e : item.expressionList){
+			if(e.typeList.size() > 1){
+				for(int j = 0; j < e.typeList.size(); j++){
+					item.idList.get(i).accept(this);
+					addAssign();
+					writer.print(variableNames[currentName] + ".p_" + j);
+					addSemicolonAndNewline();
+					i++;
+				}
+				currentName++;
+			}	
+			else
+			{
+				item.idList.get(i).accept(this);
+				addAssign();
+				e.accept(this);
+				i++;
+				addSemicolonAndNewline();
+			}	
+		}
+
+		return null;
+	}
+
+	public Object visit(WhileStatement item) throws SemanticException {
+		for (StatementNode st : item.conditionStatementList)
+			st.accept(this);
+		
+		writer.print("while");
+		openRoundBracket();
+		item.conditionExpression.accept(this);
+		closeRoundBracket();
+		openCurlyBracket();
+		addNewline();
+
+		for (StatementNode e : item.bodyStatementList)
+			e.accept(this);
+		//Print conditional statements again
+		for (StatementNode st : item.conditionStatementList)
+			st.accept(this);
+
+		closeCurlyBracket();
+		addNewline();
+
+		return null;
+	}
+
+	public Object visit(IfStatement item) throws SemanticException {
+		
+		writer.print("if");
+		openRoundBracket();
+		item.conditionExpression.accept(this);
+		closeRoundBracket();
+		openCurlyBracket();
+		addNewline();
+
+		for (StatementNode e : item.ifBodyStatatementList)
+			e.accept(this);
+		closeCurlyBracket();
+		addNewline();
+		
+		for (ElifStatement elif : item.elifStatementList)
+			elif.accept(this);
+		
+		if(item.elseStatementList.size() > 0){
+			writer.print("else");
+			openCurlyBracket();
+			for (StatementNode st : item.elseStatementList)
+				st.accept(this);
+			closeCurlyBracket();
+			addNewline();
+		}
+		return null;
+	}
+
+	public Object visit(ElifStatement item) throws SemanticException {
+		writer.print("else if");
+		openRoundBracket();
+		item.expression.accept(this);
+		closeRoundBracket();
+		
+		openCurlyBracket();
+		addNewline();
+		
+		for(StatementNode st : item.elifBodyStatementList)
+			st.accept(this);
+		
+		closeCurlyBracket();
+		addNewline();
+
+		return null;
+	}
+
+	public Object visit(CallProcedureStatement item) throws SemanticException {
+		String[] variableNames = writeFunctionStruct(item.expressionList);
+
+		writer.print(item.id.value);
+		openRoundBracket();
+		int count = 0;
+		for(int i = 0; i < item.expressionList.size(); i++){
+			ExpressionNode expressionNode = item.expressionList.get(i);
+			if(expressionNode.typeList.size() > 1){
+				CallProcedureExpression callProcedureExpression = (CallProcedureExpression) expressionNode;
+				String structName = variableNames[count++]; //Get the name from list
+
+				for (int j = 0; j < callProcedureExpression.typeList.size(); j++) {
+					writer.print(structName + ".p_" + j);
+					if (j < callProcedureExpression.typeList.size() - 1)
+						addComma();
+				}
+			}
+			else
+				expressionNode.accept(this);
+			if(i < item.typeList.size() - 1)
+				addComma();
+		}
+
+		closeRoundBracket();
+		addSemicolonAndNewline();
+		return null;
+	}
+
+	public Object visit(CallProcedureExpression item) throws SemanticException {
+		String[] variableNames = writeFunctionStruct(item.expressionList);
+
+		writer.print(item.id.value);
+		openRoundBracket();
+		int count = 0;
+		for(int i = 0; i < item.expressionList.size(); i++){
+			ExpressionNode expressionNode = item.expressionList.get(i);
+			if(expressionNode.typeList.size() > 1){
+				CallProcedureExpression callProcedureExpression = (CallProcedureExpression) expressionNode;
+				String structName = variableNames[count++]; //Get the name from list
+
+				for (int j = 0; j < callProcedureExpression.typeList.size(); j++) {
+					writer.print(structName + ".p_" + j);
+					if (j < callProcedureExpression.typeList.size() - 1)
+						addComma();
+				}
+			}
+			else
+				expressionNode.accept(this);
+			if(i < item.typeList.size() - 1)
 				addComma();
 		}
 
@@ -232,145 +397,62 @@ public class ToyToCVisitor implements Visitor {
 		return null;
 	}
 
-	public Object visit(AssignStatement item) throws SemanticException {
-		writer.println("<AssignStatement>");
-
-		for (IdentifierExpression i : item.idList)
-			i.accept(this);
-		for (ExpressionNode e : item.expressionList)
-			e.accept(this);
-
-		writer.println("</AssignStatement>");
-
-		return null;
-	}
-
-	public Object visit(CallProcedureStatement item) throws SemanticException {
-		writer.println("<CallProcedureStatement>");
-
-		for (ExpressionNode e : item.expressionList)
-			e.accept(this);
-
-		writer.println("</CallProcedureStatement>");
-
-		return null;
-	}
-
-	public Object visit(WhileStatement item) throws SemanticException {
-		writer.println("<WhileStatement>");
-
-		for (StatementNode st : item.conditionStatementList)
-			st.accept(this);
-		item.conditionExpression.accept(this);
-		for (StatementNode e : item.bodyStatementList)
-			e.accept(this);
-
-		writer.println("</WhileStatement>");
-
-		return null;
-	}
-
-	public Object visit(IfStatement item) throws SemanticException {
-		writer.println("<IfStatement>");
-
-		item.conditionExpression.accept(this);
-		for (StatementNode e : item.ifBodyStatatementList)
-			e.accept(this);
-		for (ElifStatement elif : item.elifStatementList)
-			elif.accept(this);
-		for (StatementNode st : item.elseStatementList)
-			st.accept(this);
-
-		writer.println("</IfStatement>");
-
-		return null;
-	}
-
-	public Object visit(ElifStatement item) throws SemanticException {
-
-		writer.println("<ElifStatement>");
-		item.expression.accept(this);
-		for (StatementNode elif : item.elifBodyStatementList)
-			elif.accept(this);
-
-		writer.println("</ElifStatement>");
-
-		return null;
-
-	}
-
 	public Object visit(BinaryExpression item) throws SemanticException {
-		writer.println("<BinaryExpression>");
 		item.leftExpression.accept(this);
-		writer.println("<Operation> " + Symbols.terminalNames[item.operation] + "</Operation>");
+		writer.print(ToyToCUtils.opConverter(item.operation));
 		item.rightExpression.accept(this);
-		writer.println("</BinaryExpression>");
 		return null;
 	}
 
 	public Object visit(UnaryExpression item) throws SemanticException {
-		writer.println("<UnaryExpression>");
-		writer.println("<Operation> " + Symbols.terminalNames[item.operation] + "</Operation>");
+		writer.print(ToyToCUtils.opConverter(item.operation));
 		item.rightExpression.accept(this);
-		writer.println("</UnaryExpression>");
 		return null;
 	}
 
 	public Object visit(IntegerConstant item) throws SemanticException {
-		writer.println("<IntegerConstant> " + item.value + "</IntegerConstant>");
+		writer.print(item.value);
 		return null;
 	}
 
 	public Object visit(FloatConstant item) throws SemanticException {
-		writer.println("<FloatConstant> " + item.value + "</FloatConstant>");
+		writer.print(item.value);
 		return null;
 	}
 
 	public Object visit(StringConstant item) throws SemanticException {
-		writer.println("<StringConstant> " + item.value + "</StringConstant>");
+		writer.print("\"" + item.value + "\"");
 		return null;
 	}
 
 	public Object visit(BooleanConstant item) throws SemanticException {
-		writer.println("<BooleanConstant> " + item.value + "</BooleanConstant>");
+		writer.print(item.value == true ? 1 : 0);
 		return null;
 	}
 
 	public Object visit(NullConstant item) throws SemanticException {
-		writer.println("<NullConstant> null </NullConstant>");
+		writer.print("NULL");
 		return null;
 	}
 
 	public Object visit(IdentifierExpression item) throws SemanticException {
-		writer.println("<IdentifierExpression>");
-
-		writer.println("<xleft> " + item.xleft + "</xleft>");
-		writer.println("<value> " + item.value + "</value>");
-		writer.println("<xright> " + item.xright + "</xright>");
-
-		writer.println("</IdentifierExpression>");
+		writer.print(item.value);
 		return null;
 	}
 
-	public Object visit(CallProcedureExpression item) throws SemanticException {
-		writer.println("<CallProcedureExpression>");
-		item.id.accept(this);
-		for (ExpressionNode e : item.expressionList) {
-			e.accept(this);
-		}
-		writer.println("</CallProcedureExpression>");
-		return null;
-	}
-
-	// TODO: Now the name are generated randomly, and writeFunctionStruct must
-	// return the generated names
-	// TODO: Now the CallProcedurExpression only print his name so this method must
-	// write also the type
+	
 	public String[] writeFunctionStruct(List<ExpressionNode> expressionList) throws SemanticException {
+		ArrayList<String> structNames = new ArrayList<>();
 		for (ExpressionNode e : expressionList)
-			if (e.typeList.size() > 1)
+			if (e.typeList.size() > 1){
+				CallProcedureExpression callProcedureExpression = (CallProcedureExpression) e;
+				String variableName = ToyToCUtils.getUniqueFunctionVariabletName(callProcedureExpression.id.value);
+				writer.print(ToyToCUtils.getFunctionStructName(callProcedureExpression.id.value) + " " + variableName + " = ");
+				structNames.add(variableName);
 				e.accept(this);
-		return null;
+				addSemicolonAndNewline();
+			}
+		return (String[]) structNames.toArray(new String[0]);
 	}
 
 	private void writeFunctionStructDefinition(ProcedureNode item) {

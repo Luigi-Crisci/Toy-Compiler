@@ -18,7 +18,7 @@ public class App {
     {
         // BufferedReader in = new BufferedReader(new FileReader(args[1]));
         // BufferedReader in = new BufferedReader(new FileReader("/home/luigi/crisci-cuccurullo_es5_scg/examples/factorial.toy"));
-        BufferedReader in = new BufferedReader(new FileReader("/home/luigi/compilatori/crisci-cuccurullo_es5/examples/factorial.toy"));
+        BufferedReader in = new BufferedReader(new FileReader("/home/luigi/compilatori/crisci-cuccurullo_es5/examples/multAddDiff.toy"));
 
         // BufferedReader in = new BufferedReader(new FileReader("D:\\Alessio_Cuccurullo\\gitrepo\\crisci-cuccurullo_es5_scg\\examples\\factorial.toy"));
 
@@ -35,6 +35,10 @@ public class App {
 
         SemanticVisitor semanticVisitor = new SemanticVisitor();
         programNode.accept(semanticVisitor);
+
+        ToyToCVisitor toyToCVisitor = new ToyToCVisitor("multAddDiff");
+        programNode.accept(toyToCVisitor);
+        toyToCVisitor.flush();
 
     }
 }
