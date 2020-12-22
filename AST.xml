@@ -3,25 +3,25 @@
 <Type>INT</Type>
 <IdInitialization>
 <IdentifierExpression>
-<xleft> 65</xleft>
+<xleft> 62</xleft>
 <value> n</value>
-<xright> 66</xright>
+<xright> 63</xright>
 </IdentifierExpression>
 <IntegerConstant> 0</IntegerConstant>
 </IdInitialization>
 </VariableDeclaration>
 <ProcedureNode>
 <IdentifierExpression>
-<xleft> 85</xleft>
-<value> n</value>
-<xright> 86</xright>
+<xleft> 80</xleft>
+<value> factorial</value>
+<xright> 89</xright>
 </IdentifierExpression>
 <ParameterDeclarations>
 <Type>INT</Type>
 <IdentifierExpression>
-<xleft> 91</xleft>
+<xleft> 94</xleft>
 <value> n</value>
-<xright> 92</xright>
+<xright> 95</xright>
 </IdentifierExpression>
 </ParameterDeclarations>
 <ResultTypes>
@@ -32,9 +32,9 @@
 <Type>INT</Type>
 <IdInitialization>
 <IdentifierExpression>
-<xleft> 107</xleft>
+<xleft> 109</xleft>
 <value> result</value>
-<xright> 113</xright>
+<xright> 115</xright>
 </IdentifierExpression>
 <IntegerConstant> 0</IntegerConstant>
 </IdInitialization>
@@ -51,36 +51,36 @@
 </BinaryExpression>
 <AssignStatement>
 <IdentifierExpression>
-<xleft> 141</xleft>
+<xleft> 140</xleft>
 <value> result</value>
-<xright> 147</xright>
+<xright> 146</xright>
 </IdentifierExpression>
 <IntegerConstant> 1</IntegerConstant>
 </AssignStatement>
 <AssignStatement>
 <IdentifierExpression>
-<xleft> 166</xleft>
+<xleft> 163</xleft>
 <value> result</value>
-<xright> 172</xright>
+<xright> 169</xright>
 </IdentifierExpression>
 <BinaryExpression>
 <IdentifierExpression>
-<xleft> 176</xleft>
+<xleft> 173</xleft>
 <value> n</value>
-<xright> 177</xright>
+<xright> 174</xright>
 </IdentifierExpression>
 <Operation> TIMES</Operation>
 <CallProcedureExpression>
 <IdentifierExpression>
-<xleft> 180</xleft>
-<value> n</value>
-<xright> 181</xright>
+<xleft> 177</xleft>
+<value> factorial</value>
+<xright> 186</xright>
 </IdentifierExpression>
 <BinaryExpression>
 <IdentifierExpression>
-<xleft> 182</xleft>
+<xleft> 187</xleft>
 <value> n</value>
-<xright> 183</xright>
+<xright> 188</xright>
 </IdentifierExpression>
 <Operation> MINUS</Operation>
 <IntegerConstant> 1</IntegerConstant>
@@ -89,10 +89,22 @@
 </BinaryExpression>
 </AssignStatement>
 </IfStatement>
+<CallProcedureExpression>
 <IdentifierExpression>
-<xleft> 207</xleft>
-<value> result</value>
-<xright> 213</xright>
+<xleft> 210</xleft>
+<value> factorial</value>
+<xright> 219</xright>
+</IdentifierExpression>
+<IdentifierExpression>
+<xleft> 220</xleft>
+<value> n</value>
+<xright> 221</xright>
+</IdentifierExpression>
+</CallProcedureExpression>
+<IdentifierExpression>
+<xleft> 223</xleft>
+<value> n</value>
+<xright> 224</xright>
 </IdentifierExpression>
 </ProcedureBody>
 </ProcedureNode>
@@ -110,9 +122,9 @@
 <Type>INT</Type>
 <IdInitialization>
 <IdentifierExpression>
-<xleft> 249</xleft>
+<xleft> 256</xleft>
 <value> n</value>
-<xright> 250</xright>
+<xright> 257</xright>
 </IdentifierExpression>
 <IntegerConstant> 0</IntegerConstant>
 </IdInitialization>
@@ -122,16 +134,16 @@
 </WriteStatement>
 <ReadStatement>
 <IdentifierExpression>
-<xleft> 318</xleft>
+<xleft> 322</xleft>
 <value> n</value>
-<xright> 319</xright>
+<xright> 323</xright>
 </IdentifierExpression>
 </ReadStatement>
 <BinaryExpression>
 <IdentifierExpression>
-<xleft> 332</xleft>
+<xleft> 334</xleft>
 <value> n</value>
-<xright> 333</xright>
+<xright> 335</xright>
 </IdentifierExpression>
 <Operation> LT</Operation>
 <IntegerConstant> 10</IntegerConstant>
@@ -146,13 +158,13 @@
 <CallProcedureExpression>
 <IdentifierExpression>
 <xleft> 383</xleft>
-<value> n</value>
-<xright> 384</xright>
+<value> factorial</value>
+<xright> 392</xright>
 </IdentifierExpression>
 <IdentifierExpression>
-<xleft> 385</xleft>
+<xleft> 393</xleft>
 <value> n</value>
-<xright> 386</xright>
+<xright> 394</xright>
 </IdentifierExpression>
 </CallProcedureExpression>
 <StringConstant> \n</StringConstant>

@@ -28,6 +28,19 @@ public class SymbolTableStack {
 		return found;
 	}
 
+	public Symbol lookup(String item,int type){
+
+		Symbol found = null;
+
+		for (SymbolTable current : stack){
+			found = current.get(item);
+			if(found != null && found.entryType == type)
+				break;
+		}
+
+		return found.entryType == type ? found : null;
+	}
+
 	public boolean probe(Symbol item){
 		return stack.peek().containsKey(item.identifier);
 	}

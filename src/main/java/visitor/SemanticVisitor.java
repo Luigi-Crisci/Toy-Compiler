@@ -73,19 +73,17 @@ public class SemanticVisitor implements Visitor {
 		item.typeList = item.returnTypes;
 		if(item.typeList.size() > 1 && item.typeList.contains(Symbols.VOID))
 			throw new InvalidReturnTypeException("Cannot have VOID with multiple return types");
-		
-		stack.enterScope();
-		// Type-check on formal parameters
-		// Get flat list of all parameter types
-		for (ParameterDeclarationNode e : item.paramList)
-			e.accept(this);
+			
 		List<Integer> paramTypeList = item.paramList.stream()
 				.map(p -> p.idList.stream().map(id -> p.typeList.get(0)).collect(Collectors.toList()))
 				.flatMap(list -> list.stream()).collect(Collectors.toList());
-		// Add the function to the symbol table
 		functionSymbol = new Symbol(item.id.value, paramTypeList, item.returnTypes);
 		stack.addId(functionSymbol);
-
+			
+		stack.enterScope();
+		for (ParameterDeclarationNode e : item.paramList)
+			e.accept(this);
+		
 		item.procBody.accept(this);
 		if (item.procBody.typeList.size() != item.returnTypes.size())
 			throw new MisnumberedArgumentsException(
@@ -98,7 +96,6 @@ public class SemanticVisitor implements Visitor {
 						+ Symbols.terminalNames[item.returnTypes.get(i)]);
 
 		stack.exitScope();
-		stack.addId(functionSymbol);
 		return null;
 	}
 
@@ -305,7 +302,7 @@ public class SemanticVisitor implements Visitor {
 	@Override
 	public Object visit(CallProcedureStatement item) throws SemanticException {
 		Symbol rootFunction;
-		if ((rootFunction = stack.lookup(item.id.value)) == null || rootFunction.entryType != SymbolTypes.METHOD)
+		if ((rootFunction = stack.lookup(item.id.value,SymbolTypes.METHOD)) == null)
 			throw new IdNotFoundException("Function " + item.id.value + " not found");
 
 		List<Integer> callTypes = new LinkedList<>();
@@ -335,7 +332,7 @@ public class SemanticVisitor implements Visitor {
 	@Override
 	public Object visit(CallProcedureExpression item) throws SemanticException {
 		Symbol rootFunction;
-		if ((rootFunction = stack.lookup(item.id.value)) == null || rootFunction.entryType != SymbolTypes.METHOD)
+		if ((rootFunction = stack.lookup(item.id.value,SymbolTypes.METHOD)) == null)
 			throw new IdNotFoundException("Function " + item.id.value + " not found");
 
 		List<Integer> callTypes = new LinkedList<>();

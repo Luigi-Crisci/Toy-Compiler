@@ -3,13 +3,13 @@
  */
     int n := 0;
     
-proc n(int n)int:
+proc factorial(int n)int:
     int result := 0;
 
     if n=0 then
 	result := 1;
     else
-	result := n * n(n - 1);
+	result := n * factorial(n - 1);
     fi;
     -> result
 corp;
@@ -22,7 +22,7 @@ proc main()int:
     ->
 	n < 10
     do
-	write("Factorial of ", n, " is ", n(n), "\n");
+	write("Factorial of ", n, " is ", factorial(n), "\n");
     od;
     -> 0
 corp;
