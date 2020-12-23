@@ -366,7 +366,7 @@ public class ToyToCVisitor implements Visitor {
 				}
 			} else
 				expressionNode.accept(this);
-			if (i < item.typeList.size() - 1)
+			if (i < item.expressionList.size() - 1)
 				addComma();
 		}
 
@@ -394,7 +394,7 @@ public class ToyToCVisitor implements Visitor {
 				}
 			} else
 				expressionNode.accept(this);
-			if (i < item.typeList.size() - 1)
+			if (i < item.expressionList.size() - 1)
 				addComma();
 		}
 
