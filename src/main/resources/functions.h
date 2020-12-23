@@ -17,11 +17,14 @@ char* readln(){
 		}
 
 		c = fgetc(stdin);
-		if(c == '\n')
-			if (i > 0)
+		if(c == '\n'){
+			if (i > 0){
 				break;
-			else 
+			}
+			else{
 				continue; //This handle trailing newline from scanf
+			}
+		}
 		s[i++] = c; 
 	}
 	return (char*)realloc(s,i * sizeof(char));
