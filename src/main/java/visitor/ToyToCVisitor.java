@@ -65,10 +65,11 @@ public class ToyToCVisitor implements Visitor {
 	private void addSemicolon() {
 		writer.print(";");
 	}
-	
+
 	private void addAssign() {
 		writer.print("=");
 	}
+
 	private void addSemicolonAndNewline() {
 		writer.print(";\n");
 	}
@@ -104,7 +105,7 @@ public class ToyToCVisitor implements Visitor {
 	// DONE
 	public Object visit(IdInitializerNode item) throws SemanticException {
 		item.id.accept(this);
-		if(item.getType() == Symbols.STRING)
+		if (item.getType() == Symbols.STRING)
 			writer.print("[" + ToyToCUtils.STRING_DIMENSION + "]");
 		if (item.expression != null) {
 			writer.print("=");
@@ -188,7 +189,7 @@ public class ToyToCVisitor implements Visitor {
 		writer.print(ToyToCUtils.createPlaceholderString(item.idList));
 		addComma();
 		for (int i = 0; i < item.idList.size(); i++) {
-			if(item.idList.get(i).getType() != Symbols.STRING)
+			if (item.idList.get(i).getType() != Symbols.STRING)
 				writer.print("&");
 			item.idList.get(i).accept(this);
 			if (i < item.idList.size() - 1)
@@ -210,29 +211,27 @@ public class ToyToCVisitor implements Visitor {
 		for (ExpressionNode currentExpressionNode : item.expressionList) {
 			if (currentExpressionNode.typeList.size() > 1) {
 				for (Integer type : currentExpressionNode.typeList)
-				writer.print(ToyToCUtils.getPlaceholder(type));
-			} 
-			else
+					writer.print(ToyToCUtils.getPlaceholder(type));
+			} else
 				writer.print(ToyToCUtils.getPlaceholder(currentExpressionNode.getType()));
 		}
 		writer.print("\"");
 		addComma();
-		
+
 		// Handle variable list
 		int count = 0;
 		for (int i = 0; i < item.expressionList.size(); i++) {
 			ExpressionNode currentExpressionNode = item.expressionList.get(i);
 			if (currentExpressionNode.typeList.size() > 1) {
 				CallProcedureExpression callProcedureExpression = (CallProcedureExpression) currentExpressionNode;
-				String structName = variableNames[count++]; //Get the name from list
+				String structName = variableNames[count++]; // Get the name from list
 
 				for (int j = 0; j < callProcedureExpression.typeList.size(); j++) {
 					writer.print(structName + ".p_" + j);
 					if (j < callProcedureExpression.typeList.size() - 1)
 						addComma();
 				}
-			} 
-			else
+			} else
 				currentExpressionNode.accept(this);
 			if (i < item.expressionList.size() - 1)
 				addComma();
@@ -246,10 +245,10 @@ public class ToyToCVisitor implements Visitor {
 	public Object visit(AssignStatement item) throws SemanticException {
 		String[] variableNames = writeFunctionStruct(item.expressionList);
 
-		int i = 0,currentName = 0;
-		for (ExpressionNode e : item.expressionList){
-			if(e.typeList.size() > 1){
-				for(int j = 0; j < e.typeList.size(); j++){
+		int i = 0, currentName = 0;
+		for (ExpressionNode e : item.expressionList) {
+			if (e.typeList.size() > 1) {
+				for (int j = 0; j < e.typeList.size(); j++) {
 					item.idList.get(i).accept(this);
 					addAssign();
 					writer.print(variableNames[currentName] + ".p_" + j);
@@ -257,15 +256,13 @@ public class ToyToCVisitor implements Visitor {
 					i++;
 				}
 				currentName++;
-			}	
-			else
-			{
+			} else {
 				item.idList.get(i).accept(this);
 				addAssign();
 				e.accept(this);
 				i++;
 				addSemicolonAndNewline();
-			}	
+			}
 		}
 
 		return null;
@@ -274,7 +271,7 @@ public class ToyToCVisitor implements Visitor {
 	public Object visit(WhileStatement item) throws SemanticException {
 		for (StatementNode st : item.conditionStatementList)
 			st.accept(this);
-		
+
 		writer.print("while");
 		openRoundBracket();
 		item.conditionExpression.accept(this);
@@ -284,7 +281,7 @@ public class ToyToCVisitor implements Visitor {
 
 		for (StatementNode e : item.bodyStatementList)
 			e.accept(this);
-		//Print conditional statements again
+		// Print conditional statements again
 		for (StatementNode st : item.conditionStatementList)
 			st.accept(this);
 
@@ -295,7 +292,7 @@ public class ToyToCVisitor implements Visitor {
 	}
 
 	public Object visit(IfStatement item) throws SemanticException {
-		
+
 		writer.print("if");
 		openRoundBracket();
 		item.conditionExpression.accept(this);
@@ -307,11 +304,11 @@ public class ToyToCVisitor implements Visitor {
 			e.accept(this);
 		closeCurlyBracket();
 		addNewline();
-		
+
 		for (ElifStatement elif : item.elifStatementList)
 			elif.accept(this);
-		
-		if(item.elseStatementList.size() > 0){
+
+		if (item.elseStatementList.size() > 0) {
 			writer.print("else");
 			openCurlyBracket();
 			for (StatementNode st : item.elseStatementList)
@@ -327,13 +324,13 @@ public class ToyToCVisitor implements Visitor {
 		openRoundBracket();
 		item.expression.accept(this);
 		closeRoundBracket();
-		
+
 		openCurlyBracket();
 		addNewline();
-		
-		for(StatementNode st : item.elifBodyStatementList)
+
+		for (StatementNode st : item.elifBodyStatementList)
 			st.accept(this);
-		
+
 		closeCurlyBracket();
 		addNewline();
 
@@ -346,21 +343,20 @@ public class ToyToCVisitor implements Visitor {
 		writer.print(item.id.value);
 		openRoundBracket();
 		int count = 0;
-		for(int i = 0; i < item.expressionList.size(); i++){
+		for (int i = 0; i < item.expressionList.size(); i++) {
 			ExpressionNode expressionNode = item.expressionList.get(i);
-			if(expressionNode.typeList.size() > 1){
+			if (expressionNode.typeList.size() > 1) {
 				CallProcedureExpression callProcedureExpression = (CallProcedureExpression) expressionNode;
-				String structName = variableNames[count++]; //Get the name from list
+				String structName = variableNames[count++]; // Get the name from list
 
 				for (int j = 0; j < callProcedureExpression.typeList.size(); j++) {
 					writer.print(structName + ".p_" + j);
 					if (j < callProcedureExpression.typeList.size() - 1)
 						addComma();
 				}
-			}
-			else
+			} else
 				expressionNode.accept(this);
-			if(i < item.typeList.size() - 1)
+			if (i < item.expressionList.size() - 1)
 				addComma();
 		}
 
@@ -375,21 +371,20 @@ public class ToyToCVisitor implements Visitor {
 		writer.print(item.id.value);
 		openRoundBracket();
 		int count = 0;
-		for(int i = 0; i < item.expressionList.size(); i++){
+		for (int i = 0; i < item.expressionList.size(); i++) {
 			ExpressionNode expressionNode = item.expressionList.get(i);
-			if(expressionNode.typeList.size() > 1){
+			if (expressionNode.typeList.size() > 1) {
 				CallProcedureExpression callProcedureExpression = (CallProcedureExpression) expressionNode;
-				String structName = variableNames[count++]; //Get the name from list
+				String structName = variableNames[count++]; // Get the name from list
 
 				for (int j = 0; j < callProcedureExpression.typeList.size(); j++) {
 					writer.print(structName + ".p_" + j);
 					if (j < callProcedureExpression.typeList.size() - 1)
 						addComma();
 				}
-			}
-			else
+			} else
 				expressionNode.accept(this);
-			if(i < item.typeList.size() - 1)
+			if (i < item.expressionList.size() - 1)
 				addComma();
 		}
 
@@ -440,14 +435,14 @@ public class ToyToCVisitor implements Visitor {
 		return null;
 	}
 
-	
 	public String[] writeFunctionStruct(List<ExpressionNode> expressionList) throws SemanticException {
 		ArrayList<String> structNames = new ArrayList<>();
 		for (ExpressionNode e : expressionList)
-			if (e.typeList.size() > 1){
+			if (e.typeList.size() > 1) {
 				CallProcedureExpression callProcedureExpression = (CallProcedureExpression) e;
 				String variableName = ToyToCUtils.getUniqueFunctionVariabletName(callProcedureExpression.id.value);
-				writer.print(ToyToCUtils.getFunctionStructName(callProcedureExpression.id.value) + " " + variableName + " = ");
+				writer.print(ToyToCUtils.getFunctionStructName(callProcedureExpression.id.value) + " " + variableName
+						+ " = ");
 				structNames.add(variableName);
 				e.accept(this);
 				addSemicolonAndNewline();
