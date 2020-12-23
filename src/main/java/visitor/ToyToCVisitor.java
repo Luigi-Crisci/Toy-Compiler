@@ -3,6 +3,7 @@ package visitor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import common.*;
@@ -31,7 +32,8 @@ public class ToyToCVisitor implements Visitor {
 	private void writeCommonInclude() {
 		writer.println("#include<stdlib.h>");
 		writer.println("#include<stdio.h>");
-		writer.println("#include\"resources/functions.h\"");
+		writer.println("#include<string.h>");
+		writer.println("#include\"src/main/resources/functions.h\"");
 	}
 
 	public void flush() {
@@ -106,8 +108,6 @@ public class ToyToCVisitor implements Visitor {
 	// DONE
 	public Object visit(IdInitializerNode item) throws SemanticException {
 		item.id.accept(this);
-		// if (item.getType() == Symbols.STRING)
-		// 	writer.print("[" + ToyToCUtils.STRING_DIMENSION + "]");
 		if (item.expression != null) {
 			writer.print("=");
 			item.expression.accept(this);
@@ -182,35 +182,22 @@ public class ToyToCVisitor implements Visitor {
 		return null;
 	}
 
-	// DONE
+	
 	public Object visit(ReadStatement item) throws SemanticException {
-		writer.print("scanf");
-		openRoundBracket();
-
-		writer.print(ToyToCUtils.createPlaceholderString(item.idList));
-		addComma();
-		for (int i = 0; i < item.idList.size(); i++) {
-			if (item.idList.get(i).getType() == Symbols.STRING) {
-				closeRoundBracket();
-				addSemicolonAndNewline();
-				item.idList.get(i).accept(this);
-				addAssign();
-				writer.print("readln()");
-				addSemicolonAndNewline();
-				writer.print("scanf");
-				openRoundBracket();
-			}
-
-			item.idList.get(i).accept(this);
-			if (i < item.idList.size() - 1)
-				addComma();
+		for(IdentifierExpression id : item.idList){
+			id.accept(this);
+			addAssign();
+			writer.print(ToyToCUtils.getInputString(id.getType()));
+			addSemicolonAndNewline();
 		}
-
-		closeRoundBracket();
-		addSemicolonAndNewline();
 		return null;
 	}
 
+	/**
+	 * The writeStatement conversion does not maintain the original sequence of operations in the .toy source file:
+	 * this is possibile because the Toy language doesn't allow to modify an element inside of an expression, so the order
+	 * in which they are executed doesn't matter
+	 */
 	public Object visit(WriteStatement item) throws SemanticException {
 		String[] variableNames = writeFunctionStruct(item.expressionList);
 

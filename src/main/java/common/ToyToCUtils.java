@@ -1,9 +1,7 @@
 package common;
 
-import java.util.List;
 import java.util.UUID;
 
-import nodes.ExpressionNode.IdentifierExpression;
 import parser.Symbols;
 
 public class ToyToCUtils {
@@ -58,16 +56,6 @@ public class ToyToCUtils {
 		return "error";
 	}
 
-	public static String createPlaceholderString(List<IdentifierExpression> idList) {
-		String placeholderString = "\"";
-		for (IdentifierExpression id : idList) {
-			String placeholder = getPlaceholder(id.getType());
-			placeholderString += placeholder;
-		}
-		placeholderString +="\"";
-		return placeholderString;
-	}
-
 	public static String getPlaceholder(Integer type) {
 		if (type == Symbols.STRING)
 			return "%s";
@@ -86,4 +74,13 @@ public class ToyToCUtils {
 		return FUNCTION_STRUCT_PREFIX + functionName;
 	}
 
+	public static String getInputString(int type){
+		if (type == Symbols.STRING)
+			return "readln()";
+		if (type == Symbols.BOOL || type == Symbols.INT)
+			return "strtol(readln(),NULL,10)";
+		if (type == Symbols.FLOAT)
+			return "strotf(readln(),NULL)";
+		return "";
+	}
 }

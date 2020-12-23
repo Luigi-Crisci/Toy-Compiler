@@ -26,6 +26,8 @@ corp;
 
 proc main()int :
 	int a, b, c;
+	readln(a,nome,b,c);
+
 	a, b, c := multAddDiff();
 	write ("Ciao ", nome);
 	writeNewLines(2);
