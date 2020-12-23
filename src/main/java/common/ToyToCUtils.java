@@ -14,7 +14,7 @@ public class ToyToCUtils {
 
 	public static String typeConverter(int type) {
 		if (type == Symbols.STRING)
-			return "char ";
+			return "char* ";
 		if (type == Symbols.BOOL || type == Symbols.INT)
 			return "int ";
 		if (type == Symbols.FLOAT)
