@@ -3,7 +3,6 @@ package visitor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import common.*;
@@ -12,7 +11,6 @@ import intefaces.Visitor;
 import nodes.ExpressionNode.*;
 import nodes.*;
 import nodes.StatementNode.*;
-import parser.Symbols;
 
 public class ToyToCVisitor implements Visitor {
 
@@ -34,6 +32,7 @@ public class ToyToCVisitor implements Visitor {
 		writer.println("#include<stdio.h>");
 		writer.println("#include<string.h>");
 		writer.println("#include\"src/main/resources/functions.h\"");
+		// writer.println("#include\"src/main/resources/emsctipten_functions.h\""); //This enable emscripten input
 	}
 
 	public void flush() {

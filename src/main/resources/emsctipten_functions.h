@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <emscripten.h>
 
 EM_JS(char*, readln, (), {
@@ -14,9 +13,3 @@ var jsString = prompt("Insert value");
 
   // return "aaaaa";
 });
-
-int main() {
-  char *s = readln();
-  printf("%s\n",s);
-  return 0;
-}

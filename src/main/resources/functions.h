@@ -13,7 +13,7 @@ char* readln(){
 	while(1){
 		if(i == size - 1){
 			size = size + 256;
-			s = realloc(s,size * sizeof(char));
+			s = (char*) realloc(s,size * sizeof(char));
 		}
 
 		// c = fgetc(stdin);
