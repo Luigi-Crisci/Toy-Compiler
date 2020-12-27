@@ -1,4 +1,4 @@
-package intefaces;
+package common.interfaces;
 
 import common.exceptions.SemanticException;
 

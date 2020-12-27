@@ -7,10 +7,10 @@ import java.util.List;
 
 import common.*;
 import common.exceptions.*;
-import intefaces.Visitor;
-import nodes.ExpressionNode.*;
-import nodes.*;
-import nodes.StatementNode.*;
+import common.interfaces.Visitor;
+import parser.nodes.ExpressionNode.*;
+import parser.nodes.*;
+import parser.nodes.StatementNode.*;
 
 public class ToyToCVisitor implements Visitor {
 
@@ -31,8 +31,8 @@ public class ToyToCVisitor implements Visitor {
 		writer.println("#include<stdlib.h>");
 		writer.println("#include<stdio.h>");
 		writer.println("#include<string.h>");
-		writer.println("#include\"src/main/resources/functions.h\"");
-		// writer.println("#include\"src/main/resources/emsctipten_functions.h\""); //This enable emscripten input
+		writer.println("#include\"src/main/native/functions.h\"");
+		// writer.println("#include\"src/main/native/emsctipten_functions.h\""); //This enable emscripten input
 	}
 
 	public void flush() {
@@ -62,10 +62,6 @@ public class ToyToCVisitor implements Visitor {
 
 	private void addNewline() {
 		writer.print("\n");
-	}
-
-	private void addSemicolon() {
-		writer.print(";");
 	}
 
 	private void addAssign() {
@@ -196,6 +192,7 @@ public class ToyToCVisitor implements Visitor {
 	 * The writeStatement conversion does not maintain the original sequence of operations in the .toy source file:
 	 * this is possibile because the Toy language doesn't allow to modify an element inside of an expression, so the order
 	 * in which they are executed doesn't matter
+	 * TODO: Add support to multiline string 
 	 */
 	public Object visit(WriteStatement item) throws SemanticException {
 		String[] variableNames = writeFunctionStruct(item.expressionList);

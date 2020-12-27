@@ -4,24 +4,24 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import common.exceptions.SemanticException;
-import intefaces.Visitor;
-import nodes.ExpressionNode;
-import nodes.IdInitializerNode;
-import nodes.ParameterDeclarationNode;
-import nodes.ProcedureBodyNode;
-import nodes.ProcedureNode;
-import nodes.ProgramNode;
-import nodes.StatementNode;
-import nodes.VariableDeclarationNode;
-import parser.Symbols;
-import nodes.ExpressionNode.*;
-import nodes.StatementNode.*;
+import common.interfaces.Visitor;
+import parser.nodes.ExpressionNode;
+import parser.nodes.IdInitializerNode;
+import parser.nodes.ParameterDeclarationNode;
+import parser.nodes.ProcedureBodyNode;
+import parser.nodes.ProcedureNode;
+import parser.nodes.ProgramNode;
+import parser.nodes.StatementNode;
+import parser.nodes.VariableDeclarationNode;
+import common.*;
+import parser.nodes.ExpressionNode.*;
+import parser.nodes.StatementNode.*;
 
-public class ToyVisitor implements Visitor {
+public class ASTVisitor implements Visitor {
 
 	PrintWriter writer;
 
-	public ToyVisitor(String filename) {
+	public ASTVisitor(String filename) {
 		try {
 			writer = new PrintWriter(filename + ".xml");
 		} catch (IOException ioe) {

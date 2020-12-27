@@ -1,7 +1,7 @@
-package nodes;
+package parser.nodes;
 
-import intefaces.Visitable;
-import intefaces.Visitor;
+import common.interfaces.Visitable;
+import common.interfaces.Visitor;
 
 import java.util.Collections;
 import java.util.List;

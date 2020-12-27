@@ -2,12 +2,12 @@
 package parser;
 
 import java_cup.runtime.*;
-import nodes.*;
+import parser.nodes.*;
 import java.util.*;
 import lexer.*;
-import nodes.ExpressionNode.*;
-import nodes.StatementNode.*;
-import parser.Symbols;
+import parser.nodes.ExpressionNode.*;
+import parser.nodes.StatementNode.*;
+import common.*;
 
 parser code {:
   Lexer lexer;

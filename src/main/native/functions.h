@@ -16,9 +16,7 @@ char* readln(){
 			s = (char*) realloc(s,size * sizeof(char));
 		}
 
-		// c = fgetc(stdin);
-		scanf("%c",&c);
-		printf("current char: %c\n",c);
+		c = fgetc(stdin);
 		if(c == '\n'){
 			if (i > 0){
 				break;

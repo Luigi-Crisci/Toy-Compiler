@@ -1,6 +1,6 @@
 package common;
 
-import parser.Symbols;
+import common.*;
 
 public class TypeCheck {
 

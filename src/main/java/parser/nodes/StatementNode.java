@@ -1,13 +1,13 @@
-package nodes;
+package parser.nodes;
 
 import java.util.Collections;
 import java.util.List;
 
 import common.exceptions.SemanticException;
-import intefaces.Visitable;
-import intefaces.Visitor;
+import common.interfaces.Visitable;
+import common.interfaces.Visitor;
 
-import nodes.ExpressionNode.IdentifierExpression;
+import parser.nodes.ExpressionNode.IdentifierExpression;
 
 public abstract class StatementNode extends TypedNode implements Visitable {
 

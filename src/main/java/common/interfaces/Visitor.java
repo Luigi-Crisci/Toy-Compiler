@@ -1,10 +1,9 @@
-package intefaces;
+package common.interfaces;
 
-import common.exceptions.MultipleDeclarationException;
 import common.exceptions.SemanticException;
-import nodes.*;
-import nodes.ExpressionNode.*;
-import nodes.StatementNode.*;
+import parser.nodes.*;
+import parser.nodes.ExpressionNode.*;
+import parser.nodes.StatementNode.*;
 
 public interface Visitor {
 

@@ -1,12 +1,12 @@
-package nodes;
+package parser.nodes;
 
 import java.util.Collections;
 import java.util.List;
 
 import common.exceptions.SemanticException;
-import intefaces.Visitable;
-import intefaces.Visitor;
-import nodes.ExpressionNode.IdentifierExpression;
+import common.interfaces.Visitable;
+import common.interfaces.Visitor;
+import parser.nodes.ExpressionNode.IdentifierExpression;
 
 public class ProcedureNode extends TypedNode implements Visitable {
 

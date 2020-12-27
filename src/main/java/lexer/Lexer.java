@@ -8,7 +8,7 @@ import java_cup.runtime.Symbol;
 import java_cup.runtime.ComplexSymbolFactory;
 import java_cup.runtime.ComplexSymbolFactory.Location;
 import java.lang.*;
-import parser.*;
+import common.*;
 
 
 // See https://github.com/jflex-de/jflex/issues/222

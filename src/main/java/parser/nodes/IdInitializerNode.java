@@ -1,9 +1,9 @@
-package nodes;
+package parser.nodes;
 
 import common.exceptions.SemanticException;
-import intefaces.Visitable;
-import intefaces.Visitor;
-import nodes.ExpressionNode.IdentifierExpression;
+import common.interfaces.Visitable;
+import common.interfaces.Visitor;
+import parser.nodes.ExpressionNode.IdentifierExpression;
 
 public class IdInitializerNode extends TypedNode implements Visitable {
 

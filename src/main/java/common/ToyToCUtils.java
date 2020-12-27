@@ -2,7 +2,7 @@ package common;
 
 import java.util.UUID;
 
-import parser.Symbols;
+import common.*;
 
 public class ToyToCUtils {
 
@@ -80,7 +80,7 @@ public class ToyToCUtils {
 		if (type == Symbols.BOOL || type == Symbols.INT)
 			return "strtol(readln(),NULL,10)";
 		if (type == Symbols.FLOAT)
-			return "strotf(readln(),NULL)";
+			return "strtof(readln(),NULL)";
 		return "";
 	}
 }

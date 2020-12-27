@@ -7,11 +7,10 @@ import java.util.stream.Collectors;
 
 import common.*;
 import common.exceptions.*;
-import intefaces.Visitor;
-import nodes.ExpressionNode.*;
-import nodes.*;
-import nodes.StatementNode.*;
-import parser.Symbols;
+import common.interfaces.Visitor;
+import parser.nodes.ExpressionNode.*;
+import parser.nodes.*;
+import parser.nodes.StatementNode.*;
 
 public class SemanticVisitor implements Visitor {
 

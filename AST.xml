@@ -1,203 +1,531 @@
 <ProgramNode>
-<VariableDeclaration>
-<Type>STRING</Type>
-<IdInitialization>
-<IdentifierExpression>
-<xleft> 65</xleft>
-<value> nome</value>
-<xright> 69</xright>
-</IdentifierExpression>
-<StringConstant> Michele</StringConstant>
-</IdInitialization>
-</VariableDeclaration>
 <ProcedureNode>
 <IdentifierExpression>
-<xleft> 90</xleft>
-<value> multAddDiff</value>
-<xright> 101</xright>
+<xleft> 5</xleft>
+<value> getNumeri</value>
+<xright> 14</xright>
 </IdentifierExpression>
 <ResultTypes>
-<Type>INT</Type>
-<Type>INT</Type>
-<Type>INT</Type>
+<Type>FLOAT</Type>
+<Type>FLOAT</Type>
 </ResultTypes>
 <ProcedureBody>
 <VariableDeclaration>
-<Type>INT</Type>
+<Type>FLOAT</Type>
 <IdInitialization>
 <IdentifierExpression>
-<xleft> 125</xleft>
+<xleft> 37</xleft>
 <value> primo</value>
-<xright> 130</xright>
+<xright> 42</xright>
 </IdentifierExpression>
 </IdInitialization>
 <IdInitialization>
 <IdentifierExpression>
-<xleft> 132</xleft>
+<xleft> 44</xleft>
 <value> secondo</value>
-<xright> 139</xright>
-</IdentifierExpression>
-</IdInitialization>
-<IdInitialization>
-<IdentifierExpression>
-<xleft> 141</xleft>
-<value> mul</value>
-<xright> 144</xright>
-</IdentifierExpression>
-</IdInitialization>
-<IdInitialization>
-<IdentifierExpression>
-<xleft> 146</xleft>
-<value> add</value>
-<xright> 149</xright>
-</IdentifierExpression>
-</IdInitialization>
-<IdInitialization>
-<IdentifierExpression>
-<xleft> 151</xleft>
-<value> diff</value>
-<xright> 155</xright>
+<xright> 51</xright>
 </IdentifierExpression>
 </IdInitialization>
 </VariableDeclaration>
-<WriteStatement><StringConstant> Inserire il primo argomento:\n</StringConstant>
+<WriteStatement><StringConstant> Inserire il primo numero: </StringConstant>
 </WriteStatement>
 <ReadStatement>
 <IdentifierExpression>
-<xleft> 208</xleft>
+<xleft> 99</xleft>
 <value> primo</value>
-<xright> 213</xright>
+<xright> 104</xright>
 </IdentifierExpression>
 </ReadStatement>
-<WriteStatement><StringConstant> Inserire il secondo argomento:\n</StringConstant>
+<WriteStatement><StringConstant> Inserire il secondo numero: </StringConstant>
 </WriteStatement>
 <ReadStatement>
 <IdentifierExpression>
-<xleft> 268</xleft>
+<xleft> 155</xleft>
 <value> secondo</value>
-<xright> 275</xright>
+<xright> 162</xright>
 </IdentifierExpression>
 </ReadStatement>
-<AssignStatement>
 <IdentifierExpression>
-<xleft> 279</xleft>
-<value> mul</value>
-<xright> 282</xright>
-</IdentifierExpression>
-<IdentifierExpression>
-<xleft> 284</xleft>
-<value> add</value>
-<xright> 287</xright>
-</IdentifierExpression>
-<IdentifierExpression>
-<xleft> 289</xleft>
-<value> diff</value>
-<xright> 293</xright>
-</IdentifierExpression>
-<BinaryExpression>
-<IdentifierExpression>
-<xleft> 297</xleft>
+<xleft> 170</xleft>
 <value> primo</value>
-<xright> 302</xright>
+<xright> 175</xright>
 </IdentifierExpression>
-<Operation> TIMES</Operation>
 <IdentifierExpression>
-<xleft> 303</xleft>
+<xleft> 177</xleft>
 <value> secondo</value>
-<xright> 310</xright>
-</IdentifierExpression>
-</BinaryExpression>
-<BinaryExpression>
-<IdentifierExpression>
-<xleft> 312</xleft>
-<value> primo</value>
-<xright> 317</xright>
-</IdentifierExpression>
-<Operation> PLUS</Operation>
-<IdentifierExpression>
-<xleft> 320</xleft>
-<value> secondo</value>
-<xright> 327</xright>
-</IdentifierExpression>
-</BinaryExpression>
-<BinaryExpression>
-<IdentifierExpression>
-<xleft> 329</xleft>
-<value> primo</value>
-<xright> 334</xright>
-</IdentifierExpression>
-<Operation> MINUS</Operation>
-<IdentifierExpression>
-<xleft> 337</xleft>
-<value> secondo</value>
-<xright> 344</xright>
-</IdentifierExpression>
-</BinaryExpression>
-</AssignStatement>
-<IdentifierExpression>
-<xleft> 350</xleft>
-<value> mul</value>
-<xright> 353</xright>
-</IdentifierExpression>
-<IdentifierExpression>
-<xleft> 355</xleft>
-<value> add</value>
-<xright> 358</xright>
-</IdentifierExpression>
-<IdentifierExpression>
-<xleft> 360</xleft>
-<value> diff</value>
-<xright> 364</xright>
+<xright> 184</xright>
 </IdentifierExpression>
 </ProcedureBody>
 </ProcedureNode>
 <ProcedureNode>
 <IdentifierExpression>
-<xleft> 377</xleft>
-<value> writeNewLines</value>
-<xright> 390</xright>
+<xleft> 197</xleft>
+<value> sommaNumeri</value>
+<xright> 208</xright>
 </IdentifierExpression>
-<ParameterDeclarations>
-<Type>INT</Type>
-<IdentifierExpression>
-<xleft> 395</xleft>
-<value> n</value>
-<xright> 396</xright>
-</IdentifierExpression>
-</ParameterDeclarations>
 <ResultTypes>
-<Type>VOID</Type>
+<Type>FLOAT</Type>
 </ResultTypes>
 <ProcedureBody>
+<VariableDeclaration>
+<Type>FLOAT</Type>
+<IdInitialization>
+<IdentifierExpression>
+<xleft> 225</xleft>
+<value> primo</value>
+<xright> 230</xright>
+</IdentifierExpression>
+</IdInitialization>
+<IdInitialization>
+<IdentifierExpression>
+<xleft> 232</xleft>
+<value> secondo</value>
+<xright> 239</xright>
+</IdentifierExpression>
+</IdInitialization>
+</VariableDeclaration>
+<AssignStatement>
+<IdentifierExpression>
+<xleft> 242</xleft>
+<value> primo</value>
+<xright> 247</xright>
+</IdentifierExpression>
+<IdentifierExpression>
+<xleft> 249</xleft>
+<value> secondo</value>
+<xright> 256</xright>
+</IdentifierExpression>
+<CallProcedureExpression>
+<IdentifierExpression>
+<xleft> 260</xleft>
+<value> getNumeri</value>
+<xright> 269</xright>
+</IdentifierExpression>
+</CallProcedureExpression>
+</AssignStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<xleft> 277</xleft>
+<value> primo</value>
+<xright> 282</xright>
+</IdentifierExpression>
+<Operation> PLUS</Operation>
+<IdentifierExpression>
+<xleft> 285</xleft>
+<value> secondo</value>
+<xright> 292</xright>
+</IdentifierExpression>
+</BinaryExpression>
+</ProcedureBody>
+</ProcedureNode>
+<ProcedureNode>
+<IdentifierExpression>
+<xleft> 305</xleft>
+<value> multConSomma</value>
+<xright> 317</xright>
+</IdentifierExpression>
+<ResultTypes>
+<Type>FLOAT</Type>
+</ResultTypes>
+<ProcedureBody>
+<VariableDeclaration>
+<Type>FLOAT</Type>
+<IdInitialization>
+<IdentifierExpression>
+<xleft> 346</xleft>
+<value> primo</value>
+<xright> 351</xright>
+</IdentifierExpression>
+</IdInitialization>
+<IdInitialization>
+<IdentifierExpression>
+<xleft> 353</xleft>
+<value> secondo</value>
+<xright> 360</xright>
+</IdentifierExpression>
+</IdInitialization>
+<IdInitialization>
+<IdentifierExpression>
+<xleft> 362</xleft>
+<value> mult</value>
+<xright> 366</xright>
+</IdentifierExpression>
+<FloatConstant> 0.0</FloatConstant>
+</IdInitialization>
+</VariableDeclaration>
+<VariableDeclaration>
+<Type>INT</Type>
+<IdInitialization>
+<IdentifierExpression>
+<xleft> 331</xleft>
+<value> i</value>
+<xright> 332</xright>
+</IdentifierExpression>
+<IntegerConstant> 0</IntegerConstant>
+</IdInitialization>
+</VariableDeclaration>
+<AssignStatement>
+<IdentifierExpression>
+<xleft> 376</xleft>
+<value> primo</value>
+<xright> 381</xright>
+</IdentifierExpression>
+<IdentifierExpression>
+<xleft> 383</xleft>
+<value> secondo</value>
+<xright> 390</xright>
+</IdentifierExpression>
+<CallProcedureExpression>
+<IdentifierExpression>
+<xleft> 394</xleft>
+<value> getNumeri</value>
+<xright> 403</xright>
+</IdentifierExpression>
+</CallProcedureExpression>
+</AssignStatement>
 <WhileStatement>
 <BinaryExpression>
 <IdentifierExpression>
-<xleft> 411</xleft>
-<value> n</value>
-<xright> 412</xright>
+<xleft> 415</xleft>
+<value> i</value>
+<xright> 416</xright>
 </IdentifierExpression>
-<Operation> GT</Operation>
-<IntegerConstant> 0</IntegerConstant>
+<Operation> LT</Operation>
+<IdentifierExpression>
+<xleft> 419</xleft>
+<value> secondo</value>
+<xright> 426</xright>
+</IdentifierExpression>
 </BinaryExpression>
-<WriteStatement><StringConstant> \n</StringConstant>
-</WriteStatement>
 <AssignStatement>
 <IdentifierExpression>
-<xleft> 437</xleft>
-<value> n</value>
-<xright> 438</xright>
+<xleft> 433</xleft>
+<value> mult</value>
+<xright> 437</xright>
 </IdentifierExpression>
 <BinaryExpression>
 <IdentifierExpression>
-<xleft> 442</xleft>
-<value> n</value>
-<xright> 443</xright>
+<xleft> 441</xleft>
+<value> mult</value>
+<xright> 445</xright>
 </IdentifierExpression>
-<Operation> MINUS</Operation>
+<Operation> PLUS</Operation>
+<IdentifierExpression>
+<xleft> 448</xleft>
+<value> primo</value>
+<xright> 453</xright>
+</IdentifierExpression>
+</BinaryExpression>
+</AssignStatement>
+<AssignStatement>
+<IdentifierExpression>
+<xleft> 457</xleft>
+<value> i</value>
+<xright> 458</xright>
+</IdentifierExpression>
+<BinaryExpression>
+<IdentifierExpression>
+<xleft> 462</xleft>
+<value> i</value>
+<xright> 463</xright>
+</IdentifierExpression>
+<Operation> PLUS</Operation>
 <IntegerConstant> 1</IntegerConstant>
 </BinaryExpression>
 </AssignStatement>
 </WhileStatement>
+<IdentifierExpression>
+<xleft> 478</xleft>
+<value> mult</value>
+<xright> 482</xright>
+</IdentifierExpression>
+</ProcedureBody>
+</ProcedureNode>
+<ProcedureNode>
+<IdentifierExpression>
+<xleft> 495</xleft>
+<value> divisioneNumeri</value>
+<xright> 510</xright>
+</IdentifierExpression>
+<ResultTypes>
+<Type>INT</Type>
+</ResultTypes>
+<ProcedureBody>
+<VariableDeclaration>
+<Type>INT</Type>
+<IdInitialization>
+<IdentifierExpression>
+<xleft> 522</xleft>
+<value> primo</value>
+<xright> 527</xright>
+</IdentifierExpression>
+</IdInitialization>
+<IdInitialization>
+<IdentifierExpression>
+<xleft> 529</xleft>
+<value> secondo</value>
+<xright> 536</xright>
+</IdentifierExpression>
+</IdInitialization>
+</VariableDeclaration>
+<WriteStatement><StringConstant> Inserire il primo numero: </StringConstant>
+</WriteStatement>
+<ReadStatement>
+<IdentifierExpression>
+<xleft> 584</xleft>
+<value> primo</value>
+<xright> 589</xright>
+</IdentifierExpression>
+</ReadStatement>
+<WriteStatement><StringConstant> Inserire il secondo numero: </StringConstant>
+</WriteStatement>
+<ReadStatement>
+<IdentifierExpression>
+<xleft> 640</xleft>
+<value> secondo</value>
+<xright> 647</xright>
+</IdentifierExpression>
+</ReadStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<xleft> 655</xleft>
+<value> primo</value>
+<xright> 660</xright>
+</IdentifierExpression>
+<Operation> DIV</Operation>
+<IdentifierExpression>
+<xleft> 663</xleft>
+<value> secondo</value>
+<xright> 670</xright>
+</IdentifierExpression>
+</BinaryExpression>
+</ProcedureBody>
+</ProcedureNode>
+<ProcedureNode>
+<IdentifierExpression>
+<xleft> 683</xleft>
+<value> potenza</value>
+<xright> 690</xright>
+</IdentifierExpression>
+<ResultTypes>
+<Type>FLOAT</Type>
+</ResultTypes>
+<ProcedureBody>
+<VariableDeclaration>
+<Type>INT</Type>
+<IdInitialization>
+<IdentifierExpression>
+<xleft> 729</xleft>
+<value> secondo</value>
+<xright> 736</xright>
+</IdentifierExpression>
+</IdInitialization>
+<IdInitialization>
+<IdentifierExpression>
+<xleft> 738</xleft>
+<value> i</value>
+<xright> 739</xright>
+</IdentifierExpression>
+<IntegerConstant> 0</IntegerConstant>
+</IdInitialization>
+</VariableDeclaration>
+<VariableDeclaration>
+<Type>FLOAT</Type>
+<IdInitialization>
+<IdentifierExpression>
+<xleft> 706</xleft>
+<value> primo</value>
+<xright> 711</xright>
+</IdentifierExpression>
+</IdInitialization>
+<IdInitialization>
+<IdentifierExpression>
+<xleft> 712</xleft>
+<value> res</value>
+<xright> 715</xright>
+</IdentifierExpression>
+<FloatConstant> 1.0</FloatConstant>
+</IdInitialization>
+</VariableDeclaration>
+<WriteStatement><StringConstant> Inserire la base: </StringConstant>
+</WriteStatement>
+<ReadStatement>
+<IdentifierExpression>
+<xleft> 784</xleft>
+<value> primo</value>
+<xright> 789</xright>
+</IdentifierExpression>
+</ReadStatement>
+<WriteStatement><StringConstant> Inserire l'esponente: </StringConstant>
+</WriteStatement>
+<ReadStatement>
+<IdentifierExpression>
+<xleft> 834</xleft>
+<value> secondo</value>
+<xright> 841</xright>
+</IdentifierExpression>
+</ReadStatement>
+<WhileStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<xleft> 852</xleft>
+<value> i</value>
+<xright> 853</xright>
+</IdentifierExpression>
+<Operation> LT</Operation>
+<IdentifierExpression>
+<xleft> 856</xleft>
+<value> secondo</value>
+<xright> 863</xright>
+</IdentifierExpression>
+</BinaryExpression>
+<AssignStatement>
+<IdentifierExpression>
+<xleft> 870</xleft>
+<value> res</value>
+<xright> 873</xright>
+</IdentifierExpression>
+<BinaryExpression>
+<IdentifierExpression>
+<xleft> 877</xleft>
+<value> res</value>
+<xright> 880</xright>
+</IdentifierExpression>
+<Operation> TIMES</Operation>
+<IdentifierExpression>
+<xleft> 883</xleft>
+<value> primo</value>
+<xright> 888</xright>
+</IdentifierExpression>
+</BinaryExpression>
+</AssignStatement>
+<AssignStatement>
+<IdentifierExpression>
+<xleft> 892</xleft>
+<value> i</value>
+<xright> 893</xright>
+</IdentifierExpression>
+<BinaryExpression>
+<IdentifierExpression>
+<xleft> 897</xleft>
+<value> i</value>
+<xright> 898</xright>
+</IdentifierExpression>
+<Operation> PLUS</Operation>
+<IntegerConstant> 1</IntegerConstant>
+</BinaryExpression>
+</AssignStatement>
+</WhileStatement>
+<IdentifierExpression>
+<xleft> 914</xleft>
+<value> res</value>
+<xright> 917</xright>
+</IdentifierExpression>
+</ProcedureBody>
+</ProcedureNode>
+<ProcedureNode>
+<IdentifierExpression>
+<xleft> 930</xleft>
+<value> fibonacci</value>
+<xright> 939</xright>
+</IdentifierExpression>
+<ParameterDeclarations>
+<Type>INT</Type>
+<IdentifierExpression>
+<xleft> 944</xleft>
+<value> n</value>
+<xright> 945</xright>
+</IdentifierExpression>
+</ParameterDeclarations>
+<ResultTypes>
+<Type>INT</Type>
+</ResultTypes>
+<ProcedureBody>
+<VariableDeclaration>
+<Type>INT</Type>
+<IdInitialization>
+<IdentifierExpression>
+<xleft> 956</xleft>
+<value> res</value>
+<xright> 959</xright>
+</IdentifierExpression>
+<IdentifierExpression>
+<xleft> 963</xleft>
+<value> n</value>
+<xright> 964</xright>
+</IdentifierExpression>
+</IdInitialization>
+</VariableDeclaration>
+<IfStatement>
+<BinaryExpression>
+<BinaryExpression>
+<IdentifierExpression>
+<xleft> 970</xleft>
+<value> n</value>
+<xright> 971</xright>
+</IdentifierExpression>
+<Operation> NE</Operation>
+<IntegerConstant> 1</IntegerConstant>
+</BinaryExpression>
+<Operation> AND</Operation>
+<BinaryExpression>
+<IdentifierExpression>
+<xleft> 980</xleft>
+<value> n</value>
+<xright> 981</xright>
+</IdentifierExpression>
+<Operation> NE</Operation>
+<IntegerConstant> 0</IntegerConstant>
+</BinaryExpression>
+</BinaryExpression>
+<AssignStatement>
+<IdentifierExpression>
+<xleft> 995</xleft>
+<value> res</value>
+<xright> 998</xright>
+</IdentifierExpression>
+<BinaryExpression>
+<CallProcedureExpression>
+<IdentifierExpression>
+<xleft> 1002</xleft>
+<value> fibonacci</value>
+<xright> 1011</xright>
+</IdentifierExpression>
+<BinaryExpression>
+<IdentifierExpression>
+<xleft> 1012</xleft>
+<value> n</value>
+<xright> 1013</xright>
+</IdentifierExpression>
+<Operation> MINUS</Operation>
+<IntegerConstant> 1</IntegerConstant>
+</BinaryExpression>
+</CallProcedureExpression>
+<Operation> PLUS</Operation>
+<CallProcedureExpression>
+<IdentifierExpression>
+<xleft> 1019</xleft>
+<value> fibonacci</value>
+<xright> 1028</xright>
+</IdentifierExpression>
+<BinaryExpression>
+<IdentifierExpression>
+<xleft> 1029</xleft>
+<value> n</value>
+<xright> 1030</xright>
+</IdentifierExpression>
+<Operation> MINUS</Operation>
+<IntegerConstant> 2</IntegerConstant>
+</BinaryExpression>
+</CallProcedureExpression>
+</BinaryExpression>
+</AssignStatement>
+</IfStatement>
+<IdentifierExpression>
+<xleft> 1044</xleft>
+<value> res</value>
+<xright> 1047</xright>
+</IdentifierExpression>
 </ProcedureBody>
 </ProcedureNode>
 <ProcedureNode>
@@ -214,102 +542,203 @@
 <Type>INT</Type>
 <IdInitialization>
 <IdentifierExpression>
-<xleft> 487</xleft>
-<value> a</value>
-<xright> 488</xright>
+<xleft> 1079</xleft>
+<value> op</value>
+<xright> 1081</xright>
 </IdentifierExpression>
+<IntegerConstant> 0</IntegerConstant>
 </IdInitialization>
 <IdInitialization>
 <IdentifierExpression>
-<xleft> 490</xleft>
-<value> b</value>
-<xright> 491</xright>
+<xleft> 1088</xleft>
+<value> n</value>
+<xright> 1089</xright>
 </IdentifierExpression>
-</IdInitialization>
-<IdInitialization>
-<IdentifierExpression>
-<xleft> 493</xleft>
-<value> c</value>
-<xright> 494</xright>
-</IdentifierExpression>
+<IntegerConstant> 0</IntegerConstant>
 </IdInitialization>
 </VariableDeclaration>
+<WhileStatement>
+<WriteStatement><StringConstant> Scegli l'operazione da eseguire: 
+			   1) Addizione tra due numeri;
+			   2) Moltiplicazione tra due numeri;
+			   3) Divisione intera tra 2 numeri;
+			   4) Elevamento a potenza;
+			   5) Successione di fibonacci
+			   0) Esci.
+			   </StringConstant>
+</WriteStatement>
 <ReadStatement>
 <IdentifierExpression>
-<xleft> 504</xleft>
-<value> a</value>
-<xright> 505</xright>
-</IdentifierExpression>
-<IdentifierExpression>
-<xleft> 506</xleft>
-<value> nome</value>
-<xright> 510</xright>
-</IdentifierExpression>
-<IdentifierExpression>
-<xleft> 511</xleft>
-<value> b</value>
-<xright> 512</xright>
-</IdentifierExpression>
-<IdentifierExpression>
-<xleft> 513</xleft>
-<value> c</value>
-<xright> 514</xright>
+<xleft> 1363</xleft>
+<value> op</value>
+<xright> 1365</xright>
 </IdentifierExpression>
 </ReadStatement>
-<AssignStatement>
+<BinaryExpression>
 <IdentifierExpression>
-<xleft> 519</xleft>
-<value> a</value>
-<xright> 520</xright>
+<xleft> 1373</xleft>
+<value> op</value>
+<xright> 1375</xright>
 </IdentifierExpression>
+<Operation> NE</Operation>
+<IntegerConstant> 0</IntegerConstant>
+</BinaryExpression>
+<IfStatement>
+<BinaryExpression>
+<BinaryExpression>
 <IdentifierExpression>
-<xleft> 522</xleft>
-<value> b</value>
-<xright> 523</xright>
+<xleft> 1392</xleft>
+<value> op</value>
+<xright> 1394</xright>
 </IdentifierExpression>
+<Operation> GE</Operation>
+<IntegerConstant> 1</IntegerConstant>
+</BinaryExpression>
+<Operation> OR</Operation>
+<BinaryExpression>
 <IdentifierExpression>
-<xleft> 525</xleft>
-<value> c</value>
-<xright> 526</xright>
+<xleft> 1403</xleft>
+<value> op</value>
+<xright> 1405</xright>
 </IdentifierExpression>
+<Operation> LE</Operation>
+<IntegerConstant> 5</IntegerConstant>
+</BinaryExpression>
+</BinaryExpression>
+<IfStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<xleft> 1426</xleft>
+<value> op</value>
+<xright> 1428</xright>
+</IdentifierExpression>
+<Operation> EQ</Operation>
+<IntegerConstant> 1</IntegerConstant>
+</BinaryExpression>
+<WriteStatement><StringConstant> La somma dei numeri è: </StringConstant>
 <CallProcedureExpression>
 <IdentifierExpression>
-<xleft> 530</xleft>
-<value> multAddDiff</value>
-<xright> 541</xright>
+<xleft> 1480</xleft>
+<value> sommaNumeri</value>
+<xright> 1491</xright>
 </IdentifierExpression>
 </CallProcedureExpression>
-</AssignStatement>
-<WriteStatement><StringConstant> Ciao </StringConstant>
-<IdentifierExpression>
-<xleft> 562</xleft>
-<value> nome</value>
-<xright> 566</xright>
-</IdentifierExpression>
+<StringConstant> \n</StringConstant>
 </WriteStatement>
-<CallProcedureStatement>
+<ElifStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<xleft> 1510</xleft>
+<value> op</value>
+<xright> 1512</xright>
+</IdentifierExpression>
+<Operation> EQ</Operation>
 <IntegerConstant> 2</IntegerConstant>
-</CallProcedureStatement>
-<WriteStatement><StringConstant> I tuoi valori sono:\n</StringConstant>
+</BinaryExpression>
+<WriteStatement><StringConstant> La moltiplicazione dei numeri è: </StringConstant>
+<CallProcedureExpression>
 <IdentifierExpression>
-<xleft> 620</xleft>
-<value> a</value>
-<xright> 621</xright>
+<xleft> 1574</xleft>
+<value> multConSomma</value>
+<xright> 1586</xright>
 </IdentifierExpression>
-<StringConstant>  per la moltiplicazione\n</StringConstant>
-<IdentifierExpression>
-<xleft> 652</xleft>
-<value> b</value>
-<xright> 653</xright>
-</IdentifierExpression>
-<StringConstant>  per la somma, e \n</StringConstant>
-<IdentifierExpression>
-<xleft> 681</xleft>
-<value> c</value>
-<xright> 682</xright>
-</IdentifierExpression>
-<StringConstant>  per la differenza\n</StringConstant>
+</CallProcedureExpression>
+<StringConstant> \n</StringConstant>
 </WriteStatement>
+</ElifStatement>
+<ElifStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<xleft> 1605</xleft>
+<value> op</value>
+<xright> 1607</xright>
+</IdentifierExpression>
+<Operation> EQ</Operation>
+<IntegerConstant> 3</IntegerConstant>
+</BinaryExpression>
+<WriteStatement><StringConstant> La divisione dei numeri è: </StringConstant>
+<CallProcedureExpression>
+<IdentifierExpression>
+<xleft> 1663</xleft>
+<value> divisioneNumeri</value>
+<xright> 1678</xright>
+</IdentifierExpression>
+</CallProcedureExpression>
+<StringConstant> \n</StringConstant>
+</WriteStatement>
+</ElifStatement>
+<ElifStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<xleft> 1697</xleft>
+<value> op</value>
+<xright> 1699</xright>
+</IdentifierExpression>
+<Operation> EQ</Operation>
+<IntegerConstant> 4</IntegerConstant>
+</BinaryExpression>
+<WriteStatement><StringConstant> L'elevamento a potenza è: </StringConstant>
+<CallProcedureExpression>
+<IdentifierExpression>
+<xleft> 1755</xleft>
+<value> potenza</value>
+<xright> 1762</xright>
+</IdentifierExpression>
+</CallProcedureExpression>
+<StringConstant> \n</StringConstant>
+</WriteStatement>
+</ElifStatement>
+<ElifStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<xleft> 1781</xleft>
+<value> op</value>
+<xright> 1783</xright>
+</IdentifierExpression>
+<Operation> EQ</Operation>
+<IntegerConstant> 5</IntegerConstant>
+</BinaryExpression>
+<WriteStatement><StringConstant> Inserisci il numero : </StringConstant>
+</WriteStatement>
+<ReadStatement>
+<IdentifierExpression>
+<xleft> 1848</xleft>
+<value> n</value>
+<xright> 1849</xright>
+</IdentifierExpression>
+</ReadStatement>
+<IfStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<xleft> 1860</xleft>
+<value> n</value>
+<xright> 1861</xright>
+</IdentifierExpression>
+<Operation> GE</Operation>
+<IntegerConstant> 0</IntegerConstant>
+</BinaryExpression>
+<WriteStatement><StringConstant> La successione di fibonacci è: </StringConstant>
+<CallProcedureExpression>
+<IdentifierExpression>
+<xleft> 1923</xleft>
+<value> fibonacci</value>
+<xright> 1932</xright>
+</IdentifierExpression>
+<IdentifierExpression>
+<xleft> 1933</xleft>
+<value> n</value>
+<xright> 1934</xright>
+</IdentifierExpression>
+</CallProcedureExpression>
+<StringConstant> \n</StringConstant>
+</WriteStatement>
+<WriteStatement><StringConstant> Hai inserito un numero negativo\n</StringConstant>
+</WriteStatement>
+</IfStatement>
+</ElifStatement>
+</IfStatement>
+</IfStatement>
+</WhileStatement>
 <IntegerConstant> 0</IntegerConstant>
 </ProcedureBody>
 </ProcedureNode>

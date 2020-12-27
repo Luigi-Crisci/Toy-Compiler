@@ -6,13 +6,12 @@
 package parser;
 
 import java_cup.runtime.*;
-import nodes.*;
+import parser.nodes.*;
 import java.util.*;
 import lexer.*;
-import nodes.ExpressionNode.*;
-import nodes.StatementNode.*;
-import parser.Symbols;
-import java_cup.runtime.XMLElement;
+import parser.nodes.ExpressionNode.*;
+import parser.nodes.StatementNode.*;
+import common.*;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
   */

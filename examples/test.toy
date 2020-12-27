@@ -1,0 +1,111 @@
+proc getNumeri()float,float :
+	float primo, secondo;
+	write("Inserire il primo numero: ");
+	readln(primo);
+	write("Inserire il secondo numero: ");
+	readln(secondo);
+
+	-> primo, secondo
+corp;
+
+proc sommaNumeri()float :
+	float primo, secondo;
+	primo, secondo := getNumeri();
+	-> primo + secondo
+corp;
+
+proc multConSomma()float:
+	int i := 0;
+	float primo, secondo, mult := 0.0;
+	primo, secondo := getNumeri();
+
+	while i < secondo
+	do
+		mult := mult + primo;
+		i := i + 1;
+	od;
+	-> mult
+corp;
+
+proc divisioneNumeri()int:
+	int primo, secondo;
+	write("Inserire il primo numero: ");
+	readln(primo);
+	write("Inserire il secondo numero: ");
+	readln(secondo);
+
+	-> primo / secondo
+corp;
+
+proc potenza()float:
+	float primo,res := 1.0;
+	int secondo, i := 0;
+	write("Inserire la base: ");
+	readln(primo);
+	write("Inserire l'esponente: ");
+	readln(secondo);
+
+	while i < secondo
+	do
+		res := res * primo;
+		i := i + 1;
+	od;
+
+	-> res
+corp;
+
+proc fibonacci(int n)int:
+	int res := n;
+	if n <> 1 && n <> 0
+	then
+		res := fibonacci(n-1) + fibonacci(n-2);
+	fi;
+	-> res
+corp;
+
+
+proc main()int :
+
+	int op := 0, n:= 0;
+	
+	while 
+		write("Scegli l'operazione da eseguire: 
+			   1) Addizione tra due numeri;
+			   2) Moltiplicazione tra due numeri;
+			   3) Divisione intera tra 2 numeri;
+			   4) Elevamento a potenza;
+			   5) Successione di fibonacci
+			   0) Esci.
+			   ");
+		readln(op);
+		-> op <> 0
+		do
+			if op >= 1 || op <= 5
+			then
+				if op = 1
+				then 
+					write("La somma dei numeri è: ",sommaNumeri(),"\n");
+				elif op = 2
+				then
+					write("La moltiplicazione dei numeri è: ", multConSomma(),"\n");
+				elif op = 3
+				then
+					write("La divisione dei numeri è: ", divisioneNumeri(),"\n");
+				elif op = 4  
+				then
+					write("L'elevamento a potenza è: ",potenza(),"\n");
+				elif op = 5 
+				then
+					write("Inserisci il numero : ");
+					readln(n);
+					if n >= 0
+					then
+						write("La successione di fibonacci è: ",fibonacci(n),"\n");
+					else
+						write("Hai inserito un numero negativo\n");
+					fi;
+				fi;
+			fi;
+	od;
+	-> 0
+corp;
