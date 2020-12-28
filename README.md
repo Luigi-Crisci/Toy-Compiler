@@ -1,6 +1,6 @@
-# Toy language Parser
+# Toy language Compiler
 
-A simple Parser for the Toy language, made with Java CUP and JFlex. This implementation results in the creation of the *Abstract Syntax Tree* of the Toy language.
+A simple Parser for the Toy language, made with Java CUP and JFlex. This implementation results in the creation of an executable file given a compliant toy file.
 
 ## Build  
 
@@ -23,9 +23,112 @@ Alternatively you can compile manually typing:
 
 The *jar* file will be placed under the *target/* directory.  
 
+## Assignment overview
+
+This compiler translates a toy program into an executable file into a Clang-compliant C program. The generated .c file is then compiled after that it's ready to run. The stages of the execution are the following:
+
+- Lexical analysis
+- Syntactic analysis
+- (Optional) AST visualization
+- Semantic analysis
+- Toy2C translation
+
+### Differences with the assignment
+
+This implementation doesn't go that far from the assignment. Although, some variations have been made by the authors:
+- The token MAIN has been introduced;
+- The productions *"Main ::= PROC MAIN ..."* have been added, slightly changing the syntax of the language. These productions, along with the *ProcList*, make every Toy program syntactically compliant when the procedure *Main*:
+	- appears one single time,
+	- is the last one in the file,
+	- returns an INT.
+
+
+# Lexical analysis
+
+This step is carried out by a Lexer written in `flex` and compiled with `Jflex` (an open source tool for generating Lexer in Java).
+
+It is composed of a single `Lexer.flex` source file contaning all the logic to generate a Lexer class, which is crucial for the next stage. The Lexer resulting by the compiling does the whole Lexical analysis.
+
+## Lexical specification
+
+This section describes the set of tokens and their corresponding pattern.
+
+<details>
+	<summary>The patterns</summary>
+
+	//Procedures
+	PROC "proc"          
+	CORP "corp"          
+	MAIN "main"          
+	
+	//Type
+	INT "int"             
+	FLOAT "float"           
+	BOOL "bool"            
+	STRING "string"          
+	VOID "void"            
+
+	//Statements
+	WHILE "while"           
+	DO "do"                   
+	OD "od"              
+	READ "readln"            
+	WRITE "write"           
+	ASSIGN "assign"                            
+	IF "if"                        
+	THEN "then"                  
+	FI "fi"                        
+	ELSE "else"                      
+	ELIF "elif"                      
+
+	//Separators
+	LPAR "("                                
+	RPAR ")"               
+	COLON ":"               
+	COMMA ","               
+	SEMI ";"               
+
+
+	//Operators
+	ASSIGN ":="                                       
+	PLUS "+"                            
+	MINUS "-"                            
+	TIMES "*"                            
+	DIV "/"                            
+	EQ "="                            
+	NE "<>"                            
+	LT "<"                            
+	LE "<="                            
+	GT ">"                            
+	GE ">="                            
+	AND "&&"              
+	OR "||"              
+	NOT "!"                            
+	NULL "null"                
+	TRUE "true"                                       
+	FALSE "false"            
+	RETURN "->"              
+
+
+    ALPHA=[A-Za-z]
+	DIGIT=[0-9]
+	NONZERO_DIGIT=[1-9]
+	NEWLINE=\r|\n|\r\n
+	WHITESPACE =  | [ \t\f]
+	ID = (|_)*
+	INT = ((*)|0)
+	FLOAT = +)
+	STRING_TEXT = [^\"]*
+	COMMENT_TEXT = [\w\.\@]*
+ </details>
+
+# Syntactic analysis
+
+Just like the lexical analysis, the syntactic analysis is done by a generated Java class. This has been done with CUP (Construction of Useful Parsers), which implements LALR(1) parsing.
+
 ## Syntactic specification 
 
-This section describes the whole syntactic specification of the Toy language that was implemented.
+This section describes the whole syntactic specification of the Toy language that was implemented. The grammar as-is doesn't allow LALR(1) parsing. In order to generate the parser, the PEMDAS (Parenthesis, Exponents, Multiplications/Divisions, Additions/Subtractions) rule has been introduced.
 
   <details>
 	<summary>The grammar</summary>
@@ -179,88 +282,7 @@ This section describes the whole syntactic specification of the Toy language tha
 </details>
 
 
-## Lexical specification
-
-This section describes the set of tokens and their corresponding pattern.
-
-<details>
-	<summary>The patterns</summary>
-
-	//Procedures
-	PROC "proc"          
-	CORP "corp"          
-	MAIN "main"          
-	
-	//Type
-	INT "int"             
-	FLOAT "float"           
-	BOOL "bool"            
-	STRING "string"          
-	VOID "void"            
-
-	//Statements
-	WHILE "while"           
-	DO "do"                   
-	OD "od"              
-	READ "readln"            
-	WRITE "write"           
-	ASSIGN "assign"                            
-	IF "if"                        
-	THEN "then"                  
-	FI "fi"                        
-	ELSE "else"                      
-	ELIF "elif"                      
-
-	//Separators
-	LPAR "("                                
-	RPAR ")"               
-	COLON ":"               
-	COMMA ","               
-	SEMI ";"               
-
-
-	//Operators
-	ASSIGN ":="                                       
-	PLUS "+"                            
-	MINUS "-"                            
-	TIMES "*"                            
-	DIV "/"                            
-	EQ "="                            
-	NE "<>"                            
-	LT "<"                            
-	LE "<="                            
-	GT ">"                            
-	GE ">="                            
-	AND "&&"              
-	OR "||"              
-	NOT "!"                            
-	NULL "null"                
-	TRUE "true"                                       
-	FALSE "false"            
-	RETURN "->"              
-
-
-    ALPHA=[A-Za-z]
-	DIGIT=[0-9]
-	NONZERO_DIGIT=[1-9]
-	NEWLINE=\r|\n|\r\n
-	WHITESPACE =  | [ \t\f]
-	ID = (|_)*
-	INT = ((*)|0)
-	FLOAT = +)
-	STRING_TEXT = [^\"]*
-	COMMENT_TEXT = [\w\.\@]*
- </details>
-
-## Differences with the assignment
-This implementation doesn't go that far from the assignment. Although, some variations have been made by the authors:
-- The token MAIN has been introduced;
-- The productions *"Main ::= PROC MAIN ..."* have been added, slightly changing the syntax of the language. These productions, along with the *ProcList*, make every Toy program syntactically compliant when the procedure *Main*:
-	- appears one single time,
-	- is the last one in the file,
-	- returns an INT.
-
-## The Abstract Syntax Tree
+# The Abstract Syntax Tree
 
 The implemented Grammar has been enhanced with a series of *actions*, one for each production. 
 
@@ -277,30 +299,45 @@ The *empty* production creates a new list containing the variables declarated, w
 
 As the *Parser* elaborates a given source file, the corresponding (and unique) *Syntax Tree* is generated recursively. With the completion of the parsing process, a pointer to the root of the *Syntax tree* is returned, which comes in handy for the next step of the compiler.
 
-### Tree visualization
+## Tree visualization
 
 Moreover, this implementation provides with a visualization of the *Syntactic Tree*, constructed in the previous step, via XML. The *Visitor* pattern fits this role perfectly. Once the parser has finished its job, the user can call the *ASTVisitor* on the root of the tree, which will generate a .xml file based on the instance of the *Syntactic tree*. The user can open the generated file using any Web Browser.
 
+# Semantic Analysis
+
+The Toy language follows a few simple rules listed below
+<details> 
+<summary> Semantics </summary>
+
+- rule1
+- rule2
+</details>
+
+In order to check whether the input program is semantically compliant, a *SemanticVisitor* object is created and invoked on the root of the AST generated by the parser. Given the set of rules, a single visit of such tree is required towards the semantic analysis. 
+
 ## Inference rules
 
-The following table describes each and every inference rule required to the Semantic Analysis.
+The following table describes each and every inference rule required to the type checking. The implementation of these rules can be found in the *TypeCheck* class.
 
 | Operation       | First operand type | Second operand type | Resulting type |
 |-----------------|--------------------|---------------------|----------------|
-| :=			  | integer			   | integer			 | integer		  |
+| :=			  | int				   | int				 | int			  |
 | :=			  | float			   | float				 | float		  |
 | :=			  | string			   | string				 | string		  |
 | :=			  | boolean			   | boolean			 | boolean		  |
-| * / + -         | integer            | integer             | integer        |
-| * / + -         | integer            | float               | float          |
-| * / + -         | float              | integer             | float          |
+| * / + -         | int      	       | int         	     | int       	  |
+| * / + -         | int          	   | float               | float          |
+| * / + -         | float              | int            	 | float          |
 | * / + -         | float              | float               | float          |
-| -               | integer            | null                | integer        |
+| -               | int         	   | null                | int       	  |
 | -               | float              | null                | float          |
-| <= < == <> > >= | integer            | integer             | boolean        |
-| <= < == <> > >= | integer            | float               | boolean        |
-| <= < == <> > >= | float              | integer             | boolean        |
+| <= < == <> > >= | int            	   | int            	 | boolean        |
+| <= < == <> > >= | int            	   | float               | boolean        |
+| <= < == <> > >= | float              | int        	     | boolean        |
 | <= < == <> > >= | float              | float               | boolean        |
 | && \|\|         | boolean            | boolean             | boolean        |
 | !               | boolean            | boolean             | boolean        |
+
+
+# Translating to the C language
 
