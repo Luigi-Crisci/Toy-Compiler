@@ -36,7 +36,6 @@ proc main()int:
     
     
     string numero := numero;
-    
     string numero := "Azz";
 
     write("How many pegs? ");

@@ -538,7 +538,7 @@ class CUP$Parser$actions {
 		Location vlxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location vlxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		List<VariableDeclarationNode> vl = (List<VariableDeclarationNode>)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 vl.add(vd); RESULT = vl; 
+		 vl.add(0,vd); RESULT = vl; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("VarDeclList",2, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -637,10 +637,10 @@ class CUP$Parser$actions {
           case 11: // IdListInit ::= ID 
             {
               List<IdInitializerNode> RESULT =null;
-    Location ixleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
+		Location ixleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location ixright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 List<IdInitializerNode> idl = new LinkedList<IdInitializerNode>(); idl.add( new IdInitializerNode(new IdentifierExpression(ileft,i,iright))); RESULT = idl; 
+		 List<IdInitializerNode> idl = new LinkedList<IdInitializerNode>(); idl.add( new IdInitializerNode(new IdentifierExpression(i,ixleft,ixright))); RESULT = idl; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("IdListInit",7, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -655,7 +655,7 @@ class CUP$Parser$actions {
 		Location ixleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location ixright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 idl.add(new IdInitializerNode(new IdentifierExpression(ileft,i,iright))); RESULT = idl; 
+		 idl.add(new IdInitializerNode(new IdentifierExpression(i,ixleft,ixright))); RESULT = idl; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("IdListInit",7, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -670,7 +670,7 @@ class CUP$Parser$actions {
 		Location exleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location exright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		ExpressionNode e = (ExpressionNode)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 List<IdInitializerNode> idl = new LinkedList<IdInitializerNode>(); idl.add( new IdInitializerNode(new IdentifierExpression(ileft,i,iright),e)); RESULT = idl; 
+		 List<IdInitializerNode> idl = new LinkedList<IdInitializerNode>(); idl.add( new IdInitializerNode(new IdentifierExpression(i,ixleft,ixright),e)); RESULT = idl; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("IdListInit",7, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -688,7 +688,7 @@ class CUP$Parser$actions {
 		Location exleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location exright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		ExpressionNode e = (ExpressionNode)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 idl.add( new IdInitializerNode(new IdentifierExpression(ileft,i,iright),e)); RESULT = idl; 
+		 idl.add( new IdInitializerNode(new IdentifierExpression(i,ixleft,ixright),e)); RESULT = idl; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("IdListInit",7, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -715,7 +715,7 @@ class CUP$Parser$actions {
 		Location rexprxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xleft;
 		Location rexprxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xright;
 		List<ExpressionNode> rexpr = (List<ExpressionNode>)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
-		 ProcedureBodyNode body = new ProcedureBodyNode(vdl,stl,rexpr);  RESULT = new ProcedureNode( new IdentifierExpression(ileft,i,iright),pdl,rtl,body); 
+		 ProcedureBodyNode body = new ProcedureBodyNode(vdl,stl,rexpr);  RESULT = new ProcedureNode( new IdentifierExpression(i,ixleft,ixright),pdl,rtl,body); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Proc",5, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-12)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -739,7 +739,7 @@ class CUP$Parser$actions {
 		Location rexprxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xleft;
 		Location rexprxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xright;
 		List<ExpressionNode> rexpr = (List<ExpressionNode>)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
-		 ProcedureBodyNode body = new ProcedureBodyNode(vdl,stl,rexpr);  RESULT = new ProcedureNode( new IdentifierExpression(ileft,i,iright),rtl,body); 
+		 ProcedureBodyNode body = new ProcedureBodyNode(vdl,stl,rexpr);  RESULT = new ProcedureNode( new IdentifierExpression(i,ixleft,ixright),rtl,body); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Proc",5, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-11)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -763,7 +763,7 @@ class CUP$Parser$actions {
 		Location rexprxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xleft;
 		Location rexprxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xright;
 		List<ExpressionNode> rexpr = (List<ExpressionNode>)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
-		 ProcedureBodyNode body = new ProcedureBodyNode(vdl,rexpr);  RESULT = new ProcedureNode( new IdentifierExpression(ileft,i,iright),pdl,rtl,body); 
+		 ProcedureBodyNode body = new ProcedureBodyNode(vdl,rexpr);  RESULT = new ProcedureNode( new IdentifierExpression(i,ixleft,ixright),pdl,rtl,body); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Proc",5, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-11)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -784,7 +784,7 @@ class CUP$Parser$actions {
 		Location rexprxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xleft;
 		Location rexprxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xright;
 		List<ExpressionNode> rexpr = (List<ExpressionNode>)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
-		 ProcedureBodyNode body = new ProcedureBodyNode(vdl,rexpr);  RESULT = new ProcedureNode( new IdentifierExpression(ileft,i,iright),rtl,body); 
+		 ProcedureBodyNode body = new ProcedureBodyNode(vdl,rexpr);  RESULT = new ProcedureNode( new IdentifierExpression(i,ixleft,ixright),rtl,body); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Proc",5, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-10)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -793,6 +793,9 @@ class CUP$Parser$actions {
           case 19: // Main ::= PROC MAIN LPAR ParamDeclList RPAR INT COLON VarDeclList StatList RETURN ReturnExprs CORP SEMI 
             {
               ProcedureNode RESULT =null;
+		Location mxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-11)).xleft;
+		Location mxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-11)).xright;
+		Object m = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-11)).value;
 		Location pdlxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-9)).xleft;
 		Location pdlxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-9)).xright;
 		List<ParameterDeclarationNode> pdl = (List<ParameterDeclarationNode>)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-9)).value;
@@ -805,7 +808,7 @@ class CUP$Parser$actions {
 		Location rexprxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xleft;
 		Location rexprxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xright;
 		List<ExpressionNode> rexpr = (List<ExpressionNode>)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
-		 ProcedureBodyNode body = new ProcedureBodyNode(vdl,stl,rexpr); List<Integer> rlt = new LinkedList<Integer>(); rlt.add(Symbols.INT); RESULT = new ProcedureNode( new IdentifierExpression(0,"main",0),pdl,rlt,body); 
+		 ProcedureBodyNode body = new ProcedureBodyNode(vdl,stl,rexpr); List<Integer> rlt = new LinkedList<Integer>(); rlt.add(Symbols.INT); RESULT = new ProcedureNode( new IdentifierExpression("main",mxleft,mxright),pdl,rlt,body); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Main",6, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-12)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -814,6 +817,9 @@ class CUP$Parser$actions {
           case 20: // Main ::= PROC MAIN LPAR RPAR INT COLON VarDeclList StatList RETURN ReturnExprs CORP SEMI 
             {
               ProcedureNode RESULT =null;
+		Location mxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-10)).xleft;
+		Location mxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-10)).xright;
+		Object m = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-10)).value;
 		Location vdlxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)).xleft;
 		Location vdlxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)).xright;
 		List<VariableDeclarationNode> vdl = (List<VariableDeclarationNode>)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-5)).value;
@@ -823,7 +829,7 @@ class CUP$Parser$actions {
 		Location rexprxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xleft;
 		Location rexprxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xright;
 		List<ExpressionNode> rexpr = (List<ExpressionNode>)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
-		 ProcedureBodyNode body = new ProcedureBodyNode(vdl,stl,rexpr); List<Integer> rlt = new LinkedList<Integer>(); rlt.add(Symbols.INT); RESULT = new ProcedureNode( new IdentifierExpression(0,"main",0),rlt,body); 
+		 ProcedureBodyNode body = new ProcedureBodyNode(vdl,stl,rexpr); List<Integer> rlt = new LinkedList<Integer>(); rlt.add(Symbols.INT); RESULT = new ProcedureNode( new IdentifierExpression("main",mxleft,mxright),rlt,body); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Main",6, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-11)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -832,6 +838,9 @@ class CUP$Parser$actions {
           case 21: // Main ::= PROC MAIN LPAR ParamDeclList RPAR INT COLON VarDeclList RETURN ReturnExprs CORP SEMI 
             {
               ProcedureNode RESULT =null;
+		Location mxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-10)).xleft;
+		Location mxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-10)).xright;
+		Object m = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-10)).value;
 		Location pdlxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-8)).xleft;
 		Location pdlxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-8)).xright;
 		List<ParameterDeclarationNode> pdl = (List<ParameterDeclarationNode>)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-8)).value;
@@ -841,7 +850,7 @@ class CUP$Parser$actions {
 		Location rexprxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xleft;
 		Location rexprxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xright;
 		List<ExpressionNode> rexpr = (List<ExpressionNode>)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
-		 ProcedureBodyNode body = new ProcedureBodyNode(vdl,rexpr); List<Integer> rlt = new LinkedList<Integer>(); rlt.add(Symbols.INT); RESULT = new ProcedureNode( new IdentifierExpression(0,"main",0),pdl,rlt,body); 
+		 ProcedureBodyNode body = new ProcedureBodyNode(vdl,rexpr); List<Integer> rlt = new LinkedList<Integer>(); rlt.add(Symbols.INT); RESULT = new ProcedureNode( new IdentifierExpression("main",mxleft,mxright),pdl,rlt,body); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Main",6, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-11)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -850,13 +859,16 @@ class CUP$Parser$actions {
           case 22: // Main ::= PROC MAIN LPAR RPAR INT COLON VarDeclList RETURN ReturnExprs CORP SEMI 
             {
               ProcedureNode RESULT =null;
+		Location mxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-9)).xleft;
+		Location mxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-9)).xright;
+		Object m = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-9)).value;
 		Location vdlxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).xleft;
 		Location vdlxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).xright;
 		List<VariableDeclarationNode> vdl = (List<VariableDeclarationNode>)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-4)).value;
 		Location rexprxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xleft;
 		Location rexprxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xright;
 		List<ExpressionNode> rexpr = (List<ExpressionNode>)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
-		 ProcedureBodyNode body = new ProcedureBodyNode(vdl,rexpr); List<Integer> rlt = new LinkedList<Integer>(); rlt.add(Symbols.INT); RESULT = new ProcedureNode( new IdentifierExpression(0,"main",0),rlt,body); 
+		 ProcedureBodyNode body = new ProcedureBodyNode(vdl,rexpr); List<Integer> rlt = new LinkedList<Integer>(); rlt.add(Symbols.INT); RESULT = new ProcedureNode( new IdentifierExpression("main",mxleft,mxright),rlt,body); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Main",6, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-10)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -982,7 +994,7 @@ class CUP$Parser$actions {
 		Location ixleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location ixright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 List<IdentifierExpression> idl = new LinkedList<IdentifierExpression>(); idl.add(new IdentifierExpression(ileft,i,iright)); RESULT = idl; 
+		 List<IdentifierExpression> idl = new LinkedList<IdentifierExpression>(); idl.add(new IdentifierExpression(i,ixleft,ixright)); RESULT = idl; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("IdList",16, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -997,7 +1009,7 @@ class CUP$Parser$actions {
 		Location ixleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location ixright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 idl.add(new IdentifierExpression(ileft,i,iright)); RESULT = idl; 
+		 idl.add(new IdentifierExpression(i,ixleft,ixright)); RESULT = idl; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("IdList",16, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1219,6 +1231,9 @@ class CUP$Parser$actions {
           case 50: // ReadlnStat ::= READ LPAR IdList RPAR 
             {
               ReadStatement RESULT =null;
+		Location rxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).xleft;
+		Location rxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).xright;
+		Object r = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-3)).value;
 		Location idlxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xleft;
 		Location idlxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xright;
 		List<IdentifierExpression> idl = (List<IdentifierExpression>)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
@@ -1231,6 +1246,9 @@ class CUP$Parser$actions {
           case 51: // WriteStat ::= WRITE LPAR ExprList RPAR 
             {
               WriteStatement RESULT =null;
+		Location wxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).xleft;
+		Location wxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).xright;
+		Object w = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-3)).value;
 		Location exprlxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xleft;
 		Location exprlxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xright;
 		List<ExpressionNode> exprl = (List<ExpressionNode>)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
@@ -1246,6 +1264,9 @@ class CUP$Parser$actions {
 		Location idlxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xleft;
 		Location idlxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xright;
 		List<IdentifierExpression> idl = (List<IdentifierExpression>)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		Location axleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xleft;
+		Location axright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xright;
+		Object a = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 		Location exprxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location exprxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		List<ExpressionNode> expr = (List<ExpressionNode>)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
@@ -1264,7 +1285,7 @@ class CUP$Parser$actions {
 		Location exprlxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xleft;
 		Location exprlxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xright;
 		List<ExpressionNode> exprl = (List<ExpressionNode>)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		 RESULT = new CallProcedureStatement(new IdentifierExpression(ileft,i,iright),exprl); 
+		 RESULT = new CallProcedureStatement(new IdentifierExpression(i,ixleft,ixright),exprl); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("CallProc",4, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1276,7 +1297,7 @@ class CUP$Parser$actions {
 		Location ixleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xleft;
 		Location ixright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xright;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
-		 RESULT = new CallProcedureStatement(new IdentifierExpression(ileft,i,iright)); 
+		 RESULT = new CallProcedureStatement(new IdentifierExpression(i,ixleft,ixright)); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("CallProc",4, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1312,7 +1333,10 @@ class CUP$Parser$actions {
           case 57: // Expr ::= NULL 
             {
               ExpressionNode RESULT =null;
-		 RESULT = new NullConstant(); 
+		Location nxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
+		Location nxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
+		Object n = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		 RESULT = new NullConstant(nxleft,nxright); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Expr",8, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1321,7 +1345,10 @@ class CUP$Parser$actions {
           case 58: // Expr ::= TRUE 
             {
               ExpressionNode RESULT =null;
-		 RESULT = new BooleanConstant(true);  
+		Location bxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
+		Location bxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
+		Object b = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		 RESULT = new BooleanConstant(true,bxleft,bxright);  
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Expr",8, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1330,7 +1357,10 @@ class CUP$Parser$actions {
           case 59: // Expr ::= FALSE 
             {
               ExpressionNode RESULT =null;
-		 RESULT = new BooleanConstant(false); 
+		Location bxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
+		Location bxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
+		Object b = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		 RESULT = new BooleanConstant(false,bxleft,bxright); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Expr",8, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1342,7 +1372,7 @@ class CUP$Parser$actions {
 		Location ixleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location ixright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Integer i = (Integer)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 RESULT = new IntegerConstant(i); 
+		 RESULT = new IntegerConstant(i,ixleft,ixright); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Expr",8, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1354,7 +1384,7 @@ class CUP$Parser$actions {
 		Location fxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location fxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Float f = (Float)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 RESULT = new FloatConstant(f); 
+		 RESULT = new FloatConstant(f,fxleft,fxright); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Expr",8, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1366,7 +1396,7 @@ class CUP$Parser$actions {
 		Location sxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location sxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		String s = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 RESULT = new StringConstant(s); 
+		 RESULT = new StringConstant(s,sxleft,sxright); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Expr",8, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1378,7 +1408,7 @@ class CUP$Parser$actions {
 		Location ixleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location ixright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 RESULT = new IdentifierExpression(ileft,i,iright); 
+		 RESULT = new IdentifierExpression(i,ixleft,ixright); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Expr",8, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1393,7 +1423,7 @@ class CUP$Parser$actions {
 		Location exprlxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xleft;
 		Location exprlxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xright;
 		List<ExpressionNode> exprl = (List<ExpressionNode>)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		 RESULT = new CallProcedureExpression(new IdentifierExpression(ileft,i,iright),exprl); 
+		 RESULT = new CallProcedureExpression(new IdentifierExpression(i,ixleft,ixright),exprl); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Expr",8, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1405,7 +1435,7 @@ class CUP$Parser$actions {
 		Location ixleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xleft;
 		Location ixright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).xright;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
-		 RESULT = new CallProcedureExpression(new IdentifierExpression(ileft,i,iright)); 
+		 RESULT = new CallProcedureExpression(new IdentifierExpression(i,ixleft,ixright)); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Expr",8, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1594,6 +1624,9 @@ class CUP$Parser$actions {
           case 78: // Expr ::= MINUS Expr 
             {
               ExpressionNode RESULT =null;
+		Location mxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xleft;
+		Location mxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xright;
+		Object m = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 		Location exleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location exright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		ExpressionNode e = (ExpressionNode)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
@@ -1606,6 +1639,9 @@ class CUP$Parser$actions {
           case 79: // Expr ::= NOT Expr 
             {
               ExpressionNode RESULT =null;
+		Location nxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xleft;
+		Location nxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xright;
+		Object n = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 		Location exleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location exright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		ExpressionNode e = (ExpressionNode)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;

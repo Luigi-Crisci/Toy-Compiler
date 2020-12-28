@@ -77,7 +77,7 @@ Program ::= VarDeclList:vl ProcList:pl		 	{: RESULT = new ProgramNode(vl,pl); :}
     ;
 
 VarDeclList ::= /* empty */ 					{: RESULT = new LinkedList<VariableDeclarationNode>(); :}
-	| VarDecl:vd VarDeclList:vl					{: vl.add(vd); RESULT = vl; :}
+	| VarDecl:vd VarDeclList:vl					{: vl.add(0,vd); RESULT = vl; :}
 	;
 
 VarDecl ::= Type:t IdListInit:idl SEMI			{: RESULT = new VariableDeclarationNode(t,idl); :}
@@ -94,31 +94,31 @@ Type ::= INT:i									{: RESULT = Symbols.INT; :}
 		| STRING:s								{: RESULT = Symbols.STRING; :}		
     ;
 
-IdListInit ::= ID:i 												{: List<IdInitializerNode> idl = new LinkedList<IdInitializerNode>(); idl.add( new IdInitializerNode(new IdentifierExpression(ileft,i,iright))); RESULT = idl; :}
-	| IdListInit:idl COMMA ID:i										{: idl.add(new IdInitializerNode(new IdentifierExpression(ileft,i,iright))); RESULT = idl; :}
-	| ID:i ASSIGN Expr:e											{: List<IdInitializerNode> idl = new LinkedList<IdInitializerNode>(); idl.add( new IdInitializerNode(new IdentifierExpression(ileft,i,iright),e)); RESULT = idl; :}
-	| IdListInit:idl COMMA ID:i ASSIGN Expr:e						{: idl.add( new IdInitializerNode(new IdentifierExpression(ileft,i,iright),e)); RESULT = idl; :}
+IdListInit ::= ID:i 												{: List<IdInitializerNode> idl = new LinkedList<IdInitializerNode>(); idl.add( new IdInitializerNode(new IdentifierExpression(i,ixleft,ixright))); RESULT = idl; :}
+	| IdListInit:idl COMMA ID:i										{: idl.add(new IdInitializerNode(new IdentifierExpression(i,ixleft,ixright))); RESULT = idl; :}
+	| ID:i ASSIGN Expr:e											{: List<IdInitializerNode> idl = new LinkedList<IdInitializerNode>(); idl.add( new IdInitializerNode(new IdentifierExpression(i,ixleft,ixright),e)); RESULT = idl; :}
+	| IdListInit:idl COMMA ID:i ASSIGN Expr:e						{: idl.add( new IdInitializerNode(new IdentifierExpression(i,ixleft,ixright),e)); RESULT = idl; :}
     ;
 
 Proc ::= PROC ID:i LPAR ParamDeclList:pdl RPAR ResultTypeList:rtl COLON
-		VarDeclList:vdl StatList:stl RETURN ReturnExprs:rexpr CORP SEMI			{: ProcedureBodyNode body = new ProcedureBodyNode(vdl,stl,rexpr);  RESULT = new ProcedureNode( new IdentifierExpression(ileft,i,iright),pdl,rtl,body); :}
+		VarDeclList:vdl StatList:stl RETURN ReturnExprs:rexpr CORP SEMI			{: ProcedureBodyNode body = new ProcedureBodyNode(vdl,stl,rexpr);  RESULT = new ProcedureNode( new IdentifierExpression(i,ixleft,ixright),pdl,rtl,body); :}
 	| PROC ID:i LPAR RPAR ResultTypeList:rtl COLON 									
-		VarDeclList:vdl StatList:stl RETURN ReturnExprs:rexpr CORP SEMI			{: ProcedureBodyNode body = new ProcedureBodyNode(vdl,stl,rexpr);  RESULT = new ProcedureNode( new IdentifierExpression(ileft,i,iright),rtl,body); :}
+		VarDeclList:vdl StatList:stl RETURN ReturnExprs:rexpr CORP SEMI			{: ProcedureBodyNode body = new ProcedureBodyNode(vdl,stl,rexpr);  RESULT = new ProcedureNode( new IdentifierExpression(i,ixleft,ixright),rtl,body); :}
 	|	PROC ID:i LPAR ParamDeclList:pdl RPAR ResultTypeList:rtl COLON 
-		VarDeclList:vdl RETURN ReturnExprs:rexpr CORP SEMI						{: ProcedureBodyNode body = new ProcedureBodyNode(vdl,rexpr);  RESULT = new ProcedureNode( new IdentifierExpression(ileft,i,iright),pdl,rtl,body); :}
+		VarDeclList:vdl RETURN ReturnExprs:rexpr CORP SEMI						{: ProcedureBodyNode body = new ProcedureBodyNode(vdl,rexpr);  RESULT = new ProcedureNode( new IdentifierExpression(i,ixleft,ixright),pdl,rtl,body); :}
 	| PROC ID:i LPAR RPAR ResultTypeList:rtl COLON 
-		VarDeclList:vdl RETURN ReturnExprs:rexpr CORP SEMI						{: ProcedureBodyNode body = new ProcedureBodyNode(vdl,rexpr);  RESULT = new ProcedureNode( new IdentifierExpression(ileft,i,iright),rtl,body); :}
+		VarDeclList:vdl RETURN ReturnExprs:rexpr CORP SEMI						{: ProcedureBodyNode body = new ProcedureBodyNode(vdl,rexpr);  RESULT = new ProcedureNode( new IdentifierExpression(i,ixleft,ixright),rtl,body); :}
 	;    
 
 
-Main ::= PROC MAIN LPAR ParamDeclList:pdl RPAR INT COLON
-		VarDeclList:vdl StatList:stl RETURN ReturnExprs:rexpr CORP SEMI			{: ProcedureBodyNode body = new ProcedureBodyNode(vdl,stl,rexpr); List<Integer> rlt = new LinkedList<Integer>(); rlt.add(Symbols.INT); RESULT = new ProcedureNode( new IdentifierExpression(0,"main",0),pdl,rlt,body); :}
-	| PROC MAIN LPAR RPAR INT COLON 									
-		VarDeclList:vdl StatList:stl RETURN ReturnExprs:rexpr CORP SEMI			{: ProcedureBodyNode body = new ProcedureBodyNode(vdl,stl,rexpr); List<Integer> rlt = new LinkedList<Integer>(); rlt.add(Symbols.INT); RESULT = new ProcedureNode( new IdentifierExpression(0,"main",0),rlt,body); :}
-	|	PROC MAIN LPAR ParamDeclList:pdl RPAR INT COLON 
-		VarDeclList:vdl RETURN ReturnExprs:rexpr CORP SEMI						{: ProcedureBodyNode body = new ProcedureBodyNode(vdl,rexpr); List<Integer> rlt = new LinkedList<Integer>(); rlt.add(Symbols.INT); RESULT = new ProcedureNode( new IdentifierExpression(0,"main",0),pdl,rlt,body); :}
-	| PROC MAIN LPAR RPAR INT COLON 
-		VarDeclList:vdl RETURN ReturnExprs:rexpr CORP SEMI						{: ProcedureBodyNode body = new ProcedureBodyNode(vdl,rexpr); List<Integer> rlt = new LinkedList<Integer>(); rlt.add(Symbols.INT); RESULT = new ProcedureNode( new IdentifierExpression(0,"main",0),rlt,body); :}
+Main ::= PROC MAIN:m LPAR ParamDeclList:pdl RPAR INT COLON
+		VarDeclList:vdl StatList:stl RETURN ReturnExprs:rexpr CORP SEMI			{: ProcedureBodyNode body = new ProcedureBodyNode(vdl,stl,rexpr); List<Integer> rlt = new LinkedList<Integer>(); rlt.add(Symbols.INT); RESULT = new ProcedureNode( new IdentifierExpression("main",mxleft,mxright),pdl,rlt,body); :}
+	| PROC MAIN:m LPAR RPAR INT COLON 									
+		VarDeclList:vdl StatList:stl RETURN ReturnExprs:rexpr CORP SEMI			{: ProcedureBodyNode body = new ProcedureBodyNode(vdl,stl,rexpr); List<Integer> rlt = new LinkedList<Integer>(); rlt.add(Symbols.INT); RESULT = new ProcedureNode( new IdentifierExpression("main",mxleft,mxright),rlt,body); :}
+	|	PROC MAIN:m LPAR ParamDeclList:pdl RPAR INT COLON 
+		VarDeclList:vdl RETURN ReturnExprs:rexpr CORP SEMI						{: ProcedureBodyNode body = new ProcedureBodyNode(vdl,rexpr); List<Integer> rlt = new LinkedList<Integer>(); rlt.add(Symbols.INT); RESULT = new ProcedureNode( new IdentifierExpression("main",mxleft,mxright),pdl,rlt,body); :}
+	| PROC MAIN:m LPAR RPAR INT COLON 
+		VarDeclList:vdl RETURN ReturnExprs:rexpr CORP SEMI						{: ProcedureBodyNode body = new ProcedureBodyNode(vdl,rexpr); List<Integer> rlt = new LinkedList<Integer>(); rlt.add(Symbols.INT); RESULT = new ProcedureNode( new IdentifierExpression("main",mxleft,mxright),rlt,body); :}
 	;
 
 ResultTypeList ::= ResultType:rt					{: List<Integer> rlt = new LinkedList<Integer>(); rlt.add(rt); RESULT = rlt; :}
@@ -141,8 +141,8 @@ ParamDeclList ::= ParDecl:p 						{: List<ParameterDeclarationNode> pl = new Lin
 ParDecl ::= Type:t IdList:i							{: RESULT = new ParameterDeclarationNode(t,i); :}
     ;
 
-IdList ::= ID:i										{: List<IdentifierExpression> idl = new LinkedList<IdentifierExpression>(); idl.add(new IdentifierExpression(ixleft,i,ixright)); RESULT = idl; :}
-	| IdList:idl COMMA ID:i							{: idl.add(new IdentifierExpression(ileft,i,iright)); RESULT = idl; :}
+IdList ::= ID:i										{: List<IdentifierExpression> idl = new LinkedList<IdentifierExpression>(); idl.add(new IdentifierExpression(i,ixleft,ixright)); RESULT = idl; :}
+	| IdList:idl COMMA ID:i							{: idl.add(new IdentifierExpression(i,ixleft,ixright)); RESULT = idl; :}
     ;
 
 
@@ -186,8 +186,8 @@ WriteStat ::=  WRITE:w LPAR ExprList:exprl RPAR			{: RESULT = new WriteStatement
 AssignStat ::= IdList:idl ASSIGN:a ExprList:expr			{: RESULT = new AssignStatement(idl,expr); :}
     ;
 
-CallProc ::= ID:i LPAR ExprList:exprl RPAR   					{: RESULT = new CallProcedureStatement(new IdentifierExpression(i,ixleft,ixright),exprl,ixleft,ixright); :}
-	| ID:i LPAR RPAR   									{: RESULT = new CallProcedureStatement(new IdentifierExpression(i,ixleft,ixright),ixleft,ixright); :}
+CallProc ::= ID:i LPAR ExprList:exprl RPAR   					{: RESULT = new CallProcedureStatement(new IdentifierExpression(i,ixleft,ixright),exprl); :}
+	| ID:i LPAR RPAR   									{: RESULT = new CallProcedureStatement(new IdentifierExpression(i,ixleft,ixright)); :}
     ;
 
 ExprList ::= Expr:e										{: List<ExpressionNode> el = new LinkedList<ExpressionNode>(); el.add(e); RESULT = el; :}
@@ -202,20 +202,20 @@ Expr ::= NULL:n											{: RESULT = new NullConstant(nxleft,nxright); :}
 	| FLOAT_CONST:f										{: RESULT = new FloatConstant(f,fxleft,fxright); :}
 	| STRING_CONST:s									{: RESULT = new StringConstant(s,sxleft,sxright); :}
 	| ID:i												{: RESULT = new IdentifierExpression(i,ixleft,ixright); :}	
-    | ID:i LPAR ExprList:exprl RPAR   					{: RESULT = new CallProcedureExpression(new IdentifierExpression(i,ixleft,ixright),exprl,ixleft,ixright); :}
-	| ID:i LPAR RPAR   									{: RESULT = new CallProcedureExpression(new IdentifierExpression(i,ixleft,ixright),ixleft,ixright); :}
-	| Expr:e1  PLUS Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.PLUS,e2,e1xlfet,e1xright); :}													
-	| Expr:e1  MINUS Expr:e2							{: RESULT = new BinaryExpression(e1,Symbols.MINUS,e2,e1xlfet,e1xright); :}				
-	| Expr:e1  TIMES Expr:e2							{: RESULT = new BinaryExpression(e1,Symbols.TIMES,e2,e1xlfet,e1xright); :}				
-	| Expr:e1  DIV Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.DIV,e2,e1xlfet,e1xright); :}				
-	| Expr:e1  AND Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.AND,e2,e1xlfet,e1xright); :}				
-	| Expr:e1  OR Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.OR,e2,e1xlfet,e1xright); :}				
-	| Expr:e1  GT Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.GT,e2,e1xlfet,e1xright); :}				
-	| Expr:e1  GE Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.GE,e2,e1xlfet,e1xright); :}				
-	| Expr:e1  LT Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.LT,e2,e1xlfet,e1xright); :}				
-	| Expr:e1  LE Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.LE,e2,e1xlfet,e1xright); :}				
-	| Expr:e1  EQ Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.EQ,e2,e1xlfet,e1xright); :}				
-	| Expr:e1  NE Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.NE,e2,e1xlfet,e1xright); :}				
-	| MINUS:m Expr:e									{: RESULT = new UnaryExpression(Symbols.MINUS,e,mxleft,mxrigth); :}
-	| NOT:n Expr:e										{: RESULT = new UnaryExpression(Symbols.NOT,e,nxleft,nxrigth); :}			
+    | ID:i LPAR ExprList:exprl RPAR   					{: RESULT = new CallProcedureExpression(new IdentifierExpression(i,ixleft,ixright),exprl); :}
+	| ID:i LPAR RPAR   									{: RESULT = new CallProcedureExpression(new IdentifierExpression(i,ixleft,ixright)); :}
+	| Expr:e1  PLUS Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.PLUS,e2); :}													
+	| Expr:e1  MINUS Expr:e2							{: RESULT = new BinaryExpression(e1,Symbols.MINUS,e2); :}				
+	| Expr:e1  TIMES Expr:e2							{: RESULT = new BinaryExpression(e1,Symbols.TIMES,e2); :}				
+	| Expr:e1  DIV Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.DIV,e2); :}				
+	| Expr:e1  AND Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.AND,e2); :}				
+	| Expr:e1  OR Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.OR,e2); :}				
+	| Expr:e1  GT Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.GT,e2); :}				
+	| Expr:e1  GE Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.GE,e2); :}				
+	| Expr:e1  LT Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.LT,e2); :}				
+	| Expr:e1  LE Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.LE,e2); :}				
+	| Expr:e1  EQ Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.EQ,e2); :}				
+	| Expr:e1  NE Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.NE,e2); :}				
+	| MINUS:m Expr:e									{: RESULT = new UnaryExpression(Symbols.MINUS,e); :}
+	| NOT:n Expr:e										{: RESULT = new UnaryExpression(Symbols.NOT,e); :}			
     ;

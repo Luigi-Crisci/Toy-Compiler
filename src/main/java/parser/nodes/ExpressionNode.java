@@ -6,8 +6,18 @@ import java.util.List;
 import common.exceptions.SemanticException;
 import common.interfaces.Visitable;
 import common.interfaces.Visitor;
+import java_cup.runtime.ComplexSymbolFactory.Location;
 
 public abstract class ExpressionNode extends TypedNode implements Visitable {
+
+
+	public ExpressionNode(Location left,Location rigth){
+		super(left, rigth);
+	}
+
+	public ExpressionNode(){
+		super();
+	}
 
 	public static class BinaryExpression extends ExpressionNode {
 
@@ -50,8 +60,8 @@ public abstract class ExpressionNode extends TypedNode implements Visitable {
 
 		public int value;
 
-		public IntegerConstant(int value) {
-			super();
+		public IntegerConstant(int value,Location left, Location rigth) {
+			super(left,rigth);
 			this.value = value;
 		}
 
@@ -65,7 +75,8 @@ public abstract class ExpressionNode extends TypedNode implements Visitable {
 
 		public float value;
 
-		public FloatConstant(float value) {
+		public FloatConstant(float value,Location left, Location rigth) {
+			super(left,rigth);
 			this.value = value;
 		}
 
@@ -79,8 +90,8 @@ public abstract class ExpressionNode extends TypedNode implements Visitable {
 
 		public String value;
 
-		public StringConstant(String value) {
-			super();
+		public StringConstant(String value,Location left, Location rigth) {
+			super(left,rigth);
 			this.value = value;
 		}
 
@@ -94,8 +105,8 @@ public abstract class ExpressionNode extends TypedNode implements Visitable {
 
 		public boolean value;
 
-		public BooleanConstant(boolean value) {
-			super();
+		public BooleanConstant(boolean value,Location left, Location rigth) {
+			super(left,rigth);
 			this.value = value;
 		}
 
@@ -107,8 +118,8 @@ public abstract class ExpressionNode extends TypedNode implements Visitable {
 
 	public static class NullConstant extends ExpressionNode {
 
-		public NullConstant() {
-			super();
+		public NullConstant(Location left, Location rigth) {
+			super(left,rigth);
 		}
 		
 		@Override
@@ -120,14 +131,11 @@ public abstract class ExpressionNode extends TypedNode implements Visitable {
 
 	public static class IdentifierExpression extends ExpressionNode {
 
-		public int xleft, xright;
 		public String value;
 
-		public IdentifierExpression(int xleft, String value, int xright) {
-			super();
-			this.xleft = xleft;
+		public IdentifierExpression(String value,Location left, Location rigth) {
+			super(left,rigth);
 			this.value = value;
-			this.xright = xright;
 		}
 
 		@Override

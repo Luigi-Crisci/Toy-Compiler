@@ -232,11 +232,7 @@ public class ASTVisitor implements Visitor {
 
 	public Object visit(IdentifierExpression item) throws SemanticException {
 		writer.println("<IdentifierExpression>");
-
-		writer.println("<xleft> " + item.xleft + "</xleft>");
 		writer.println("<value> " + item.value + "</value>");
-		writer.println("<xright> " + item.xright + "</xright>");
-
 		writer.println("</IdentifierExpression>");
 		return null;
 	}

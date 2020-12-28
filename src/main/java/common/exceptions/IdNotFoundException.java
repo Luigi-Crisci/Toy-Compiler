@@ -1,9 +1,15 @@
 package common.exceptions;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
+
 public class IdNotFoundException extends SemanticException {
 
-	public IdNotFoundException(String string) {
-		super(string);
+	public IdNotFoundException(String string,Location l) {
+		super(string,l);
+	}
+
+	public IdNotFoundException(String string,int l) {
+		super(string,l);
 	}
 
 

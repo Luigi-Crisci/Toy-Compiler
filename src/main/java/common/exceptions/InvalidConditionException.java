@@ -1,9 +1,15 @@
 package common.exceptions;
 
-public class InvalidConditionException extends SemanticException{
+import java_cup.runtime.ComplexSymbolFactory.Location;
 
-	public InvalidConditionException(String string) {
-		super(string);
+public class InvalidConditionException extends SemanticException {
+
+	public InvalidConditionException(String string,Location l) {
+		super(string,l);
+	}
+
+	public InvalidConditionException(String string,int l) {
+		super(string,l);
 	}
 	
 }
