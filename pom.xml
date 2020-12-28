@@ -70,6 +70,7 @@
           <dumpTables>true</dumpTables>
           <time>true</time>
           <xmlActions>false</xmlActions>
+          <locations>true</locations>
           <className>Parser</className>
           <symbolsName>Symbols</symbolsName>
           <packageName>parser</packageName>
