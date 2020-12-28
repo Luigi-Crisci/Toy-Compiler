@@ -409,7 +409,7 @@ public class ToyToCVisitor implements Visitor {
 	}
 
 	public Object visit(StringConstant item) throws SemanticException {
-		writer.print("\"" + item.value + "\"");
+		writer.print("\"" + item.value.replace("\n", "\\n") + "\"");
 		return null;
 	}
 
