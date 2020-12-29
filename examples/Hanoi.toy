@@ -6,7 +6,7 @@
 
 proc printPeg(int peg)void:
 
-    if peg = 1 then
+    if peg = 1 && 1 then
         write("left");
     elif peg = 2 then
         write("center");
