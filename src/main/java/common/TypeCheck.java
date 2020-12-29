@@ -1,7 +1,5 @@
 package common;
 
-import common.*;
-
 public class TypeCheck {
 
 	public static int checkType(Integer op, Integer type1, Integer type2) {

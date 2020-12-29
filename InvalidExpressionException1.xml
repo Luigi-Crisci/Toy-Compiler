@@ -1,0 +1,56 @@
+<ProgramNode>
+<ProcedureNode>
+<IdentifierExpression>
+<value> multipleValues</value>
+</IdentifierExpression>
+<ResultTypes>
+<Type>INT</Type>
+<Type>INT</Type>
+</ResultTypes>
+<ProcedureBody>
+<VariableDeclaration>
+<Type>INT</Type>
+<IdInitialization>
+<IdentifierExpression>
+<value> a</value>
+</IdentifierExpression>
+</IdInitialization>
+<IdInitialization>
+<IdentifierExpression>
+<value> b</value>
+</IdentifierExpression>
+</IdInitialization>
+</VariableDeclaration>
+<IdentifierExpression>
+<value> a</value>
+</IdentifierExpression>
+<IdentifierExpression>
+<value> b</value>
+</IdentifierExpression>
+</ProcedureBody>
+</ProcedureNode>
+<ProcedureNode>
+<IdentifierExpression>
+<value> main</value>
+</IdentifierExpression>
+<ResultTypes>
+<Type>INT</Type>
+</ResultTypes>
+<ProcedureBody>
+<IfStatement>
+<BinaryExpression>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> multipleValues</value>
+</IdentifierExpression>
+</CallProcedureExpression>
+<Operation> EQ</Operation>
+<IntegerConstant> 1</IntegerConstant>
+</BinaryExpression>
+<WriteStatement><StringConstant> ok</StringConstant>
+</WriteStatement>
+</IfStatement>
+<IntegerConstant> 0</IntegerConstant>
+</ProcedureBody>
+</ProcedureNode>
+</ProgramNode>

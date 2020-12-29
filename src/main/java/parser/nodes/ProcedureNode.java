@@ -15,7 +15,6 @@ public class ProcedureNode extends TypedNode implements Visitable {
 	public List<Integer> returnTypes;
 	public ProcedureBodyNode procBody;
 
-	//TODO: map returnTypes to type list
 	public ProcedureNode(IdentifierExpression id, List<ParameterDeclarationNode> paramList, List<Integer> returnTypes, ProcedureBodyNode procBody) {
 		super();
 		this.id = id;

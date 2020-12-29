@@ -7,7 +7,6 @@ package lexer;
 import java_cup.runtime.Symbol;
 import java_cup.runtime.ComplexSymbolFactory;
 import java_cup.runtime.ComplexSymbolFactory.Location;
-import java.lang.*;
 import common.*;
 
 
@@ -377,12 +376,6 @@ public class Lexer implements Symbols, java_cup.runtime.Scanner {
 
   private Symbol symbol(String name, int sym, Object val) {
       Location left = new Location(yyline+1,yycolumn+1,(int)yychar);
-      Location right= new Location(yyline+1,yycolumn+yylength(), (int)(yychar+yylength()));
-      return symbolFactory.newSymbol(name, sym, left, right,val);
-  }
-
-  private Symbol symbol(String name, int sym, Object val,int buflength) {
-      Location left = new Location(yyline+1,yycolumn+yylength()-buflength,(int)(yychar+yylength()-buflength));
       Location right= new Location(yyline+1,yycolumn+yylength(), (int)(yychar+yylength()));
       return symbolFactory.newSymbol(name, sym, left, right,val);
   }
@@ -856,7 +849,7 @@ public class Lexer implements Symbols, java_cup.runtime.Scanner {
             // fall through
           case 60: break;
           case 12:
-            { return symbol("INT_CONST",INT_CONST,new Integer(yytext()));
+            { return symbol("INT_CONST",INT_CONST,Integer.parseInt(yytext()));
             }
             // fall through
           case 61: break;
@@ -957,17 +950,17 @@ public class Lexer implements Symbols, java_cup.runtime.Scanner {
             // fall through
           case 80: break;
           case 32:
-            { return symbol("FLOAT_CONST",FLOAT_CONST,new Float(yytext()));
+            { return symbol("FLOAT_CONST",FLOAT_CONST,Float.parseFloat(yytext()));
             }
             // fall through
           case 81: break;
           case 33:
-            { return symbol("INT",INT, new Integer(INT) );
+            { return symbol("INT",INT, INT);
             }
             // fall through
           case 82: break;
           case 34:
-            { return symbol("BOOL",BOOL, new Integer(BOOL));
+            { return symbol("BOOL",BOOL, BOOL);
             }
             // fall through
           case 83: break;
@@ -1012,7 +1005,7 @@ public class Lexer implements Symbols, java_cup.runtime.Scanner {
             // fall through
           case 91: break;
           case 43:
-            { return symbol("VOID",VOID, new Integer(VOID));
+            { return symbol("VOID",VOID, VOID);
             }
             // fall through
           case 92: break;
@@ -1022,7 +1015,7 @@ public class Lexer implements Symbols, java_cup.runtime.Scanner {
             // fall through
           case 93: break;
           case 45:
-            { return symbol("FLOAT",FLOAT, new Integer(FLOAT));
+            { return symbol("FLOAT",FLOAT, FLOAT);
             }
             // fall through
           case 94: break;
@@ -1042,7 +1035,7 @@ public class Lexer implements Symbols, java_cup.runtime.Scanner {
             // fall through
           case 97: break;
           case 49:
-            { return symbol("STRING",STRING, new Integer(STRING));
+            { return symbol("STRING",STRING, STRING);
             }
             // fall through
           case 98: break;

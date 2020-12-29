@@ -14,26 +14,26 @@ function_struct_getNumeri getNumeri()
 	primo = strtof(readln(), NULL);
 	printf("%s", "Inserire il secondo numero: ");
 	secondo = strtof(readln(), NULL);
-	function_struct_getNumeri getNumeri6a183c0e60724566a41f43ac445987fb;
-	getNumeri6a183c0e60724566a41f43ac445987fb.p_0 = primo;
-	getNumeri6a183c0e60724566a41f43ac445987fb.p_1 = secondo;
-	return getNumeri6a183c0e60724566a41f43ac445987fb;
+	function_struct_getNumeri getNumeri4eef8cece9b44f5a89d2a378eb7202f0;
+	getNumeri4eef8cece9b44f5a89d2a378eb7202f0.p_0 = primo;
+	getNumeri4eef8cece9b44f5a89d2a378eb7202f0.p_1 = secondo;
+	return getNumeri4eef8cece9b44f5a89d2a378eb7202f0;
 }
 float sommaNumeri()
 {
 	float primo, secondo;
-	function_struct_getNumeri getNumeri4e20e43edca74d5e9cb21d3e212d239e = getNumeri();
-	primo = getNumeri4e20e43edca74d5e9cb21d3e212d239e.p_0;
-	secondo = getNumeri4e20e43edca74d5e9cb21d3e212d239e.p_1;
+	function_struct_getNumeri getNumeri6afcc33a105e45688535d40f2eefd8fa = getNumeri();
+	primo = getNumeri6afcc33a105e45688535d40f2eefd8fa.p_0;
+	secondo = getNumeri6afcc33a105e45688535d40f2eefd8fa.p_1;
 	return primo + secondo;
 }
 float multConSomma()
 {
-	float primo, secondo, mult = 0.0;
 	int i = 0;
-	function_struct_getNumeri getNumericca1ded910e84a5d9ccdd8e60b9f6a68 = getNumeri();
-	primo = getNumericca1ded910e84a5d9ccdd8e60b9f6a68.p_0;
-	secondo = getNumericca1ded910e84a5d9ccdd8e60b9f6a68.p_1;
+	float primo, secondo, mult = 0.0;
+	function_struct_getNumeri getNumeri33e58f5fe6e34cb7b4dae0b165beb455 = getNumeri();
+	primo = getNumeri33e58f5fe6e34cb7b4dae0b165beb455.p_0;
+	secondo = getNumeri33e58f5fe6e34cb7b4dae0b165beb455.p_1;
 	while (i < secondo)
 	{
 		mult = mult + primo;
@@ -52,8 +52,8 @@ int divisioneNumeri()
 }
 float potenza()
 {
-	int secondo, i = 0;
 	float primo, res = 1.0;
+	int secondo, i = 0;
 	printf("%s", "Inserire la base: ");
 	primo = strtof(readln(), NULL);
 	printf("%s", "Inserire l'esponente: ");

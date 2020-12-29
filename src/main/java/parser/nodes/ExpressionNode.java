@@ -25,8 +25,8 @@ public abstract class ExpressionNode extends TypedNode implements Visitable {
 		public int operation;
 		public ExpressionNode rightExpression;
 
-		public BinaryExpression(ExpressionNode leftExpression, int operation, ExpressionNode rightExpression) {
-			super();
+		public BinaryExpression(ExpressionNode leftExpression, int operation, ExpressionNode rightExpression,Location left,Location right) {
+			super(left,right);
 			this.leftExpression = leftExpression;
 			this.operation = operation;
 			this.rightExpression = rightExpression;
@@ -43,8 +43,8 @@ public abstract class ExpressionNode extends TypedNode implements Visitable {
 		public int operation;
 		public ExpressionNode rightExpression;
 
-		public UnaryExpression(int operation, ExpressionNode rightExpression) {
-			super();
+		public UnaryExpression(int operation, ExpressionNode rightExpression,Location left,Location right) {
+			super(left,right);
 			this.operation = operation;
 			this.rightExpression = rightExpression;
 		}
@@ -149,14 +149,14 @@ public abstract class ExpressionNode extends TypedNode implements Visitable {
 		public IdentifierExpression id;
 		public List<ExpressionNode> expressionList;
 
-		public CallProcedureExpression(IdentifierExpression id, List<ExpressionNode> expressionList) {
-			super();
+		public CallProcedureExpression(IdentifierExpression id, List<ExpressionNode> expressionList,Location left,Location right) {
+			super(left,right);
 			this.id = id;
 			this.expressionList = expressionList;
 		}
 
-		public CallProcedureExpression(IdentifierExpression id) {
-			super();
+		public CallProcedureExpression(IdentifierExpression id,Location left,Location right) {
+			super(left,right);
 			this.id = id;
 			this.expressionList = Collections.emptyList();
 		}

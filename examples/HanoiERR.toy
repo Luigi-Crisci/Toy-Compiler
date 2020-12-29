@@ -1,5 +1,6 @@
 /*
  * hanoi.t - standard "Towers of Hanoi" in toy.
+ * In main there are 2 variable named "Numero"
  */
 
 int numero := 5;

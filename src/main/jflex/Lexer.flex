@@ -3,8 +3,7 @@ package lexer;
 import java_cup.runtime.Symbol;
 import java_cup.runtime.ComplexSymbolFactory;
 import java_cup.runtime.ComplexSymbolFactory.Location;
-import java.lang.*;
-import parser.*;
+import common.*;
 
 %%
 
@@ -32,12 +31,6 @@ import parser.*;
 
   private Symbol symbol(String name, int sym, Object val) {
       Location left = new Location(yyline+1,yycolumn+1,(int)yychar);
-      Location right= new Location(yyline+1,yycolumn+yylength(), (int)(yychar+yylength()));
-      return symbolFactory.newSymbol(name, sym, left, right,val);
-  }
-
-  private Symbol symbol(String name, int sym, Object val,int buflength) {
-      Location left = new Location(yyline+1,yycolumn+yylength()-buflength,(int)(yychar+yylength()-buflength));
       Location right= new Location(yyline+1,yycolumn+yylength(), (int)(yychar+yylength()));
       return symbolFactory.newSymbol(name, sym, left, right,val);
   }
@@ -71,11 +64,11 @@ COMMENT_TEXT = ([^*]|\*+[^/])*
   "main"          {return symbol("MAIN", MAIN); }
   
 //Type
-  "int"             { return symbol("INT",INT, new Integer(INT) ); }
-  "float"           { return symbol("FLOAT",FLOAT, new Integer(FLOAT)); }
-  "bool"            { return symbol("BOOL",BOOL, new Integer(BOOL)); }
-  "string"          { return symbol("STRING",STRING, new Integer(STRING)); }
-  "void"            { return symbol("VOID",VOID, new Integer(VOID)); }
+  "int"             { return symbol("INT",INT, INT); }
+  "float"           { return symbol("FLOAT",FLOAT, FLOAT); }
+  "bool"            { return symbol("BOOL",BOOL, BOOL); }
+  "string"          { return symbol("STRING",STRING, STRING); }
+  "void"            { return symbol("VOID",VOID, VOID); }
 
   //Statements
   "while"           {return symbol("WHILE",WHILE);  }
@@ -119,8 +112,8 @@ COMMENT_TEXT = ([^*]|\*+[^/])*
   "->"              {return symbol("RETURN",RETURN);    }
 
   //Constants
-  {INT}           {return symbol("INT_CONST",INT_CONST,new Integer(yytext()));        } 
-  {FLOAT}         {return symbol("FLOAT_CONST",FLOAT_CONST,new Float(yytext()));      } 
+  {INT}           {return symbol("INT_CONST",INT_CONST,Integer.parseInt(yytext()));        } 
+  {FLOAT}         {return symbol("FLOAT_CONST",FLOAT_CONST,Float.parseFloat(yytext()));      } 
   {ID}            {return symbol("ID",ID,yytext());                                   }
 
 

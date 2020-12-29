@@ -186,8 +186,8 @@ WriteStat ::=  WRITE:w LPAR ExprList:exprl RPAR			{: RESULT = new WriteStatement
 AssignStat ::= IdList:idl ASSIGN:a ExprList:expr			{: RESULT = new AssignStatement(idl,expr); :}
     ;
 
-CallProc ::= ID:i LPAR ExprList:exprl RPAR   					{: RESULT = new CallProcedureStatement(new IdentifierExpression(i,ixleft,ixright),exprl); :}
-	| ID:i LPAR RPAR   									{: RESULT = new CallProcedureStatement(new IdentifierExpression(i,ixleft,ixright)); :}
+CallProc ::= ID:i LPAR ExprList:exprl RPAR   					{: RESULT = new CallProcedureStatement(new IdentifierExpression(i,ixleft,ixright),exprl,ixleft,ixright); :}
+	| ID:i LPAR RPAR   									{: RESULT = new CallProcedureStatement(new IdentifierExpression(i,ixleft,ixright),ixleft,ixright); :}
     ;
 
 ExprList ::= Expr:e										{: List<ExpressionNode> el = new LinkedList<ExpressionNode>(); el.add(e); RESULT = el; :}
@@ -202,20 +202,20 @@ Expr ::= NULL:n											{: RESULT = new NullConstant(nxleft,nxright); :}
 	| FLOAT_CONST:f										{: RESULT = new FloatConstant(f,fxleft,fxright); :}
 	| STRING_CONST:s									{: RESULT = new StringConstant(s,sxleft,sxright); :}
 	| ID:i												{: RESULT = new IdentifierExpression(i,ixleft,ixright); :}	
-    | ID:i LPAR ExprList:exprl RPAR   					{: RESULT = new CallProcedureExpression(new IdentifierExpression(i,ixleft,ixright),exprl); :}
-	| ID:i LPAR RPAR   									{: RESULT = new CallProcedureExpression(new IdentifierExpression(i,ixleft,ixright)); :}
-	| Expr:e1  PLUS Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.PLUS,e2); :}													
-	| Expr:e1  MINUS Expr:e2							{: RESULT = new BinaryExpression(e1,Symbols.MINUS,e2); :}				
-	| Expr:e1  TIMES Expr:e2							{: RESULT = new BinaryExpression(e1,Symbols.TIMES,e2); :}				
-	| Expr:e1  DIV Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.DIV,e2); :}				
-	| Expr:e1  AND Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.AND,e2); :}				
-	| Expr:e1  OR Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.OR,e2); :}				
-	| Expr:e1  GT Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.GT,e2); :}				
-	| Expr:e1  GE Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.GE,e2); :}				
-	| Expr:e1  LT Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.LT,e2); :}				
-	| Expr:e1  LE Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.LE,e2); :}				
-	| Expr:e1  EQ Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.EQ,e2); :}				
-	| Expr:e1  NE Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.NE,e2); :}				
-	| MINUS:m Expr:e									{: RESULT = new UnaryExpression(Symbols.MINUS,e); :}
-	| NOT:n Expr:e										{: RESULT = new UnaryExpression(Symbols.NOT,e); :}			
+    | ID:i LPAR ExprList:exprl RPAR   					{: RESULT = new CallProcedureExpression(new IdentifierExpression(i,ixleft,ixright),exprl,ixleft,ixright); :}
+	| ID:i LPAR RPAR   									{: RESULT = new CallProcedureExpression(new IdentifierExpression(i,ixleft,ixright),ixleft,ixright); :}
+	| Expr:e1  PLUS:o Expr:e2							{: RESULT = new BinaryExpression(e1,Symbols.PLUS,e2,oxright,oxleft); :}													
+	| Expr:e1  MINUS:o Expr:e2							{: RESULT = new BinaryExpression(e1,Symbols.MINUS,e2,oxright,oxleft); :}				
+	| Expr:e1  TIMES:o Expr:e2							{: RESULT = new BinaryExpression(e1,Symbols.TIMES,e2,oxright,oxleft); :}				
+	| Expr:e1  DIV:o Expr:e2							{: RESULT = new BinaryExpression(e1,Symbols.DIV,e2,oxright,oxleft); :}				
+	| Expr:e1  AND:o Expr:e2							{: RESULT = new BinaryExpression(e1,Symbols.AND,e2,oxright,oxleft); :}				
+	| Expr:e1  OR:o Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.OR,e2,oxright,oxleft); :}				
+	| Expr:e1  GT:o Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.GT,e2,oxright,oxleft); :}				
+	| Expr:e1  GE:o Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.GE,e2,oxright,oxleft); :}				
+	| Expr:e1  LT:o Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.LT,e2,oxright,oxleft); :}				
+	| Expr:e1  LE:o Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.LE,e2,oxright,oxleft); :}				
+	| Expr:e1  EQ:o Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.EQ,e2,oxright,oxleft); :}				
+	| Expr:e1  NE:o Expr:e2								{: RESULT = new BinaryExpression(e1,Symbols.NE,e2,oxright,oxleft); :}				
+	| MINUS:o Expr:e									{: RESULT = new UnaryExpression(Symbols.MINUS,e,oxright,oxleft); :}
+	| NOT:o Expr:e										{: RESULT = new UnaryExpression(Symbols.NOT,e,oxright,oxleft); :}			
     ;

@@ -1,0 +1,12 @@
+/*
+ * a is not declared
+*/ 
+
+proc main()int :
+	if a = 1
+	then
+		write("Ok");
+	fi;
+	-> 0
+corp;
+

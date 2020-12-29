@@ -4,7 +4,12 @@ import java_cup.runtime.ComplexSymbolFactory.Location;
 
 public class InvalidAssignmentException extends SemanticException {
 
-	public InvalidAssignmentException(String string,Location l) {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public InvalidAssignmentException(String string, Location l) {
 		super(string,l);
 	}
 

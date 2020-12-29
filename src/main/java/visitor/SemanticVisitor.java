@@ -226,14 +226,14 @@ public class SemanticVisitor implements Visitor {
 
 		if (item.leftExpression.typeList.size() > 1 || item.rightExpression.typeList.size() > 1)
 			throw new InvalidExpressionException(
-					"Cannot apply " + Symbols.terminalNames[item.operation] + " to more than one element",item.leftExpression.left);
+					"Cannot apply " + Symbols.terminalNames[item.operation] + " to more than one element",item.left);
 
 		Integer type = TypeCheck.checkType(item.operation, item.leftExpression.typeList.get(0),
 				item.rightExpression.typeList.get(0));
 		if (type == -1)
 			throw new TypeMismatch("Cannot use the operation " + Symbols.terminalNames[item.operation] + " on "
 					+ Symbols.terminalNames[item.leftExpression.typeList.get(0)] + " and "
-					+ Symbols.terminalNames[item.rightExpression.typeList.get(0)],item.leftExpression.left);
+					+ Symbols.terminalNames[item.rightExpression.typeList.get(0)],item.left);
 		item.typeList.add(type);
 
 		return null;
@@ -246,12 +246,12 @@ public class SemanticVisitor implements Visitor {
 
 		if (item.rightExpression.typeList.size() > 1)
 			throw new InvalidExpressionException(
-					"Cannot apply " + Symbols.terminalNames[item.operation] + " to more than one element",item.rightExpression.left);
+					"Cannot apply " + Symbols.terminalNames[item.operation] + " to more than one element",item.left);
 
 		Integer type = TypeCheck.checkType(item.operation, item.rightExpression.typeList.get(0));
 		if (type == -1)
 			throw new TypeMismatch("Cannot apply the unary operator " + Symbols.terminalNames[item.operation] + " to "
-					+ Symbols.terminalNames[item.rightExpression.typeList.get(0)],item.rightExpression.left);
+					+ Symbols.terminalNames[item.rightExpression.typeList.get(0)],item.left);
 		item.typeList.add(type);
 
 		return null;

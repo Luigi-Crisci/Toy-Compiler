@@ -1,0 +1,14 @@
+/*
+ * a is int, but a condition must be bool
+*/ 
+
+
+proc main()int :
+	int a;
+	while a
+	do
+		write("Ok");
+	od;
+	-> 0
+corp;
+

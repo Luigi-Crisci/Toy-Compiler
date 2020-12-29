@@ -192,7 +192,6 @@ public class ToyToCVisitor implements Visitor {
 	 * The writeStatement conversion does not maintain the original sequence of operations in the .toy source file:
 	 * this is possibile because the Toy language doesn't allow to modify an element inside of an expression, so the order
 	 * in which they are executed doesn't matter
-	 * TODO: Add support to multiline string 
 	 */
 	public Object visit(WriteStatement item) throws SemanticException {
 		String[] variableNames = writeFunctionStruct(item.expressionList);

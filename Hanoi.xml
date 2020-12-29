@@ -1,218 +1,167 @@
 <ProgramNode>
-	<ProcedureNode>
-		<IdentifierExpression>
-			<xleft> 63</xleft>
-			<value> printPeg</value>
-			<xright> 71</xright>
-		</IdentifierExpression>
-		<ParameterDeclarations>
-			<Type>INT</Type>
-			<IdentifierExpression>
-				<xleft> 76</xleft>
-				<value> peg</value>
-				<xright> 79</xright>
-			</IdentifierExpression>
-		</ParameterDeclarations>
-		<ResultTypes>
-			<Type>VOID</Type>
-		</ResultTypes>
-		<ProcedureBody>
-			<IfStatement>
-				<BinaryExpression>
-					<IdentifierExpression>
-						<xleft> 94</xleft>
-						<value> peg</value>
-						<xright> 97</xright>
-					</IdentifierExpression>
-					<Operation> EQ</Operation>
-					<IntegerConstant> 1</IntegerConstant>
-				</BinaryExpression>
-				<WriteStatement>
-					<StringConstant> left</StringConstant>
-				</WriteStatement>
-				<ElifStatement>
-					<BinaryExpression>
-						<IdentifierExpression>
-							<xleft> 139</xleft>
-							<value> peg</value>
-							<xright> 142</xright>
-						</IdentifierExpression>
-						<Operation> EQ</Operation>
-						<IntegerConstant> 2</IntegerConstant>
-					</BinaryExpression>
-					<WriteStatement>
-						<StringConstant> center</StringConstant>
-					</WriteStatement>
-				</ElifStatement>
-				<WriteStatement>
-					<StringConstant> right</StringConstant>
-				</WriteStatement>
-			</IfStatement>
-		</ProcedureBody>
-	</ProcedureNode>
-	<ProcedureNode>
-		<IdentifierExpression>
-			<xleft> 237</xleft>
-			<value> hanoi</value>
-			<xright> 242</xright>
-		</IdentifierExpression>
-		<ParameterDeclarations>
-			<Type>INT</Type>
-			<IdentifierExpression>
-				<xleft> 247</xleft>
-				<value> n</value>
-				<xright> 248</xright>
-			</IdentifierExpression>
-			<IdentifierExpression>
-				<xleft> 250</xleft>
-				<value> fromPeg</value>
-				<xright> 257</xright>
-			</IdentifierExpression>
-			<IdentifierExpression>
-				<xleft> 259</xleft>
-				<value> usingPeg</value>
-				<xright> 267</xright>
-			</IdentifierExpression>
-			<IdentifierExpression>
-				<xleft> 269</xleft>
-				<value> toPeg</value>
-				<xright> 274</xright>
-			</IdentifierExpression>
-		</ParameterDeclarations>
-		<ResultTypes>
-			<Type>VOID</Type>
-		</ResultTypes>
-		<ProcedureBody>
-			<IfStatement>
-				<BinaryExpression>
-					<IdentifierExpression>
-						<xleft> 289</xleft>
-						<value> n</value>
-						<xright> 290</xright>
-					</IdentifierExpression>
-					<Operation> NE</Operation>
-					<IntegerConstant> 0</IntegerConstant>
-				</BinaryExpression>
-				<CallProcedureStatement>
-					<BinaryExpression>
-						<IdentifierExpression>
-							<xleft> 315</xleft>
-							<value> n</value>
-							<xright> 316</xright>
-						</IdentifierExpression>
-						<Operation> MINUS</Operation>
-						<IntegerConstant> 1</IntegerConstant>
-					</BinaryExpression>
-					<IdentifierExpression>
-						<xleft> 322</xleft>
-						<value> fromPeg</value>
-						<xright> 329</xright>
-					</IdentifierExpression>
-					<IdentifierExpression>
-						<xleft> 331</xleft>
-						<value> toPeg</value>
-						<xright> 336</xright>
-					</IdentifierExpression>
-					<IdentifierExpression>
-						<xleft> 338</xleft>
-						<value> usingPeg</value>
-						<xright> 346</xright>
-					</IdentifierExpression>
-				</CallProcedureStatement>
-				<WriteStatement>
-					<StringConstant> Move disk from </StringConstant>
-				</WriteStatement>
-				<CallProcedureStatement>
-					<IdentifierExpression>
-						<xleft> 400</xleft>
-						<value> fromPeg</value>
-						<xright> 407</xright>
-					</IdentifierExpression>
-				</CallProcedureStatement>
-				<WriteStatement>
-					<StringConstant>  peg to </StringConstant>
-				</WriteStatement>
-				<CallProcedureStatement>
-					<IdentifierExpression>
-						<xleft> 454</xleft>
-						<value> toPeg</value>
-						<xright> 459</xright>
-					</IdentifierExpression>
-				</CallProcedureStatement>
-				<WriteStatement>
-					<StringConstant>  peg.\n</StringConstant>
-				</WriteStatement>
-				<CallProcedureStatement>
-					<BinaryExpression>
-						<IdentifierExpression>
-							<xleft> 502</xleft>
-							<value> n</value>
-							<xright> 503</xright>
-						</IdentifierExpression>
-						<Operation> MINUS</Operation>
-						<IntegerConstant> 1</IntegerConstant>
-					</BinaryExpression>
-					<IdentifierExpression>
-						<xleft> 509</xleft>
-						<value> usingPeg</value>
-						<xright> 517</xright>
-					</IdentifierExpression>
-					<IdentifierExpression>
-						<xleft> 519</xleft>
-						<value> fromPeg</value>
-						<xright> 526</xright>
-					</IdentifierExpression>
-					<IdentifierExpression>
-						<xleft> 528</xleft>
-						<value> toPeg</value>
-						<xright> 533</xright>
-					</IdentifierExpression>
-				</CallProcedureStatement>
-			</IfStatement>
-		</ProcedureBody>
-	</ProcedureNode>
-	<ProcedureNode>
-		<IdentifierExpression>
-			<xleft> 0</xleft>
-			<value> main</value>
-			<xright> 0</xright>
-		</IdentifierExpression>
-		<ResultTypes>
-			<Type>INT</Type>
-		</ResultTypes>
-		<ProcedureBody>
-			<VariableDeclaration>
-				<Type>INT</Type>
-				<IdInitialization>
-					<IdentifierExpression>
-						<xleft> 582</xleft>
-						<value> n</value>
-						<xright> 583</xright>
-					</IdentifierExpression>
-					<IntegerConstant> 0</IntegerConstant>
-				</IdInitialization>
-			</VariableDeclaration>
-			<WriteStatement>
-				<StringConstant> How many pegs? </StringConstant>
-			</WriteStatement>
-			<ReadStatement>
-				<IdentifierExpression>
-					<xleft> 632</xleft>
-					<value> n</value>
-					<xright> 633</xright>
-				</IdentifierExpression>
-			</ReadStatement>
-			<CallProcedureStatement>
-				<IdentifierExpression>
-					<xleft> 646</xleft>
-					<value> n</value>
-					<xright> 647</xright>
-				</IdentifierExpression>
-				<IntegerConstant> 1</IntegerConstant>
-				<IntegerConstant> 2</IntegerConstant>
-				<IntegerConstant> 3</IntegerConstant>
-			</CallProcedureStatement>
-			<IntegerConstant> 0</IntegerConstant>
-		</ProcedureBody>
-	</ProcedureNode>
+<ProcedureNode>
+<IdentifierExpression>
+<value> printPeg</value>
+</IdentifierExpression>
+<ParameterDeclarations>
+<Type>INT</Type>
+<IdentifierExpression>
+<value> peg</value>
+</IdentifierExpression>
+</ParameterDeclarations>
+<ResultTypes>
+<Type>VOID</Type>
+</ResultTypes>
+<ProcedureBody>
+<IfStatement>
+<BinaryExpression>
+<BinaryExpression>
+<IdentifierExpression>
+<value> peg</value>
+</IdentifierExpression>
+<Operation> EQ</Operation>
+<IntegerConstant> 1</IntegerConstant>
+</BinaryExpression>
+<Operation> AND</Operation>
+<IntegerConstant> 1</IntegerConstant>
+</BinaryExpression>
+<WriteStatement><StringConstant> left</StringConstant>
+</WriteStatement>
+<ElifStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<value> peg</value>
+</IdentifierExpression>
+<Operation> EQ</Operation>
+<IntegerConstant> 2</IntegerConstant>
+</BinaryExpression>
+<WriteStatement><StringConstant> center</StringConstant>
+</WriteStatement>
+</ElifStatement>
+<WriteStatement><StringConstant> right</StringConstant>
+</WriteStatement>
+</IfStatement>
+</ProcedureBody>
+</ProcedureNode>
+<ProcedureNode>
+<IdentifierExpression>
+<value> hanoi</value>
+</IdentifierExpression>
+<ParameterDeclarations>
+<Type>INT</Type>
+<IdentifierExpression>
+<value> n</value>
+</IdentifierExpression>
+<IdentifierExpression>
+<value> fromPeg</value>
+</IdentifierExpression>
+<IdentifierExpression>
+<value> usingPeg</value>
+</IdentifierExpression>
+<IdentifierExpression>
+<value> toPeg</value>
+</IdentifierExpression>
+</ParameterDeclarations>
+<ResultTypes>
+<Type>VOID</Type>
+</ResultTypes>
+<ProcedureBody>
+<IfStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<value> n</value>
+</IdentifierExpression>
+<Operation> NE</Operation>
+<IntegerConstant> 0</IntegerConstant>
+</BinaryExpression>
+<CallProcedureStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<value> n</value>
+</IdentifierExpression>
+<Operation> MINUS</Operation>
+<IntegerConstant> 1</IntegerConstant>
+</BinaryExpression>
+<IdentifierExpression>
+<value> fromPeg</value>
+</IdentifierExpression>
+<IdentifierExpression>
+<value> toPeg</value>
+</IdentifierExpression>
+<IdentifierExpression>
+<value> usingPeg</value>
+</IdentifierExpression>
+</CallProcedureStatement>
+<WriteStatement><StringConstant> Move disk from </StringConstant>
+</WriteStatement>
+<CallProcedureStatement>
+<IdentifierExpression>
+<value> fromPeg</value>
+</IdentifierExpression>
+</CallProcedureStatement>
+<WriteStatement><StringConstant>  peg to </StringConstant>
+</WriteStatement>
+<CallProcedureStatement>
+<IdentifierExpression>
+<value> toPeg</value>
+</IdentifierExpression>
+</CallProcedureStatement>
+<WriteStatement><StringConstant>  peg.\n</StringConstant>
+</WriteStatement>
+<CallProcedureStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<value> n</value>
+</IdentifierExpression>
+<Operation> MINUS</Operation>
+<IntegerConstant> 1</IntegerConstant>
+</BinaryExpression>
+<IdentifierExpression>
+<value> usingPeg</value>
+</IdentifierExpression>
+<IdentifierExpression>
+<value> fromPeg</value>
+</IdentifierExpression>
+<IdentifierExpression>
+<value> toPeg</value>
+</IdentifierExpression>
+</CallProcedureStatement>
+</IfStatement>
+</ProcedureBody>
+</ProcedureNode>
+<ProcedureNode>
+<IdentifierExpression>
+<value> main</value>
+</IdentifierExpression>
+<ResultTypes>
+<Type>INT</Type>
+</ResultTypes>
+<ProcedureBody>
+<VariableDeclaration>
+<Type>INT</Type>
+<IdInitialization>
+<IdentifierExpression>
+<value> n</value>
+</IdentifierExpression>
+<IntegerConstant> 0</IntegerConstant>
+</IdInitialization>
+</VariableDeclaration>
+<WriteStatement><StringConstant> How many pegs? </StringConstant>
+</WriteStatement>
+<ReadStatement>
+<IdentifierExpression>
+<value> n</value>
+</IdentifierExpression>
+</ReadStatement>
+<CallProcedureStatement>
+<IdentifierExpression>
+<value> n</value>
+</IdentifierExpression>
+<IntegerConstant> 1</IntegerConstant>
+<IntegerConstant> 2</IntegerConstant>
+<IntegerConstant> 3</IntegerConstant>
+</CallProcedureStatement>
+<IntegerConstant> 0</IntegerConstant>
+</ProcedureBody>
+</ProcedureNode>
 </ProgramNode>

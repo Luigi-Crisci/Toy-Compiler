@@ -4,7 +4,12 @@ import java_cup.runtime.ComplexSymbolFactory.Location;
 
 public class IdNotFoundException extends SemanticException {
 
-	public IdNotFoundException(String string,Location l) {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public IdNotFoundException(String string, Location l) {
 		super(string,l);
 	}
 

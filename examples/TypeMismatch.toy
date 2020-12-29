@@ -1,0 +1,11 @@
+/*
+ * Type Mismatch in MultiAddDiff function
+*/ 
+
+proc main()int :
+	int a;
+	float b;
+	a := b;
+	-> 0
+corp;
+

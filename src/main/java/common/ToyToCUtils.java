@@ -2,8 +2,6 @@ package common;
 
 import java.util.UUID;
 
-import common.*;
-
 public class ToyToCUtils {
 
 	public static final String FUNCTION_STRUCT_PREFIX = "function_struct_";

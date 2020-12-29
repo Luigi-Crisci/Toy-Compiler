@@ -6,10 +6,18 @@ import java.util.List;
 import common.exceptions.SemanticException;
 import common.interfaces.Visitable;
 import common.interfaces.Visitor;
-
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import parser.nodes.ExpressionNode.IdentifierExpression;
 
 public abstract class StatementNode extends TypedNode implements Visitable {
+
+	public StatementNode(Location left, Location right) {
+		super(left, right);
+	}
+
+	public StatementNode(){
+		super();
+	}
 
 	public static class ReadStatement extends StatementNode {
 
@@ -63,14 +71,14 @@ public abstract class StatementNode extends TypedNode implements Visitable {
 		public IdentifierExpression id;
 		public List<ExpressionNode> expressionList;
 
-		public CallProcedureStatement(IdentifierExpression id, List<ExpressionNode> expressionList) {
-			super();
+		public CallProcedureStatement(IdentifierExpression id, List<ExpressionNode> expressionList,Location left, Location right) {
+			super(left,right);
 			this.id = id;
 			this.expressionList = expressionList;
 		}
 
-		public CallProcedureStatement(IdentifierExpression id) {
-			super();
+		public CallProcedureStatement(IdentifierExpression id,Location left, Location right) {
+			super(left,right);
 			this.id = id;
 			this.expressionList = Collections.emptyList();
 		}

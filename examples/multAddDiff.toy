@@ -2,7 +2,7 @@
  * Calcolo di moltiplicazione, somma e differenza
 */ 
 
-string nome := "Michele";
+string nome := "Prof. Gennaro Costagliola";
 
 proc multAddDiff()int, int, int :	
 	int primo, secondo, mul, add, diff;
@@ -26,8 +26,6 @@ corp;
 
 proc main()int :
 	int a, b, c;
-	readln(a,nome,b,c);
-
 	a, b, c := multAddDiff();
 	write ("Ciao ", nome);
 	writeNewLines(2);

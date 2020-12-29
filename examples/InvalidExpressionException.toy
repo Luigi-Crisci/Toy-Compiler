@@ -1,0 +1,17 @@
+/*
+ * Trying to assing multiple values to a
+*/ 
+
+proc multipleValues()int,int:
+	int a,b;
+	-> a,b
+corp;
+
+proc main()int :
+	if multipleValues() = 1
+	then 
+		write("ok");
+	fi;
+	-> 0
+corp;
+
