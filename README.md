@@ -1,3 +1,10 @@
+---
+	title: Toy Compiler
+	author:
+		- Luigi Crisci
+		- Alessio Cuccurullo
+	abstract: A compiler for the Toy language in pure Java. It compiles to C as Intermediate code representation, then the *Clang* compiler is used to generate machine code
+---
 # Toy language Compiler
 
 A simple Parser for the Toy language, made with Java CUP and JFlex. This implementation results in the creation of an executable file given a compliant toy file.
@@ -35,12 +42,12 @@ This compiler translates a toy program into a Clang-compliant C program. The gen
 
 ### Differences with the assignment
 
-This implementation doesn't go that far from the assignment. Although, some variations have been made by the authors:
-- The token MAIN has been introduced;
-- The productions *"Main ::= PROC MAIN ..."* have been added, slightly changing the syntax of the language. These productions, along with the *ProcList*, make every Toy program syntactically compliant when the procedure *Main*:
-	- appears one single time,
-	- is the last one in the file,
-	- returns an INT.
+This implementation doesn't go that far from the assignment. Although, some variations have been made by the authors:  
+- The token MAIN has been introduced;  
+- The productions *"Main ::= PROC MAIN ..."* have been added, slightly changing the syntax of the language. These productions, along with the *ProcList*, make every Toy program syntactically compliant when the procedure *Main*:  
+	- appears one single time,  
+	- is the last one in the file,  
+	- returns an INT.  
 
 # Lexical analysis
 
@@ -52,9 +59,8 @@ It is composed of a single `Lexer.flex` source file contaning all the logic to g
 
 This section describes the set of tokens and their corresponding pattern.
 
-<details>
-	<summary>The patterns</summary>
 
+```flex
 	//Procedures
 	PROC "proc"          
 	CORP "corp"          
@@ -112,14 +118,14 @@ This section describes the set of tokens and their corresponding pattern.
     ALPHA=[A-Za-z]
 	DIGIT=[0-9]
 	NONZERO_DIGIT=[1-9]
-	NEWLINE=\r|\n|\r\n
-	WHITESPACE =  | [ \t\f]
+	NEWLINE=\\r|\\n|\\r\\n
+	WHITESPACE =  | [ \\t\\f]
 	ID = (|_)*
 	INT = ((*)|0)
 	FLOAT = +)
-	STRING_TEXT = [^\"]*
-	COMMENT_TEXT = [\w\.\@]*
- </details>
+	STRING_TEXT = [^\\"]*
+	COMMENT_TEXT = [\\w\\.\\@]*
+```
 
 # Syntactic analysis
 
@@ -129,10 +135,8 @@ Just like the lexical analysis, the syntactic analysis is done by a generated Ja
 
 This section describes the whole syntactic specification of the Toy language that was implemented. The grammar as-is doesn't allow *LALR(1)* parsing. In order to generate the parser, the *PEMDAS* (Parenthesis, Exponents, Multiplications/Divisions, Additions/Subtractions) rule has been introduced.
 
-  <details>
-	<summary>The grammar</summary>
-
-	Program ::= VarDeclList ProcList		 	 
+```cup
+Program ::= VarDeclList ProcList		 	 
 		;
 
 	VarDeclList ::= /* empty */ 					 
@@ -272,8 +276,7 @@ This section describes the whole syntactic specification of the Toy language tha
 		| MINUS Expr										 
 		| NOT Expr										 			
 		;		
-
-</details>
+```
 
 
 # The Abstract Syntax Tree
