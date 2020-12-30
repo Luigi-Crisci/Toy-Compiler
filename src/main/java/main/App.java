@@ -20,7 +20,6 @@ public class App {
         BufferedReader in = new BufferedReader(new FileReader("/home/luigi/crisci-cuccurullo_es5_scg/examples/" + filename + ".toy"));
         // BufferedReader in = new BufferedReader(new FileReader("/home/luigi/compilatori/crisci-cuccurullo_es5/examples/" + filename + ".toy"));
 
-        // BufferedReader in = new BufferedReader(new FileReader("D:\\Alessio_Cuccurullo\\gitrepo\\crisci-cuccurullo_es5_scg\\examples\\factorial.toy"));
 
         ComplexSymbolFactory f = new ComplexSymbolFactory();
         Lexer l = new Lexer(in,f);
