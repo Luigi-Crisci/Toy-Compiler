@@ -7,7 +7,7 @@
 ---
 # Toy language Compiler
 
-A simple Parser for the Toy language, made with Java CUP and JFlex. This implementation results in the creation of an executable file given a compliant toy file.
+A compiler for the Toy language, made with Java CUP and JFlex. This implementation results in the creation of an executable file given a compliant toy file.
 
 ## Build  
 
@@ -361,3 +361,71 @@ $$\frac{\Gamma \vdash cnd\_expr : \bm{boolean} \;\;\; \Gamma \vdash then\_stmt\,
 
 
 # Translating to the C language
+
+The two languages differ in various aspects. Notably:  
+
+- Toy allows the programmer to write a function with multiple return types, while C doesn't;  
+- Toy boolean variables are `true` and `false`, while C handles them as `1` and `!1`;  
+- Toy doesn't require the programmer to explicitly allocate memory when declaring a new string variable;  
+- Toy allows the programmer to open and close a string on two different lines of code.  
+
+## Multiple return types
+
+This is a simple Toy function that returns three integer variables.
+
+```
+proc multAddDiff()int, int, int :	
+	int primo, secondo, mul, add, diff;
+
+	write("Inserire il primo argomento:\n");
+	readln(primo);
+	write("Inserire il secondo argomento:\n");
+	readln(secondo);
+	mul, add, diff := primo*secondo, primo + secondo, primo - secondo;
+	-> mul, add, diff
+corp;
+```
+
+When translating this snippet, this is what gets generated:
+
+```c
+typedef struct function_struct_t2cmultAddDiff
+{
+    int p_0;
+    int p_1;
+    int p_2;
+} function_struct_t2cmultAddDiff;
+
+function_struct_t2cmultAddDiff t2cmultAddDiff()
+{
+    int t2cprimo, t2csecondo, t2cmul, t2cadd, t2cdiff;
+    printf("%s", "Inserire il primo argomento:\n");
+    t2cprimo = string_to_int(readln());
+    printf("%s", "Inserire il secondo argomento:\n");
+    t2csecondo = string_to_int(readln());
+    t2cmul = t2cprimo * t2csecondo;
+    t2cadd = t2cprimo + t2csecondo;
+    t2cdiff = t2cprimo - t2csecondo;
+    function_struct_t2cmultAddDiff function_struct_t2cmultAddDiff396874f9a95149b6be1614ee5e99fed5;
+    function_struct_t2cmultAddDiff396874f9a95149b6be1614ee5e99fed5.p_0 = t2cmul;
+    function_struct_t2cmultAddDiff396874f9a95149b6be1614ee5e99fed5.p_1 = t2cadd;
+    function_struct_t2cmultAddDiff396874f9a95149b6be1614ee5e99fed5.p_2 = t2cdiff;
+    return function_struct_t2cmultAddDiff396874f9a95149b6be1614ee5e99fed5;
+}
+```
+
+Firstly, a `struct` with three `int` fields has been defined. It handles the return statement of the Toy function multAddDiff by getting returned by such function. The flow of the translated function is pretty much the same as the original, but the return statement explodes into a series of assignments. 
+
+A mandatory note about the name of the `struct` variable: a uniquely generated string has been appended to the actual function. This verbose act prevents multiple declarations of the same c variable, in case of subsequent calls of the same function in a given scope (recursion!!).
+
+Lastly, the filled `struct` is returned.
+
+## Memory alloc for strings
+
+
+## Strings spanning on multiple lines
+
+
+## Boolean shenanigans
+
+
