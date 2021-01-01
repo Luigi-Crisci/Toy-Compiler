@@ -1,5 +1,5 @@
 /*
- * Type Mismatch in MultiAddDiff function
+ * Cannot assign float to int
 */ 
 
 proc main()int :

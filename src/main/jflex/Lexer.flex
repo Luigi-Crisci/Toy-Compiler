@@ -59,22 +59,22 @@ COMMENT_TEXT = ([^*]|\*+[^/])*
 
 <YYINITIAL> {
 
-  "proc"          {return symbol("PROC", PROC); }
-  "corp"          {return symbol("CORP", CORP); }
-  "main"          {return symbol("MAIN", MAIN); }
+  "proc"            {return symbol("PROC", PROC); }
+  "corp"            {return symbol("CORP", CORP); }
+  "main"            {return symbol("MAIN", MAIN); }
   
 //Type
-  "int"             { return symbol("INT",INT, INT); }
-  "float"           { return symbol("FLOAT",FLOAT, FLOAT); }
-  "bool"            { return symbol("BOOL",BOOL, BOOL); }
-  "string"          { return symbol("STRING",STRING, STRING); }
-  "void"            { return symbol("VOID",VOID, VOID); }
+  "int"             {return symbol("INT",INT, INT); }
+  "float"           {return symbol("FLOAT",FLOAT, FLOAT); }
+  "bool"            {return symbol("BOOL",BOOL, BOOL); }
+  "string"          {return symbol("STRING",STRING, STRING); }
+  "void"            {return symbol("VOID",VOID, VOID); }
 
   //Statements
   "while"           {return symbol("WHILE",WHILE);  }
   "do"              {return symbol("DO",DO);        }     
   "od"              {return symbol("OD",OD);        }
-  "readln"            {return symbol("READ",READ);    }
+  "readln"          {return symbol("READ",READ);    }
   "write"           {return symbol("WRITE",WRITE);  }
   "assign"          {return symbol("ASSIGN",ASSIGN); }                  
   "if"              {return symbol("IF",IF); }          

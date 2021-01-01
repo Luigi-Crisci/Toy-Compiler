@@ -44,6 +44,10 @@ public class ToyToCVisitor implements Visitor {
 		writer.print(" ");
 	}
 
+	private void addPrefix(){
+		writer.print(ToyToCUtils.IDENTIFIER_PREFIX);
+	}
+
 	private void openRoundBracket() {
 		writer.print("(");
 	}
@@ -116,14 +120,14 @@ public class ToyToCVisitor implements Visitor {
 			writeFunctionStructDefinition(item);
 			hasStruct = true;
 		}
-		currentFunctionName = item.id.value;
+		currentFunctionName = ToyToCUtils.FUNCTION_STRUCT_PREFIX + ToyToCUtils.IDENTIFIER_PREFIX + item.id.value;
 		if (hasStruct)
-			writer.print(ToyToCUtils.FUNCTION_STRUCT_PREFIX + currentFunctionName);
+			writer.print(currentFunctionName);
 		else
 			writer.print(ToyToCUtils.typeConverter(item.getType()));
 
 		addSpace();
-		writer.print(item.id.value);
+		item.id.accept(this);
 
 		// Handle parameters
 		openRoundBracket();
@@ -160,7 +164,7 @@ public class ToyToCVisitor implements Visitor {
 		// Handle multiple return types
 		if (item.exprList.size() > 1) {
 			String variableName = ToyToCUtils.getUniqueFunctionVariabletName(currentFunctionName);
-			writer.print(ToyToCUtils.FUNCTION_STRUCT_PREFIX + currentFunctionName + " " + variableName);
+			writer.print(currentFunctionName + " " + variableName);
 			addSemicolonAndNewline();
 			for (int i = 0; i < item.exprList.size(); i++) {
 				writer.print(variableName + ".p_" + i + " = ");
@@ -223,8 +227,13 @@ public class ToyToCVisitor implements Visitor {
 					if (j < callProcedureExpression.typeList.size() - 1)
 						addComma();
 				}
-			} else
+			} 
+			else{
 				currentExpressionNode.accept(this);
+				//Convert c bool to "true" or "false	
+				if(currentExpressionNode.getType() == Symbols.BOOL)
+					writer.print("== 1 ? \"true\" : \"false\"");
+			}
 			if (i < item.expressionList.size() - 1)
 				addComma();
 		}
@@ -332,7 +341,8 @@ public class ToyToCVisitor implements Visitor {
 	public Object visit(CallProcedureStatement item) throws SemanticException {
 		String[] variableNames = writeFunctionStruct(item.expressionList);
 
-		writer.print(item.id.value);
+		item.id.accept(this);
+
 		openRoundBracket();
 		int count = 0;
 		for (int i = 0; i < item.expressionList.size(); i++) {
@@ -360,7 +370,8 @@ public class ToyToCVisitor implements Visitor {
 	public Object visit(CallProcedureExpression item) throws SemanticException {
 		String[] variableNames = writeFunctionStruct(item.expressionList);
 
-		writer.print(item.id.value);
+		item.id.accept(this);
+
 		openRoundBracket();
 		int count = 0;
 		for (int i = 0; i < item.expressionList.size(); i++) {
@@ -423,10 +434,19 @@ public class ToyToCVisitor implements Visitor {
 	}
 
 	public Object visit(IdentifierExpression item) throws SemanticException {
+		if(item.value.compareToIgnoreCase(Symbols.terminalNames[Symbols.MAIN]) != 0)
+			addPrefix();
 		writer.print(item.value);
 		return null;
 	}
 
+	/**
+	 * Write procedure calls with multiple parameters and assign those to unique-identified variables
+	 * This is needed because multiple call to the same function can occour in the same code block
+	 * @param expressionList
+	 * @return the generated names for all function calls
+	 * @throws SemanticException
+	 */
 	public String[] writeFunctionStruct(List<ExpressionNode> expressionList) throws SemanticException {
 		ArrayList<String> structNames = new ArrayList<>();
 		for (ExpressionNode e : expressionList)
@@ -443,7 +463,7 @@ public class ToyToCVisitor implements Visitor {
 	}
 
 	private void writeFunctionStructDefinition(ProcedureNode item) {
-		String functionStructName = ToyToCUtils.FUNCTION_STRUCT_PREFIX + item.id.value;
+		String functionStructName = ToyToCUtils.FUNCTION_STRUCT_PREFIX + ToyToCUtils.IDENTIFIER_PREFIX  + item.id.value;
 		writer.print("typedef struct " + functionStructName + "{\n");
 		for (int i = 0; i < item.returnTypes.size(); i++) {
 			writer.println(ToyToCUtils.typeConverter(item.returnTypes.get(i)) + " p_" + i + ";");

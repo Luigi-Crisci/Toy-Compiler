@@ -10,8 +10,6 @@ public class TypeCheck {
 
 			if (type1 == type2)
 				return type1;
-			else
-				return Symbols.FLOAT;
 		}
 
 		// Binary logical
@@ -21,18 +19,14 @@ public class TypeCheck {
 
 		// Comparators
 		if (isRelationalOperator(op))
-			if (type1 != Symbols.STRING && type2 != Symbols.STRING)
+			if (type1 != Symbols.STRING && type2 != Symbols.STRING && !isNull(type1) && !isNull(type2))
 				return Symbols.BOOL;
 
 		// Assign
-		if (op == Symbols.ASSIGN) {
-			if (type1 == type2)
+		if (op == Symbols.ASSIGN)
+			if (type1 == type2 || (type1 == Symbols.STRING && isNull(type2)))
 				return type1;
-
-			// if(type1 == Symbols.INT && type2 == Symbols.FLOAT || type1 == Symbols.FLOAT
-			// && type2 == Symbols.INT)
-			// return type1;
-		}
+		
 
 		// Call proc
 		if (op == Symbols.CORP)
@@ -40,7 +34,6 @@ public class TypeCheck {
 				return type1;
 
 		return -1;
-
 	}
 
 	public static int checkType(Integer op, Integer type) {
@@ -71,6 +64,10 @@ public class TypeCheck {
 
 	public static boolean isArithmeticOperator(Integer op) {
 		return op == Symbols.PLUS || op == Symbols.MINUS || op == Symbols.TIMES || op == Symbols.DIV;
+	}
+
+	public static boolean isNull(Integer op){
+		return op == Symbols.NULL;
 	}
 
 }

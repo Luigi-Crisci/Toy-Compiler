@@ -1,0 +1,14 @@
+/*
+ * a is int, but a condition must be bool
+*/ 
+
+proc multipleReturns(float a,b)int,int:
+	-> 1,2
+corp;
+
+proc main()int :
+	int a;
+	a := multipleReturns(1);
+	-> 0
+corp;
+
