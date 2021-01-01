@@ -1,1 +1,0 @@
-$$ \begin{gathered} Sia,n,il,numero,di,nodi,,t_{1},il,tempo,di,esecuzione,per,1,nodo \\ e ,t_{n},il,tempo,per,n,nodi, allora,lo,Strong,Scalability,Speedup,è: \\ S_{strong}=(\frac{t1}{t_{n}}) \end{gathered} $$

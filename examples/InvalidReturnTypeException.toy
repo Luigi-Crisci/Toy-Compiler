@@ -1,0 +1,14 @@
+/*
+ * a is int, but a condition must be bool
+*/ 
+
+proc multipleReturns()int,void:
+	-> 1
+corp;
+
+proc main()int :
+	int a;
+	a := multipleReturns();
+	-> 0
+corp;
+

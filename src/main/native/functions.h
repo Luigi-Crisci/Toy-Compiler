@@ -29,3 +29,45 @@ char* readln(){
 	}
 	return (char*)realloc(s,i * sizeof(char));
 }
+
+int string_to_int(char* s){
+	if(s == NULL)
+		return -1;
+
+	char* ptr;
+	int n = strtol(s,&ptr,10);
+	if(ptr == s)
+		exit(EXIT_FAILURE);
+	free(s);
+	return n;
+}
+
+int string_to_float(char* s){
+	if(s == NULL)
+		return -1;
+	
+	char* ptr;
+	float f = strtof(s,&ptr);
+	if(ptr == s)
+		exit(EXIT_FAILURE);
+	free(s);
+	return f;
+}
+
+int string_to_bool(char* s){
+	if(s == NULL)
+		return -1;
+		
+	int res = -1;
+	if(strcmp(s,"true") == 0)
+		res = 1;
+	else 
+		if (strcmp(s,"false") == 0)
+			res = 0;
+		else
+			exit(EXIT_FAILURE);
+	free(s);
+	return res;
+}
+
+

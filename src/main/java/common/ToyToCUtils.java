@@ -7,6 +7,7 @@ public class ToyToCUtils {
 	public static final String FUNCTION_STRUCT_PREFIX = "function_struct_";
 	public static final String FUNCTION_STRUCT_VARIABLE_PREFIX = "returnFunctionParameters_";
 	public static final int STRING_DIMENSION = 256;
+	public static final String IDENTIFIER_PREFIX = "__t2c__";
 
 	public static String typeConverter(int type) {
 		if (type == Symbols.STRING)
@@ -19,7 +20,7 @@ public class ToyToCUtils {
 			return "NULL ";
 		if (type == Symbols.VOID)
 			return "void ";
-		return "HORRIBLE_ERROR "; //Just an Esse3 reference
+		return "HORRIBLE_EXCEPTION "; //Just an Esse3 reference
 	}
 
 	public static String opConverter(int op) {
@@ -55,9 +56,9 @@ public class ToyToCUtils {
 	}
 
 	public static String getPlaceholder(Integer type) {
-		if (type == Symbols.STRING)
+		if (type == Symbols.STRING || type == Symbols.BOOL)
 			return "%s";
-		if (type == Symbols.BOOL || type == Symbols.INT)
+		if (type == Symbols.INT)
 			return "%d";
 		if (type == Symbols.FLOAT)
 			return "%f";
@@ -69,16 +70,18 @@ public class ToyToCUtils {
 	}
 
 	public static String getFunctionStructName(String functionName) {
-		return FUNCTION_STRUCT_PREFIX + functionName;
+		return FUNCTION_STRUCT_PREFIX + IDENTIFIER_PREFIX + functionName;
 	}
 
 	public static String getInputString(int type){
 		if (type == Symbols.STRING)
 			return "readln()";
-		if (type == Symbols.BOOL || type == Symbols.INT)
-			return "strtol(readln(),NULL,10)";
+		if (type == Symbols.INT)
+			return "string_to_int(readln())";
+		if (type == Symbols.BOOL)
+			return "string_to_bool(readln())";
 		if (type == Symbols.FLOAT)
-			return "strtof(readln(),NULL)";
+			return "string_to_float(readln())";
 		return "";
 	}
 }
