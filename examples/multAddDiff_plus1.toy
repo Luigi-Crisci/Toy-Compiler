@@ -1,0 +1,41 @@
+/*
+ * Calcolo di moltiplicazione, somma e differenza e aggiunge 1 a tutti i parametri
+ * Caso di test per expr di ritorno con valori di return multipli, dove questi son funzioni
+*/ 
+
+string nome := "Prof. Gennaro Costagliola";
+
+proc add1(int a,b,c)int,int,int:
+	-> a+1,b+1,c+1
+corp;
+
+proc multAddDiff()int, int, int :	
+	int primo, secondo, mul, add, diff;
+
+	write("Inserire il primo argomento:\n");
+	readln(primo);
+	write("Inserire il secondo argomento:\n");
+	readln(secondo);
+	mul, add, diff := primo*secondo, primo + secondo, primo - secondo;
+	-> add1(mul,add,diff)
+corp;
+
+proc writeNewLines(int n)void :
+	while n > 0 do
+		write("\n");
+		n := n -1;
+	od;
+	->
+corp;
+
+
+proc main()int :
+	int a, b, c;
+	a, b, c := multAddDiff();
+	write ("Ciao ", nome);
+	writeNewLines(2);
+	write("I tuoi valori sono:\n", a, " per la moltiplicazione\n", b, 
+		" per la somma, e \n", c, " per la differenza\n");
+	-> 0
+corp;
+
