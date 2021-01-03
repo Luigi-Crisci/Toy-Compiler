@@ -50,5 +50,5 @@ public class Symbol {
 
 		return typeList.get(0);
 	}
-
+	
 }
