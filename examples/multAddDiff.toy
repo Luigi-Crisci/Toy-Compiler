@@ -2,7 +2,8 @@
  * Calcolo di moltiplicazione, somma e differenza
 */ 
 
-string nome := "Prof. Gennaro Costagliola";
+string nome := "Prof. Gennaro 
+Costagliola";
 
 proc multAddDiff()int, int, int :	
 	int primo, secondo, mul, add, diff;
