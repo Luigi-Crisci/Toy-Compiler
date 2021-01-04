@@ -91,16 +91,13 @@ public class ToyToCVisitor implements Visitor {
 
 	// DONE
 	public Object visit(VariableDeclarationNode item) throws SemanticException {
-
-		writer.print(ToyToCUtils.typeConverter(item.getType()));
-
+		
 		for (int i = 0; i < item.IdInitializerList.size(); i++) {
+			writer.print(ToyToCUtils.typeConverter(item.getType()));
 			item.IdInitializerList.get(i).accept(this);
-			if (i < item.IdInitializerList.size() - 1)
-				addComma();
+			addSemicolonAndNewline();
 		}
 
-		addSemicolonAndNewline();
 		return null;
 	}
 

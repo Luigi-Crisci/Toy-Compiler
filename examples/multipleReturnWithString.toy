@@ -1,0 +1,21 @@
+
+
+proc multipleWithStrings()int,string,string,float,bool:
+	string s;
+	readln(s);
+	-> 1,s,"Luigi",2.0,true
+corp;
+
+
+proc main()int:
+
+	int a;
+	string s1,s2;
+	float f;
+	bool b;
+
+	a,s1,s2,f,b := multipleWithStrings();
+
+	write(a,"\n",s1,"\n",s2,"\n",f,"\n",b,"\n");
+-> 0
+corp;
