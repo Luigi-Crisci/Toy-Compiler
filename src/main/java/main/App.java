@@ -15,12 +15,12 @@ public class App {
 
     public static void main(String[] args) throws Exception
     {
-        String filename = "multAddDiff";
+        String filename = "baa";
         // BufferedReader in = new BufferedReader(new FileReader(args[1]));
         // BufferedReader in = new BufferedReader(new FileReader("/home/luigi/crisci-cuccurullo_es5_scg/examples/" + filename + ".toy"));
-        // BufferedReader in = new BufferedReader(new FileReader("/home/luigi/compilatori/crisci-cuccurullo_es5/examples/" + filename + ".toy"));
+        BufferedReader in = new BufferedReader(new FileReader("/home/luigi/compilatori/crisci-cuccurullo_es5/examples/variablesTests/" + filename + ".toy"));
         
-        BufferedReader in = new BufferedReader(new FileReader("/home/alecuc/crisci-cuccurullo_es5_scg/examples/" + filename + ".toy"));
+        // BufferedReader in = new BufferedReader(new FileReader("/home/alecuc/crisci-cuccurullo_es5_scg/examples/" + filename + ".toy"));
 
         
         ComplexSymbolFactory f = new ComplexSymbolFactory();
