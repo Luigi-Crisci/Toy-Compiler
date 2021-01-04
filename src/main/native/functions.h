@@ -6,13 +6,13 @@
  */
 char* readln(){
 	char c;
-	int size = 256;
+	int size = 40;
 	char *s = (char*) calloc(size,sizeof(char));
 	int i = 0;
 
 	while(1){
 		if(i == size - 1){
-			size = size + 256;
+			size = size + 40;
 			s = (char*) realloc(s,size * sizeof(char));
 		}
 

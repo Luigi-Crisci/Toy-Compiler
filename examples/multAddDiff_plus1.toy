@@ -1,9 +1,13 @@
 /*
- * Calcolo di moltiplicazione, somma e differenza
+ * Calcolo di moltiplicazione, somma e differenza e aggiunge 1 a tutti i parametri
+ * Caso di test per expr di ritorno con valori di return multipli, dove questi son funzioni
 */ 
 
-string nome := "Prof. Gennaro 
-Costagliola";
+string nome := "Prof. Gennaro Costagliola";
+
+proc add1(int a,b,c)int,int,int:
+	-> a+1,b+1,c+1
+corp;
 
 proc multAddDiff()int, int, int :	
 	int primo, secondo, mul, add, diff;
@@ -13,7 +17,7 @@ proc multAddDiff()int, int, int :
 	write("Inserire il secondo argomento:\n");
 	readln(secondo);
 	mul, add, diff := primo*secondo, primo + secondo, primo - secondo;
-	-> mul, add, diff
+	-> add1(mul,add,diff)
 corp;
 
 proc writeNewLines(int n)void :

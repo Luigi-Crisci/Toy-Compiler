@@ -1,0 +1,575 @@
+<ProgramNode>
+<ProcedureNode>
+<IdentifierExpression>
+<value> getNumeri</value>
+</IdentifierExpression>
+<ResultTypes>
+<Type>FLOAT</Type>
+<Type>FLOAT</Type>
+</ResultTypes>
+<ProcedureBody>
+<VariableDeclaration>
+<Type>FLOAT</Type>
+<IdInitialization>
+<IdentifierExpression>
+<value> primo</value>
+</IdentifierExpression>
+</IdInitialization>
+<IdInitialization>
+<IdentifierExpression>
+<value> secondo</value>
+</IdentifierExpression>
+</IdInitialization>
+</VariableDeclaration>
+<WriteStatement><StringConstant> Inserire il primo numero: </StringConstant>
+</WriteStatement>
+<ReadStatement>
+<IdentifierExpression>
+<value> primo</value>
+</IdentifierExpression>
+</ReadStatement>
+<WriteStatement><StringConstant> Inserire il secondo numero: </StringConstant>
+</WriteStatement>
+<ReadStatement>
+<IdentifierExpression>
+<value> secondo</value>
+</IdentifierExpression>
+</ReadStatement>
+<IdentifierExpression>
+<value> primo</value>
+</IdentifierExpression>
+<IdentifierExpression>
+<value> secondo</value>
+</IdentifierExpression>
+</ProcedureBody>
+</ProcedureNode>
+<ProcedureNode>
+<IdentifierExpression>
+<value> sommaNumeri</value>
+</IdentifierExpression>
+<ResultTypes>
+<Type>FLOAT</Type>
+</ResultTypes>
+<ProcedureBody>
+<VariableDeclaration>
+<Type>FLOAT</Type>
+<IdInitialization>
+<IdentifierExpression>
+<value> primo</value>
+</IdentifierExpression>
+</IdInitialization>
+<IdInitialization>
+<IdentifierExpression>
+<value> secondo</value>
+</IdentifierExpression>
+</IdInitialization>
+</VariableDeclaration>
+<AssignStatement>
+<IdentifierExpression>
+<value> primo</value>
+</IdentifierExpression>
+<IdentifierExpression>
+<value> secondo</value>
+</IdentifierExpression>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> getNumeri</value>
+</IdentifierExpression>
+</CallProcedureExpression>
+</AssignStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<value> primo</value>
+</IdentifierExpression>
+<Operation> PLUS</Operation>
+<IdentifierExpression>
+<value> secondo</value>
+</IdentifierExpression>
+</BinaryExpression>
+</ProcedureBody>
+</ProcedureNode>
+<ProcedureNode>
+<IdentifierExpression>
+<value> multConSomma</value>
+</IdentifierExpression>
+<ResultTypes>
+<Type>FLOAT</Type>
+</ResultTypes>
+<ProcedureBody>
+<VariableDeclaration>
+<Type>INT</Type>
+<IdInitialization>
+<IdentifierExpression>
+<value> i</value>
+</IdentifierExpression>
+<IntegerConstant> 0</IntegerConstant>
+</IdInitialization>
+</VariableDeclaration>
+<VariableDeclaration>
+<Type>FLOAT</Type>
+<IdInitialization>
+<IdentifierExpression>
+<value> primo</value>
+</IdentifierExpression>
+</IdInitialization>
+<IdInitialization>
+<IdentifierExpression>
+<value> secondo</value>
+</IdentifierExpression>
+</IdInitialization>
+<IdInitialization>
+<IdentifierExpression>
+<value> mult</value>
+</IdentifierExpression>
+<FloatConstant> 0.0</FloatConstant>
+</IdInitialization>
+</VariableDeclaration>
+<AssignStatement>
+<IdentifierExpression>
+<value> primo</value>
+</IdentifierExpression>
+<IdentifierExpression>
+<value> secondo</value>
+</IdentifierExpression>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> getNumeri</value>
+</IdentifierExpression>
+</CallProcedureExpression>
+</AssignStatement>
+<WhileStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<value> i</value>
+</IdentifierExpression>
+<Operation> LT</Operation>
+<IdentifierExpression>
+<value> secondo</value>
+</IdentifierExpression>
+</BinaryExpression>
+<AssignStatement>
+<IdentifierExpression>
+<value> mult</value>
+</IdentifierExpression>
+<BinaryExpression>
+<IdentifierExpression>
+<value> mult</value>
+</IdentifierExpression>
+<Operation> PLUS</Operation>
+<IdentifierExpression>
+<value> primo</value>
+</IdentifierExpression>
+</BinaryExpression>
+</AssignStatement>
+<AssignStatement>
+<IdentifierExpression>
+<value> i</value>
+</IdentifierExpression>
+<BinaryExpression>
+<IdentifierExpression>
+<value> i</value>
+</IdentifierExpression>
+<Operation> PLUS</Operation>
+<IntegerConstant> 1</IntegerConstant>
+</BinaryExpression>
+</AssignStatement>
+</WhileStatement>
+<IdentifierExpression>
+<value> mult</value>
+</IdentifierExpression>
+</ProcedureBody>
+</ProcedureNode>
+<ProcedureNode>
+<IdentifierExpression>
+<value> divisioneNumeri</value>
+</IdentifierExpression>
+<ResultTypes>
+<Type>INT</Type>
+</ResultTypes>
+<ProcedureBody>
+<VariableDeclaration>
+<Type>INT</Type>
+<IdInitialization>
+<IdentifierExpression>
+<value> primo</value>
+</IdentifierExpression>
+</IdInitialization>
+<IdInitialization>
+<IdentifierExpression>
+<value> secondo</value>
+</IdentifierExpression>
+</IdInitialization>
+</VariableDeclaration>
+<WriteStatement><StringConstant> Inserire il primo numero: </StringConstant>
+</WriteStatement>
+<ReadStatement>
+<IdentifierExpression>
+<value> primo</value>
+</IdentifierExpression>
+</ReadStatement>
+<WriteStatement><StringConstant> Inserire il secondo numero: </StringConstant>
+</WriteStatement>
+<ReadStatement>
+<IdentifierExpression>
+<value> secondo</value>
+</IdentifierExpression>
+</ReadStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<value> primo</value>
+</IdentifierExpression>
+<Operation> DIV</Operation>
+<IdentifierExpression>
+<value> secondo</value>
+</IdentifierExpression>
+</BinaryExpression>
+</ProcedureBody>
+</ProcedureNode>
+<ProcedureNode>
+<IdentifierExpression>
+<value> potenza</value>
+</IdentifierExpression>
+<ResultTypes>
+<Type>FLOAT</Type>
+</ResultTypes>
+<ProcedureBody>
+<VariableDeclaration>
+<Type>FLOAT</Type>
+<IdInitialization>
+<IdentifierExpression>
+<value> primo</value>
+</IdentifierExpression>
+</IdInitialization>
+<IdInitialization>
+<IdentifierExpression>
+<value> res</value>
+</IdentifierExpression>
+<FloatConstant> 1.0</FloatConstant>
+</IdInitialization>
+</VariableDeclaration>
+<VariableDeclaration>
+<Type>INT</Type>
+<IdInitialization>
+<IdentifierExpression>
+<value> secondo</value>
+</IdentifierExpression>
+</IdInitialization>
+<IdInitialization>
+<IdentifierExpression>
+<value> i</value>
+</IdentifierExpression>
+<IntegerConstant> 0</IntegerConstant>
+</IdInitialization>
+</VariableDeclaration>
+<WriteStatement><StringConstant> Inserire la base: </StringConstant>
+</WriteStatement>
+<ReadStatement>
+<IdentifierExpression>
+<value> primo</value>
+</IdentifierExpression>
+</ReadStatement>
+<WriteStatement><StringConstant> Inserire l'esponente: </StringConstant>
+</WriteStatement>
+<ReadStatement>
+<IdentifierExpression>
+<value> secondo</value>
+</IdentifierExpression>
+</ReadStatement>
+<WhileStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<value> i</value>
+</IdentifierExpression>
+<Operation> LT</Operation>
+<IdentifierExpression>
+<value> secondo</value>
+</IdentifierExpression>
+</BinaryExpression>
+<AssignStatement>
+<IdentifierExpression>
+<value> res</value>
+</IdentifierExpression>
+<BinaryExpression>
+<IdentifierExpression>
+<value> res</value>
+</IdentifierExpression>
+<Operation> TIMES</Operation>
+<IdentifierExpression>
+<value> primo</value>
+</IdentifierExpression>
+</BinaryExpression>
+</AssignStatement>
+<AssignStatement>
+<IdentifierExpression>
+<value> i</value>
+</IdentifierExpression>
+<BinaryExpression>
+<IdentifierExpression>
+<value> i</value>
+</IdentifierExpression>
+<Operation> PLUS</Operation>
+<IntegerConstant> 1</IntegerConstant>
+</BinaryExpression>
+</AssignStatement>
+</WhileStatement>
+<IdentifierExpression>
+<value> res</value>
+</IdentifierExpression>
+</ProcedureBody>
+</ProcedureNode>
+<ProcedureNode>
+<IdentifierExpression>
+<value> fibonacci</value>
+</IdentifierExpression>
+<ParameterDeclarations>
+<Type>INT</Type>
+<IdentifierExpression>
+<value> n</value>
+</IdentifierExpression>
+</ParameterDeclarations>
+<ResultTypes>
+<Type>INT</Type>
+</ResultTypes>
+<ProcedureBody>
+<VariableDeclaration>
+<Type>INT</Type>
+<IdInitialization>
+<IdentifierExpression>
+<value> res</value>
+</IdentifierExpression>
+<IdentifierExpression>
+<value> n</value>
+</IdentifierExpression>
+</IdInitialization>
+</VariableDeclaration>
+<IfStatement>
+<BinaryExpression>
+<BinaryExpression>
+<IdentifierExpression>
+<value> n</value>
+</IdentifierExpression>
+<Operation> NE</Operation>
+<IntegerConstant> 1</IntegerConstant>
+</BinaryExpression>
+<Operation> AND</Operation>
+<BinaryExpression>
+<IdentifierExpression>
+<value> n</value>
+</IdentifierExpression>
+<Operation> NE</Operation>
+<IntegerConstant> 0</IntegerConstant>
+</BinaryExpression>
+</BinaryExpression>
+<AssignStatement>
+<IdentifierExpression>
+<value> res</value>
+</IdentifierExpression>
+<BinaryExpression>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> fibonacci</value>
+</IdentifierExpression>
+<BinaryExpression>
+<IdentifierExpression>
+<value> n</value>
+</IdentifierExpression>
+<Operation> MINUS</Operation>
+<IntegerConstant> 1</IntegerConstant>
+</BinaryExpression>
+</CallProcedureExpression>
+<Operation> PLUS</Operation>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> fibonacci</value>
+</IdentifierExpression>
+<BinaryExpression>
+<IdentifierExpression>
+<value> n</value>
+</IdentifierExpression>
+<Operation> MINUS</Operation>
+<IntegerConstant> 2</IntegerConstant>
+</BinaryExpression>
+</CallProcedureExpression>
+</BinaryExpression>
+</AssignStatement>
+</IfStatement>
+<IdentifierExpression>
+<value> res</value>
+</IdentifierExpression>
+</ProcedureBody>
+</ProcedureNode>
+<ProcedureNode>
+<IdentifierExpression>
+<value> main</value>
+</IdentifierExpression>
+<ResultTypes>
+<Type>INT</Type>
+</ResultTypes>
+<ProcedureBody>
+<VariableDeclaration>
+<Type>INT</Type>
+<IdInitialization>
+<IdentifierExpression>
+<value> op</value>
+</IdentifierExpression>
+<IntegerConstant> 0</IntegerConstant>
+</IdInitialization>
+<IdInitialization>
+<IdentifierExpression>
+<value> n</value>
+</IdentifierExpression>
+<IntegerConstant> 0</IntegerConstant>
+</IdInitialization>
+</VariableDeclaration>
+<WhileStatement>
+<WriteStatement><StringConstant> Scegli l'operazione da eseguire: 
+			   1) Addizione tra due numeri;
+			   2) Moltiplicazione tra due numeri;
+			   3) Divisione intera tra 2 numeri;
+			   4) Elevamento a potenza;
+			   5) Successione di fibonacci
+			   0) Esci.
+			   </StringConstant>
+</WriteStatement>
+<ReadStatement>
+<IdentifierExpression>
+<value> op</value>
+</IdentifierExpression>
+</ReadStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<value> op</value>
+</IdentifierExpression>
+<Operation> NE</Operation>
+<IntegerConstant> 0</IntegerConstant>
+</BinaryExpression>
+<IfStatement>
+<BinaryExpression>
+<BinaryExpression>
+<IdentifierExpression>
+<value> op</value>
+</IdentifierExpression>
+<Operation> GE</Operation>
+<IntegerConstant> 1</IntegerConstant>
+</BinaryExpression>
+<Operation> OR</Operation>
+<BinaryExpression>
+<IdentifierExpression>
+<value> op</value>
+</IdentifierExpression>
+<Operation> LE</Operation>
+<IntegerConstant> 5</IntegerConstant>
+</BinaryExpression>
+</BinaryExpression>
+<IfStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<value> op</value>
+</IdentifierExpression>
+<Operation> EQ</Operation>
+<IntegerConstant> 1</IntegerConstant>
+</BinaryExpression>
+<WriteStatement><StringConstant> La somma dei numeri è: </StringConstant>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> sommaNumeri</value>
+</IdentifierExpression>
+</CallProcedureExpression>
+<StringConstant> \n</StringConstant>
+</WriteStatement>
+<ElifStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<value> op</value>
+</IdentifierExpression>
+<Operation> EQ</Operation>
+<IntegerConstant> 2</IntegerConstant>
+</BinaryExpression>
+<WriteStatement><StringConstant> La moltiplicazione dei numeri è: </StringConstant>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> multConSomma</value>
+</IdentifierExpression>
+</CallProcedureExpression>
+<StringConstant> \n</StringConstant>
+</WriteStatement>
+</ElifStatement>
+<ElifStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<value> op</value>
+</IdentifierExpression>
+<Operation> EQ</Operation>
+<IntegerConstant> 3</IntegerConstant>
+</BinaryExpression>
+<WriteStatement><StringConstant> La divisione dei numeri è: </StringConstant>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> divisioneNumeri</value>
+</IdentifierExpression>
+</CallProcedureExpression>
+<StringConstant> \n</StringConstant>
+</WriteStatement>
+</ElifStatement>
+<ElifStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<value> op</value>
+</IdentifierExpression>
+<Operation> EQ</Operation>
+<IntegerConstant> 4</IntegerConstant>
+</BinaryExpression>
+<WriteStatement><StringConstant> L'elevamento a potenza è: </StringConstant>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> potenza</value>
+</IdentifierExpression>
+</CallProcedureExpression>
+<StringConstant> \n</StringConstant>
+</WriteStatement>
+</ElifStatement>
+<ElifStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<value> op</value>
+</IdentifierExpression>
+<Operation> EQ</Operation>
+<IntegerConstant> 5</IntegerConstant>
+</BinaryExpression>
+<WriteStatement><StringConstant> Inserisci il numero : </StringConstant>
+</WriteStatement>
+<ReadStatement>
+<IdentifierExpression>
+<value> n</value>
+</IdentifierExpression>
+</ReadStatement>
+<IfStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<value> n</value>
+</IdentifierExpression>
+<Operation> GE</Operation>
+<IntegerConstant> 0</IntegerConstant>
+</BinaryExpression>
+<WriteStatement><StringConstant> La successione di fibonacci è: </StringConstant>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> fibonacci</value>
+</IdentifierExpression>
+<IdentifierExpression>
+<value> n</value>
+</IdentifierExpression>
+</CallProcedureExpression>
+<StringConstant> \n</StringConstant>
+</WriteStatement>
+<WriteStatement><StringConstant> Hai inserito un numero negativo\n</StringConstant>
+</WriteStatement>
+</IfStatement>
+</ElifStatement>
+</IfStatement>
+</IfStatement>
+</WhileStatement>
+<IntegerConstant> 0</IntegerConstant>
+</ProcedureBody>
+</ProcedureNode>
+</ProgramNode>

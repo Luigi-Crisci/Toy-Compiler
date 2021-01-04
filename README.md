@@ -7,7 +7,7 @@
 ---
 # Toy language Compiler
 
-A simple Parser for the Toy language, made with Java CUP and JFlex. This implementation results in the creation of an executable file given a compliant toy file.
+A compiler for the Toy language, made with Java CUP and JFlex. This implementation results in the creation of an executable file given a compliant Toy file.
 
 ## Build  
 
@@ -32,7 +32,7 @@ The *jar* file will be placed under the *target/* directory.
 
 ## Assignment overview
 
-This compiler translates a toy program into a Clang-compliant C program. The generated .c file is then compiled and, after that, it's ready to run. The stages of the execution are the following:
+This compiler translates a .toy program into a Clang-compliant C program. The generated .c file is then compiled and, after that, it's ready to run. The stages of the execution are the following:
 
 - Lexical analysis
 - Syntactic analysis
@@ -361,3 +361,110 @@ $$\frac{\Gamma \vdash cnd\_expr : \bm{boolean} \;\;\; \Gamma \vdash then\_stmt\,
 
 
 # Translating to the C language
+
+The two languages differ in various aspects. Notably:  
+
+- Toy allows the programmer to write a function with multiple return types, while C doesn't;  
+- Toy boolean variables are `true` and `false`, while C handles them as `1` and `!1`;  
+- Toy doesn't require the programmer to explicitly allocate memory when declaring a new string variable;  
+- Toy allows the programmer to open and close a string on two different lines of code.  
+
+## Multiple return types
+
+This is a simple Toy function that returns three integer variables.
+
+```
+proc multAddDiff()int, int, int :	
+	int primo, secondo, mul, add, diff;
+
+	write("Inserire il primo argomento:\n");
+	readln(primo);
+	write("Inserire il secondo argomento:\n");
+	readln(secondo);
+	mul, add, diff := primo*secondo, primo + secondo, primo - secondo;
+	-> mul, add, diff
+corp;
+```
+
+When translating this snippet, this is what gets generated:
+
+```c
+typedef struct function_struct_t2cmultAddDiff
+{
+    int p_0;
+    int p_1;
+    int p_2;
+} function_struct_t2cmultAddDiff;
+
+function_struct_t2cmultAddDiff t2cmultAddDiff()
+{
+    int t2cprimo, t2csecondo, t2cmul, t2cadd, t2cdiff;
+    printf("%s", "Inserire il primo argomento:\n");
+    t2cprimo = string_to_int(readln());
+    printf("%s", "Inserire il secondo argomento:\n");
+    t2csecondo = string_to_int(readln());
+    t2cmul = t2cprimo * t2csecondo;
+    t2cadd = t2cprimo + t2csecondo;
+    t2cdiff = t2cprimo - t2csecondo;
+    function_struct_t2cmultAddDiff function_struct_t2cmultAddDiff396874f9a95149b6be1614ee5e99fed5;
+    function_struct_t2cmultAddDiff396874f9a95149b6be1614ee5e99fed5.p_0 = t2cmul;
+    function_struct_t2cmultAddDiff396874f9a95149b6be1614ee5e99fed5.p_1 = t2cadd;
+    function_struct_t2cmultAddDiff396874f9a95149b6be1614ee5e99fed5.p_2 = t2cdiff;
+    return function_struct_t2cmultAddDiff396874f9a95149b6be1614ee5e99fed5;
+}
+```
+
+Firstly, a `struct` with three `int` fields has been defined. It handles the return statement of the Toy function multAddDiff by getting returned by such function. The flow of the translated function is pretty much the same as the original, but the return statement explodes into a series of assignments. 
+
+A mandatory note about the name of the `struct` variable: a uniquely generated string has been appended to the actual function. This verbose act prevents multiple declarations of the same c variable, in case of subsequent calls of the same function in a given scope (recursion!!).
+
+Lastly, the filled `struct` is returned and it's used as follows:
+
+```c
+    int __t2c__a, __t2c__b, __t2c__c;
+    function_struct___t2c__multAddDiff multAddDiffd3eae84310004a499bdcd38c5f9e2073 = __t2c__multAddDiff();
+    __t2c__a = multAddDiffd3eae84310004a499bdcd38c5f9e2073.p_0;
+    __t2c__b = multAddDiffd3eae84310004a499bdcd38c5f9e2073.p_1;
+    __t2c__c = multAddDiffd3eae84310004a499bdcd38c5f9e2073.p_2;
+```
+
+
+## Memory allocation for strings
+Toy doesn't requier the programmer to explicitly indicate the length of a string. Of course this is a huge problem when translating to C. In order to solve this issue, a tiny C library was defined. It defines the funcion `readln`, named after the Toy function, which reads characters from `stdin` and allocate enough memory to store the string read.
+
+### An important flaw
+We are aware of a huge problem in this implementation: **no string gets deallocated**. The ones that shouldn't are function parameters and those that get returned to the calling function. Although it seems easy to discriminate between these, there are cases in which this operation is impracticable with a single visit of the Syntactic Tree (i.e. nesting callProcedure statements in a return statement).  
+
+## Strings spanning on multiple lines
+Notably, C doesn't allow string delimiters to be on two distinct lines of code.
+
+```c
+//This doesn't work
+char *str ="C doesn't like 
+enjambment";
+```
+
+On the other hand, Toy has no strict rule in that regard. For example, the following string is perfectly correct:
+
+```language
+string fullName := " First name
+Last name";
+```
+
+The `ToyToCVisitor` translates such strings by simply replacing each `\n` sequence with `\\n`. Its corresponding C string would be:
+
+```c
+char *fullName = "First name \n Last name";
+```
+
+
+## Boolean shenanigans
+
+Toy handles boolean variables as "true" and "false", but C does not. In order to actually print these variables, a simple trick has been used. Supposing the compiler runs into a `write` statement that contains a boolean variable, the translation of such block of code would look something like this:
+
+```C
+	int __t2c__a_boolean=1;
+	printf("%s%s", "This is a boolean: ", __t2c__a_boolean== 1 ? "true" : "false");
+```
+
+By using the ternary operator `?` it's easy to return to the original toy-ish boolean values on a single line.

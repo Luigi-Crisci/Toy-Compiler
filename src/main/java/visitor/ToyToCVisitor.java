@@ -19,6 +19,7 @@ public class ToyToCVisitor implements Visitor {
 
 	public ToyToCVisitor(String filename) {
 		currentFunctionName = "";
+
 		try {
 			writer = new PrintWriter(filename + ".c");
 			writeCommonInclude();
@@ -158,26 +159,39 @@ public class ToyToCVisitor implements Visitor {
 		for (StatementNode s : item.statementList)
 			s.accept(this);
 
+		String[] variableNames = writeFunctionStruct(item.exprList);
+		List<ExpressionNode> returnList = item.exprList;
+
 		// Handle multiple return types
-		if (item.exprList.size() > 1) {
+		int current_name = 0, current_index = 0;
+		if (returnList.size() > 1 || returnList.size() == 1 && Utils.isFunctionWithMultipleReturns(returnList.get(0)) ) {
 			String variableName = ToyToCUtils.getUniqueFunctionVariabletName(currentFunctionName);
 			writer.print(currentFunctionName + " " + variableName);
 			addSemicolonAndNewline();
-			for (int i = 0; i < item.exprList.size(); i++) {
-				writer.print(variableName + ".p_" + i + " = ");
-				item.exprList.get(i).accept(this);
+			for (int i = 0; i < returnList.size(); i++) {
+				if(Utils.isFunctionWithMultipleReturns(returnList.get(i))){
+					for (int j = 0; j < returnList.get(i).typeList.size(); j++) {
+						writer.print(variableName + ".p_" + current_index++ + " = " + variableNames[current_name] + ".p_" + j);
+						addSemicolonAndNewline();
+					}
+					current_name++;
+					continue;
+				}
+
+				writer.print(variableName + ".p_" + current_index + " = ");
+				returnList.get(i).accept(this);
 				addSemicolonAndNewline();
 			}
 			writer.print("return " + variableName);
 			addSemicolonAndNewline();
-		} else if (item.exprList.size() == 1) {
+		} else if (returnList.size() == 1) {
 			writer.print("return ");
-			item.exprList.get(0).accept(this);
+			returnList.get(0).accept(this);
 			addSemicolonAndNewline();
 		}
 		return null;
 	}
-
+	
 	
 	public Object visit(ReadStatement item) throws SemanticException {
 		for(IdentifierExpression id : item.idList){
@@ -193,6 +207,7 @@ public class ToyToCVisitor implements Visitor {
 	 * The writeStatement conversion does not maintain the original sequence of operations in the .toy source file:
 	 * this is possibile because the Toy language doesn't allow to modify an element inside of an expression, so the order
 	 * in which they are executed doesn't matter
+	 * For example: it's possible to execute functions originally placed inside the write statement before calling it
 	 */
 	public Object visit(WriteStatement item) throws SemanticException {
 		String[] variableNames = writeFunctionStruct(item.expressionList);
