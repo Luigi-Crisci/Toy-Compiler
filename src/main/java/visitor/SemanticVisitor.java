@@ -44,7 +44,7 @@ public class SemanticVisitor implements Visitor {
 
 	@Override
 	public Object visit(IdInitializerNode item) throws SemanticException {
-		if (stack.probe(item.id.value))
+		if (stack.probe(item.id.value) || stack.lookup(item.id.value, SymbolTypes.METHOD) != null)
 			throw new MultipleDeclarationException("Symbol " + item.id.value + " has been previously declared",item.id.left);
 
 		if (item.expression != null) {

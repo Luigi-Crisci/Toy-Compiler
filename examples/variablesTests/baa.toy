@@ -1,0 +1,15 @@
+
+/*
+	Error on variable a
+*/
+
+int b;
+
+proc a()void:
+	int a;
+	->
+corp;
+
+proc main()int:
+	-> 0
+corp;

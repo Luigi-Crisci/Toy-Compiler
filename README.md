@@ -42,6 +42,8 @@ This compiler translates a .toy program into a Clang-compliant C program. The ge
 
 ### Differences with the assignment
 
+#TODO: Aggiungi duplicazione callProcedureStatement
+
 This implementation doesn't go that far from the assignment. Although, some variations have been made by the authors:  
 - The token MAIN has been introduced;  
 - The productions *"Main ::= PROC MAIN ..."* have been added, slightly changing the syntax of the language. These productions, along with the *ProcList*, make every Toy program syntactically compliant when the procedure *Main*:  
@@ -283,7 +285,7 @@ Program ::= VarDeclList ProcList
 
 The implemented Grammar has been enhanced with a series of *actions*, one for each production. 
 
-Generally, these actions instantiate a *Node* object related to each of the *non-terminals* appearing in the right-hand side of the production itself. 
+Generally, these actions instantiate a *Node* object related to each *element* appearing in the right-hand side of the production itself. 
 There are several different actions in this parser.
 
 For example:
@@ -362,6 +364,9 @@ $$\frac{\Gamma \vdash cnd\_expr : \bm{boolean} \;\;\; \Gamma \vdash then\_stmt\,
 
 # Translating to the C language
 
+#TODO: Abbiamo fatto un visitor ed abbiamo una libreria di appoggio
+
+
 The two languages differ in various aspects. Notably:  
 
 - Toy allows the programmer to write a function with multiple return types, while C doesn't;  
@@ -431,9 +436,11 @@ Lastly, the filled `struct` is returned and it's used as follows:
 
 ## Memory allocation for strings
 Toy doesn't requier the programmer to explicitly indicate the length of a string. Of course this is a huge problem when translating to C. In order to solve this issue, a tiny C library was defined. It defines the funcion `readln`, named after the Toy function, which reads characters from `stdin` and allocate enough memory to store the string read.
+#TODO: Ridefinisci dato che sta scritto all'inizio della libreria
 
 ### An important flaw
 We are aware of a huge problem in this implementation: **no string gets deallocated**. The ones that shouldn't are function parameters and those that get returned to the calling function. Although it seems easy to discriminate between these, there are cases in which this operation is impracticable with a single visit of the Syntactic Tree (i.e. nesting callProcedure statements in a return statement).  
+#TODO: Pulisci munnezza
 
 ## Strings spanning on multiple lines
 Notably, C doesn't allow string delimiters to be on two distinct lines of code.

@@ -1,0 +1,17 @@
+
+/*
+	Correct
+*/
+
+
+
+int a;
+
+proc b()void:
+	int a;
+	->
+corp;
+
+proc main()int:
+	-> 0
+corp;

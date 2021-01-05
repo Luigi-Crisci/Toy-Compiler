@@ -1,0 +1,15 @@
+int a;
+
+/*
+	Error on function a
+*/
+
+
+proc a()void:
+	int b;
+	->
+corp;
+
+proc main()int:
+	-> 0
+corp;

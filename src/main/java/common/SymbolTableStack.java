@@ -38,7 +38,7 @@ public class SymbolTableStack {
 				break;
 		}
 
-		return found.entryType == type ? found : null;
+		return found != null && found.entryType == type ? found : null;
 	}
 
 	public boolean probe(Symbol item){
