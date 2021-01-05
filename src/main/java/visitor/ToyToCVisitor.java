@@ -2,7 +2,9 @@ package visitor;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 
 import common.*;
@@ -16,10 +18,11 @@ public class ToyToCVisitor implements Visitor {
 
 	PrintWriter writer;
 	String currentFunctionName;
+	Deque<String> functionStructNameQueue;
 
 	public ToyToCVisitor(String filename) {
 		currentFunctionName = "";
-
+		functionStructNameQueue = new ArrayDeque<>();
 		try {
 			writer = new PrintWriter(filename + ".c");
 			writeCommonInclude();
@@ -168,19 +171,23 @@ public class ToyToCVisitor implements Visitor {
 			String variableName = ToyToCUtils.getUniqueFunctionVariabletName(currentFunctionName);
 			writer.print(currentFunctionName + " " + variableName);
 			addSemicolonAndNewline();
-			for (int i = 0; i < returnList.size(); i++) {
+			//Initialize the funciton struct fields
+			for (int i = 0; i < returnList.size(); i++) { 
+				//If one of the return expressions is a function call with multiple return values, the return struct values must be 
+				//copied into the current function return struct 
 				if(Utils.isFunctionWithMultipleReturns(returnList.get(i))){
 					for (int j = 0; j < returnList.get(i).typeList.size(); j++) {
 						writer.print(variableName + ".p_" + current_index++ + " = " + variableNames[current_name] + ".p_" + j);
 						addSemicolonAndNewline();
 					}
 					current_name++;
-					continue;
 				}
-
-				writer.print(variableName + ".p_" + current_index + " = ");
-				returnList.get(i).accept(this);
-				addSemicolonAndNewline();
+				else{
+					//The expression generate one value and can be printed as it is
+					writer.print(variableName + ".p_" + current_index++ + " = ");
+					returnList.get(i).accept(this);
+					addSemicolonAndNewline();
+				}
 			}
 			writer.print("return " + variableName);
 			addSemicolonAndNewline();
@@ -380,7 +387,7 @@ public class ToyToCVisitor implements Visitor {
 	}
 
 	public Object visit(CallProcedureExpression item) throws SemanticException {
-		String[] variableNames = writeFunctionStruct(item.expressionList);
+		// String[] variableNames = writeFunctionStruct(item.expressionList);
 
 		item.id.accept(this);
 
@@ -464,7 +471,10 @@ public class ToyToCVisitor implements Visitor {
 		for (ExpressionNode e : expressionList)
 			if (e.typeList.size() > 1) {
 				CallProcedureExpression callProcedureExpression = (CallProcedureExpression) e;
+				
+				String[] variableNames = writeFunctionStruct(callProcedureExpression.expressionList);
 				String variableName = ToyToCUtils.getUniqueFunctionVariabletName(callProcedureExpression.id.value);
+
 				writer.print(ToyToCUtils.getFunctionStructName(callProcedureExpression.id.value) + " " + variableName
 						+ " = ");
 				structNames.add(variableName);

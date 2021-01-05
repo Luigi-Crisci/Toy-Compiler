@@ -6,6 +6,13 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "Launch Driver",
+			"request": "launch",
+			"mainClass": "main.Driver",
+			"projectName": "Crisci-Cuccurullo_es4_CUP"
+		},
+		{
+			"type": "java",
 			"name": "Launch test",
 			"request": "launch",
 			"mainClass": "main.test",

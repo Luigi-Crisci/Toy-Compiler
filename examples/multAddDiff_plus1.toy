@@ -5,6 +5,10 @@
 
 string nome := "Prof. Gennaro Costagliola";
 
+proc getval()int,int,int:
+	-> 1,2,3
+corp;
+
 proc add1(int a,b,c)int,int,int:
 	-> a+1,b+1,c+1
 corp;
@@ -17,7 +21,7 @@ proc multAddDiff()int, int, int :
 	write("Inserire il secondo argomento:\n");
 	readln(secondo);
 	mul, add, diff := primo*secondo, primo + secondo, primo - secondo;
-	-> add1(mul,add,diff)
+	-> add1(getval())
 corp;
 
 proc writeNewLines(int n)void :
