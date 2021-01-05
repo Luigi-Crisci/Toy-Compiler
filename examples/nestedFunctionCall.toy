@@ -1,0 +1,33 @@
+/*
+ * compute factorials, the slow recursive way.
+ */
+    int n := 0;
+
+proc multipleReturns(int a)int,int,int:
+    -> 1,2,3
+corp;
+
+proc sum(int a,b,c)int:
+    -> a + b + c
+corp;
+
+proc omegasum(int a,b,c,d,e,f)int:
+    -> 0
+corp;
+    
+proc factorial(int n)int:
+    int result := 0;
+
+    if n=0 then
+	result := 1;
+    else
+	result := n * factorial(n - 1);
+    fi;
+    -> result
+corp;
+
+proc main()int:
+    write(omegasum(multipleReturns(1),multipleReturns(1)));
+    write(factorial(6),"\n",multipleReturns(10),"\n",sum(sum(multipleReturns(sum(multipleReturns(sum(1,2,3))))),sum(1,2,3),sum(1,2,3)),"\n",multipleReturns(1));
+    -> 0
+corp;

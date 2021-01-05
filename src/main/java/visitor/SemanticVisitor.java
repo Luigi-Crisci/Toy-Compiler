@@ -290,7 +290,7 @@ public class SemanticVisitor implements Visitor {
 	@Override
 	public Object visit(IdentifierExpression item) throws SemanticException {
 		Symbol s;
-		if ((s = stack.lookup(item.value)) == null)
+		if ((s = stack.lookup(item.value,SymbolTypes.VAR)) == null )
 			throw new IdNotFoundException("Identifier " + item.value + " not declared",item.left);
 
 		item.typeList = s.typeList;

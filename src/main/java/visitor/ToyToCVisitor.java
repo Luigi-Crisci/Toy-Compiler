@@ -3,7 +3,6 @@ package visitor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
@@ -18,11 +17,11 @@ public class ToyToCVisitor implements Visitor {
 
 	PrintWriter writer;
 	String currentFunctionName;
-	Deque<String> functionStructNameQueue;
+	Deque<String> functionStructNames;
 
 	public ToyToCVisitor(String filename) {
 		currentFunctionName = "";
-		functionStructNameQueue = new ArrayDeque<>();
+		functionStructNames = new ArrayDeque<>();
 		try {
 			writer = new PrintWriter(filename + ".c");
 			writeCommonInclude();
@@ -162,11 +161,13 @@ public class ToyToCVisitor implements Visitor {
 		for (StatementNode s : item.statementList)
 			s.accept(this);
 
-		String[] variableNames = writeFunctionStruct(item.exprList);
+		clearStack();
+		writeFunctionStruct(item.exprList);
+		reverseStack();
 		List<ExpressionNode> returnList = item.exprList;
 
 		// Handle multiple return types
-		int current_name = 0, current_index = 0;
+		int current_index = 0;
 		if (returnList.size() > 1 || returnList.size() == 1 && Utils.isFunctionWithMultipleReturns(returnList.get(0)) ) {
 			String variableName = ToyToCUtils.getUniqueFunctionVariabletName(currentFunctionName);
 			writer.print(currentFunctionName + " " + variableName);
@@ -176,11 +177,11 @@ public class ToyToCVisitor implements Visitor {
 				//If one of the return expressions is a function call with multiple return values, the return struct values must be 
 				//copied into the current function return struct 
 				if(Utils.isFunctionWithMultipleReturns(returnList.get(i))){
+					String structName = functionStructNames.pop();
 					for (int j = 0; j < returnList.get(i).typeList.size(); j++) {
-						writer.print(variableName + ".p_" + current_index++ + " = " + variableNames[current_name] + ".p_" + j);
+						writer.print(variableName + ".p_" + current_index++ + " = " + structName + ".p_" + j);
 						addSemicolonAndNewline();
 					}
-					current_name++;
 				}
 				else{
 					//The expression generate one value and can be printed as it is
@@ -217,7 +218,9 @@ public class ToyToCVisitor implements Visitor {
 	 * For example: it's possible to execute functions originally placed inside the write statement before calling it
 	 */
 	public Object visit(WriteStatement item) throws SemanticException {
-		String[] variableNames = writeFunctionStruct(item.expressionList);
+		clearStack();
+		writeFunctionStruct(item.expressionList);
+		reverseStack();
 
 		writer.print("printf");
 		openRoundBracket();
@@ -234,12 +237,12 @@ public class ToyToCVisitor implements Visitor {
 		addComma();
 
 		// Handle variable list
-		int count = 0;
 		for (int i = 0; i < item.expressionList.size(); i++) {
 			ExpressionNode currentExpressionNode = item.expressionList.get(i);
 			if (currentExpressionNode.typeList.size() > 1) {
 				CallProcedureExpression callProcedureExpression = (CallProcedureExpression) currentExpressionNode;
-				String structName = variableNames[count++]; // Get the name from list
+				// String structName = variableNames[count++]; // Get the name from list
+				String structName = functionStructNames.pop(); // Get the name from list
 
 				for (int j = 0; j < callProcedureExpression.typeList.size(); j++) {
 					writer.print(structName + ".p_" + j);
@@ -263,19 +266,21 @@ public class ToyToCVisitor implements Visitor {
 	}
 
 	public Object visit(AssignStatement item) throws SemanticException {
-		String[] variableNames = writeFunctionStruct(item.expressionList);
+		clearStack();
+		writeFunctionStruct(item.expressionList);
+		reverseStack();
 
-		int i = 0, currentName = 0;
+		int i = 0;
 		for (ExpressionNode e : item.expressionList) {
 			if (e.typeList.size() > 1) {
+				String variableName = functionStructNames.pop();
 				for (int j = 0; j < e.typeList.size(); j++) {
 					item.idList.get(i).accept(this);
 					addAssign();
-					writer.print(variableNames[currentName] + ".p_" + j);
+					writer.print(variableName + ".p_" + j);
 					addSemicolonAndNewline();
 					i++;
 				}
-				currentName++;
 			} else {
 				item.idList.get(i).accept(this);
 				addAssign();
@@ -312,8 +317,8 @@ public class ToyToCVisitor implements Visitor {
 	}
 
 	public Object visit(IfStatement item) throws SemanticException {
-
 		writer.print("if");
+		
 		openRoundBracket();
 		item.conditionExpression.accept(this);
 		closeRoundBracket();
@@ -358,60 +363,68 @@ public class ToyToCVisitor implements Visitor {
 	}
 
 	public Object visit(CallProcedureStatement item) throws SemanticException {
-		String[] variableNames = writeFunctionStruct(item.expressionList);
-
+		String variableName = null;
+		if(Utils.isFunctionWithMultipleReturns(item)){
+			variableName = ToyToCUtils.getUniqueFunctionVariabletName(item.id.value);
+			writer.print(ToyToCUtils.getFunctionStructName(item.id.value) + " " + variableName + " = ");
+		}
+				
 		item.id.accept(this);
 
 		openRoundBracket();
-		int count = 0;
 		for (int i = 0; i < item.expressionList.size(); i++) {
 			ExpressionNode expressionNode = item.expressionList.get(i);
-			if (expressionNode.typeList.size() > 1) {
-				CallProcedureExpression callProcedureExpression = (CallProcedureExpression) expressionNode;
-				String structName = variableNames[count++]; // Get the name from list
-
-				for (int j = 0; j < callProcedureExpression.typeList.size(); j++) {
-					writer.print(structName + ".p_" + j);
-					if (j < callProcedureExpression.typeList.size() - 1)
-						addComma();
+				if (expressionNode.typeList.size() > 1) {
+					CallProcedureExpression callProcedureExpression = (CallProcedureExpression) expressionNode;
+					String structName = functionStructNames.pop(); // Get the name from list
+	
+					for (int j = 0; j < callProcedureExpression.typeList.size(); j++) {
+						writer.print(structName + ".p_" + j);
+						if (j < callProcedureExpression.typeList.size() - 1)
+							addComma();
+					}
 				}
-			} else
-				expressionNode.accept(this);
+			 	else
+					expressionNode.accept(this);
 			if (i < item.expressionList.size() - 1)
 				addComma();
 		}
 
 		closeRoundBracket();
 		addSemicolonAndNewline();
-		return null;
+		return variableName;
 	}
 
 	public Object visit(CallProcedureExpression item) throws SemanticException {
-		// String[] variableNames = writeFunctionStruct(item.expressionList);
-
+		String variableName = null;
+		if(Utils.isFunctionWithMultipleReturns(item)){
+			variableName = ToyToCUtils.getUniqueFunctionVariabletName(item.id.value);
+			writer.print(ToyToCUtils.getFunctionStructName(item.id.value) + " " + variableName + " = ");
+		}
+				
 		item.id.accept(this);
 
 		openRoundBracket();
-		int count = 0;
 		for (int i = 0; i < item.expressionList.size(); i++) {
 			ExpressionNode expressionNode = item.expressionList.get(i);
-			if (expressionNode.typeList.size() > 1) {
-				CallProcedureExpression callProcedureExpression = (CallProcedureExpression) expressionNode;
-				String structName = variableNames[count++]; // Get the name from list
-
-				for (int j = 0; j < callProcedureExpression.typeList.size(); j++) {
-					writer.print(structName + ".p_" + j);
-					if (j < callProcedureExpression.typeList.size() - 1)
-						addComma();
+				if (expressionNode.typeList.size() > 1) {
+					CallProcedureExpression callProcedureExpression = (CallProcedureExpression) expressionNode;
+					String structName = functionStructNames.pop(); // Get the name from list
+	
+					for (int j = 0; j < callProcedureExpression.typeList.size(); j++) {
+						writer.print(structName + ".p_" + j);
+						if (j < callProcedureExpression.typeList.size() - 1)
+							addComma();
+					}
 				}
-			} else
-				expressionNode.accept(this);
+			 	else
+					expressionNode.accept(this);
 			if (i < item.expressionList.size() - 1)
 				addComma();
 		}
 
 		closeRoundBracket();
-		return null;
+		return variableName;
 	}
 
 	public Object visit(BinaryExpression item) throws SemanticException {
@@ -466,22 +479,17 @@ public class ToyToCVisitor implements Visitor {
 	 * @return the generated names for all function calls
 	 * @throws SemanticException
 	 */
-	public String[] writeFunctionStruct(List<ExpressionNode> expressionList) throws SemanticException {
-		ArrayList<String> structNames = new ArrayList<>();
-		for (ExpressionNode e : expressionList)
-			if (e.typeList.size() > 1) {
+	public void writeFunctionStruct(List<ExpressionNode> expressionList) throws SemanticException {
+		for (ExpressionNode e : expressionList){
+			if (e instanceof CallProcedureExpression){
 				CallProcedureExpression callProcedureExpression = (CallProcedureExpression) e;
-				
-				String[] variableNames = writeFunctionStruct(callProcedureExpression.expressionList);
-				String variableName = ToyToCUtils.getUniqueFunctionVariabletName(callProcedureExpression.id.value);
-
-				writer.print(ToyToCUtils.getFunctionStructName(callProcedureExpression.id.value) + " " + variableName
-						+ " = ");
-				structNames.add(variableName);
-				e.accept(this);
-				addSemicolonAndNewline();
+				writeFunctionStruct(callProcedureExpression.expressionList);
+				if (e.typeList.size() > 1 ) {
+					functionStructNames.push((String)callProcedureExpression.accept(this));
+					addSemicolonAndNewline();
+				}
 			}
-		return (String[]) structNames.toArray(new String[0]);
+		}
 	}
 
 	private void writeFunctionStructDefinition(ProcedureNode item) {
@@ -492,6 +500,17 @@ public class ToyToCVisitor implements Visitor {
 		}
 		writer.print("}" + functionStructName);
 		addSemicolonAndNewline();
+	}
+
+	private void reverseStack(){
+		Deque<String> reverseStack = new ArrayDeque<>();
+		for(String s : functionStructNames)
+			reverseStack.push(s);
+		functionStructNames = reverseStack;
+	}
+
+	private void clearStack(){
+		functionStructNames = new ArrayDeque<>();
 	}
 
 }
