@@ -363,6 +363,11 @@ public class ToyToCVisitor implements Visitor {
 	}
 
 	public Object visit(CallProcedureStatement item) throws SemanticException {
+		clearStack();
+		writeFunctionStruct(item.expressionList);
+		reverseStack();
+
+		
 		String variableName = null;
 		if(Utils.isFunctionWithMultipleReturns(item)){
 			variableName = ToyToCUtils.getUniqueFunctionVariabletName(item.id.value);

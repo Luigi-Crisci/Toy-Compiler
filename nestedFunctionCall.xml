@@ -1,0 +1,315 @@
+<ProgramNode>
+<VariableDeclaration>
+<Type>INT</Type>
+<IdInitialization>
+<IdentifierExpression>
+<value> n</value>
+</IdentifierExpression>
+<IntegerConstant> 0</IntegerConstant>
+</IdInitialization>
+</VariableDeclaration>
+<ProcedureNode>
+<IdentifierExpression>
+<value> multipleReturns</value>
+</IdentifierExpression>
+<ParameterDeclarations>
+<Type>INT</Type>
+<IdentifierExpression>
+<value> a</value>
+</IdentifierExpression>
+</ParameterDeclarations>
+<ResultTypes>
+<Type>INT</Type>
+<Type>INT</Type>
+<Type>INT</Type>
+</ResultTypes>
+<ProcedureBody>
+<IntegerConstant> 1</IntegerConstant>
+<IntegerConstant> 2</IntegerConstant>
+<IntegerConstant> 3</IntegerConstant>
+</ProcedureBody>
+</ProcedureNode>
+<ProcedureNode>
+<IdentifierExpression>
+<value> sum</value>
+</IdentifierExpression>
+<ParameterDeclarations>
+<Type>INT</Type>
+<IdentifierExpression>
+<value> a</value>
+</IdentifierExpression>
+<IdentifierExpression>
+<value> b</value>
+</IdentifierExpression>
+<IdentifierExpression>
+<value> c</value>
+</IdentifierExpression>
+</ParameterDeclarations>
+<ResultTypes>
+<Type>INT</Type>
+</ResultTypes>
+<ProcedureBody>
+<BinaryExpression>
+<BinaryExpression>
+<IdentifierExpression>
+<value> a</value>
+</IdentifierExpression>
+<Operation> PLUS</Operation>
+<IdentifierExpression>
+<value> b</value>
+</IdentifierExpression>
+</BinaryExpression>
+<Operation> PLUS</Operation>
+<IdentifierExpression>
+<value> c</value>
+</IdentifierExpression>
+</BinaryExpression>
+</ProcedureBody>
+</ProcedureNode>
+<ProcedureNode>
+<IdentifierExpression>
+<value> omegasum</value>
+</IdentifierExpression>
+<ParameterDeclarations>
+<Type>INT</Type>
+<IdentifierExpression>
+<value> a</value>
+</IdentifierExpression>
+<IdentifierExpression>
+<value> b</value>
+</IdentifierExpression>
+<IdentifierExpression>
+<value> c</value>
+</IdentifierExpression>
+<IdentifierExpression>
+<value> d</value>
+</IdentifierExpression>
+<IdentifierExpression>
+<value> e</value>
+</IdentifierExpression>
+<IdentifierExpression>
+<value> f</value>
+</IdentifierExpression>
+</ParameterDeclarations>
+<ResultTypes>
+<Type>INT</Type>
+</ResultTypes>
+<ProcedureBody>
+<IntegerConstant> 0</IntegerConstant>
+</ProcedureBody>
+</ProcedureNode>
+<ProcedureNode>
+<IdentifierExpression>
+<value> factorial</value>
+</IdentifierExpression>
+<ParameterDeclarations>
+<Type>INT</Type>
+<IdentifierExpression>
+<value> n</value>
+</IdentifierExpression>
+</ParameterDeclarations>
+<ResultTypes>
+<Type>INT</Type>
+</ResultTypes>
+<ProcedureBody>
+<VariableDeclaration>
+<Type>INT</Type>
+<IdInitialization>
+<IdentifierExpression>
+<value> result</value>
+</IdentifierExpression>
+<IntegerConstant> 0</IntegerConstant>
+</IdInitialization>
+</VariableDeclaration>
+<IfStatement>
+<BinaryExpression>
+<IdentifierExpression>
+<value> n</value>
+</IdentifierExpression>
+<Operation> EQ</Operation>
+<IntegerConstant> 0</IntegerConstant>
+</BinaryExpression>
+<AssignStatement>
+<IdentifierExpression>
+<value> result</value>
+</IdentifierExpression>
+<IntegerConstant> 1</IntegerConstant>
+</AssignStatement>
+<AssignStatement>
+<IdentifierExpression>
+<value> result</value>
+</IdentifierExpression>
+<BinaryExpression>
+<IdentifierExpression>
+<value> n</value>
+</IdentifierExpression>
+<Operation> TIMES</Operation>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> factorial</value>
+</IdentifierExpression>
+<BinaryExpression>
+<IdentifierExpression>
+<value> n</value>
+</IdentifierExpression>
+<Operation> MINUS</Operation>
+<IntegerConstant> 1</IntegerConstant>
+</BinaryExpression>
+</CallProcedureExpression>
+</BinaryExpression>
+</AssignStatement>
+</IfStatement>
+<IdentifierExpression>
+<value> result</value>
+</IdentifierExpression>
+</ProcedureBody>
+</ProcedureNode>
+<ProcedureNode>
+<IdentifierExpression>
+<value> main</value>
+</IdentifierExpression>
+<ResultTypes>
+<Type>INT</Type>
+</ResultTypes>
+<ProcedureBody>
+<CallProcedureStatement>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> sum</value>
+</IdentifierExpression>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> multipleReturns</value>
+</IdentifierExpression>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> sum</value>
+</IdentifierExpression>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> multipleReturns</value>
+</IdentifierExpression>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> sum</value>
+</IdentifierExpression>
+<IntegerConstant> 1</IntegerConstant>
+<IntegerConstant> 2</IntegerConstant>
+<IntegerConstant> 3</IntegerConstant>
+</CallProcedureExpression>
+</CallProcedureExpression>
+</CallProcedureExpression>
+</CallProcedureExpression>
+</CallProcedureExpression>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> sum</value>
+</IdentifierExpression>
+<IntegerConstant> 1</IntegerConstant>
+<IntegerConstant> 2</IntegerConstant>
+<IntegerConstant> 3</IntegerConstant>
+</CallProcedureExpression>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> sum</value>
+</IdentifierExpression>
+<IntegerConstant> 1</IntegerConstant>
+<IntegerConstant> 2</IntegerConstant>
+<IntegerConstant> 3</IntegerConstant>
+</CallProcedureExpression>
+</CallProcedureStatement>
+<WriteStatement><IntegerConstant> 1</IntegerConstant>
+</WriteStatement>
+<WriteStatement><CallProcedureExpression>
+<IdentifierExpression>
+<value> omegasum</value>
+</IdentifierExpression>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> multipleReturns</value>
+</IdentifierExpression>
+<IntegerConstant> 1</IntegerConstant>
+</CallProcedureExpression>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> multipleReturns</value>
+</IdentifierExpression>
+<IntegerConstant> 1</IntegerConstant>
+</CallProcedureExpression>
+</CallProcedureExpression>
+</WriteStatement>
+<WriteStatement><CallProcedureExpression>
+<IdentifierExpression>
+<value> factorial</value>
+</IdentifierExpression>
+<IntegerConstant> 6</IntegerConstant>
+</CallProcedureExpression>
+<StringConstant> \n</StringConstant>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> multipleReturns</value>
+</IdentifierExpression>
+<IntegerConstant> 10</IntegerConstant>
+</CallProcedureExpression>
+<StringConstant> \n</StringConstant>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> sum</value>
+</IdentifierExpression>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> sum</value>
+</IdentifierExpression>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> multipleReturns</value>
+</IdentifierExpression>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> sum</value>
+</IdentifierExpression>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> multipleReturns</value>
+</IdentifierExpression>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> sum</value>
+</IdentifierExpression>
+<IntegerConstant> 1</IntegerConstant>
+<IntegerConstant> 2</IntegerConstant>
+<IntegerConstant> 3</IntegerConstant>
+</CallProcedureExpression>
+</CallProcedureExpression>
+</CallProcedureExpression>
+</CallProcedureExpression>
+</CallProcedureExpression>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> sum</value>
+</IdentifierExpression>
+<IntegerConstant> 1</IntegerConstant>
+<IntegerConstant> 2</IntegerConstant>
+<IntegerConstant> 3</IntegerConstant>
+</CallProcedureExpression>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> sum</value>
+</IdentifierExpression>
+<IntegerConstant> 1</IntegerConstant>
+<IntegerConstant> 2</IntegerConstant>
+<IntegerConstant> 3</IntegerConstant>
+</CallProcedureExpression>
+</CallProcedureExpression>
+<StringConstant> \n</StringConstant>
+<CallProcedureExpression>
+<IdentifierExpression>
+<value> multipleReturns</value>
+</IdentifierExpression>
+<IntegerConstant> 1</IntegerConstant>
+</CallProcedureExpression>
+</WriteStatement>
+<IntegerConstant> 0</IntegerConstant>
+</ProcedureBody>
+</ProcedureNode>
+</ProgramNode>

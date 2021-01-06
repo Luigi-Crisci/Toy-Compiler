@@ -27,6 +27,8 @@ proc factorial(int n)int:
 corp;
 
 proc main()int:
+    sum(sum(multipleReturns(sum(multipleReturns(sum(1,2,3))))),sum(1,2,3),sum(1,2,3));
+    write(1);
     write(omegasum(multipleReturns(1),multipleReturns(1)));
     write(factorial(6),"\n",multipleReturns(10),"\n",sum(sum(multipleReturns(sum(multipleReturns(sum(1,2,3))))),sum(1,2,3),sum(1,2,3)),"\n",multipleReturns(1));
     -> 0
