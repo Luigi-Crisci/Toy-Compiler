@@ -13,5 +13,5 @@ toy_filename=$1
 filename=${toy_filename%.toy}
 c_filename=$filename.toy.c
 
-java -cp Toy2C.jar main.Driver $toy_filename
+java -jar Toy2C.jar $toy_filename
 clang $c_filename -o $filename -lm

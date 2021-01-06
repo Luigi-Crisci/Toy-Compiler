@@ -15,10 +15,9 @@ To build this project, just type
 
 > mvn package
 
-A jar *with all dependencies* will be created under the `target/` directory.  
+A jar *with all dependencies* will be created under the `release/` directory.  
 
-> Note that code generation for *Javacup* and *jflex* is disabled: if you want to compile the source code and modify the .cup or the .jflex source file, you will need to enable the related plugins in the pom.xml, then generate the .java files and manually replace them under the /src tree.  
-> The mvn package will not work if the *Javacup* or the *jflex* are enabled. 
+> Note that code generation for *Javacup* and *jflex* is disabled by default. If you want to manually generate the sources for Javacup and Jflex, type *"mvn generate-sources -P source-gen"* and the .java classes will be placed under *target* folder.
 
 A compiled version of this compiler can be found under the `release/` directory. The release is composed of:  
 
