@@ -10,6 +10,8 @@ public class TypeCheck {
 
 			if (type1 == type2)
 				return type1;
+			else
+				return Symbols.FLOAT;
 		}
 
 		// Binary logical

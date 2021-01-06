@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo "Creating symbolic link..."
+sudo ln ../src/main/resources/native/toy_functions.h /usr/include/toy_functions.h
+sudo ldconfig
+
+echo "Successfully installed at /usr/include!"
+exit 0

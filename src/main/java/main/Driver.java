@@ -15,12 +15,19 @@ public class Driver {
 
     public static void main(String[] args) throws Exception
     {
-        String filename = "nestedFunctionCall";
-        // BufferedReader in = new BufferedReader(new FileReader(args[1]));
-        BufferedReader in = new BufferedReader(new FileReader("/home/luigi/crisci-cuccurullo_es5_scg/examples/" + filename + ".toy")); //Home pc
-        // BufferedReader in = new BufferedReader(new FileReader("/home/luigi/compilatori/crisci-cuccurullo_es5/examples/" + filename + ".toy"));
+        if(args.length < 1){
+            System.out.println("No filename provided");
+            return;
+        }
+
+        String filename = args[0];
+        // String filename = "whileWithMultipleReturns";
+        // // BufferedReader in = new BufferedReader(new FileReader(args[1]));
+        // BufferedReader in = new BufferedReader(new FileReader("/home/luigi/crisci-cuccurullo_es5_scg/examples/" + filename + ".toy")); //Home pc
+        BufferedReader in = new BufferedReader(new FileReader(filename)); //Home pc
+        // // BufferedReader in = new BufferedReader(new FileReader("/home/luigi/compilatori/crisci-cuccurullo_es5/examples/" + filename + ".toy"));
         
-        // BufferedReader in = new BufferedReader(new FileReader("/home/alecuc/crisci-cuccurullo_es5_scg/examples/" + filename + ".toy"));
+        // // BufferedReader in = new BufferedReader(new FileReader("/home/alecuc/crisci-cuccurullo_es5_scg/examples/" + filename + ".toy"));
 
         
         ComplexSymbolFactory f = new ComplexSymbolFactory();

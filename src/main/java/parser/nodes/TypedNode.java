@@ -24,5 +24,23 @@ public abstract class TypedNode {
 		return typeList.get(0);
 	}
 
+	public Integer getType(int i){
+		return typeList.get(i);
+	}
 
+	/**
+	 * Return number of types for this node
+	 * @return	the size of the typeList
+	 */
+	public Integer size(){
+		return typeList.size();
+	}
+
+	public boolean containsType(int type){
+		return typeList.contains(type);
+	}
+
+	public void addType(int type){
+		typeList.add(type);
+	}
 }

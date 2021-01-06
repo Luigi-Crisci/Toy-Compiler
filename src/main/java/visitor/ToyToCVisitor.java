@@ -34,7 +34,7 @@ public class ToyToCVisitor implements Visitor {
 		writer.println("#include<stdlib.h>");
 		writer.println("#include<stdio.h>");
 		writer.println("#include<string.h>");
-		writer.println("#include\"src/main/native/functions.h\"");
+		writer.println("#include<toy_functions.h>");
 		// writer.println("#include\"src/main/native/emsctipten_functions.h\""); //This enable emscripten input
 	}
 
@@ -108,7 +108,7 @@ public class ToyToCVisitor implements Visitor {
 	public Object visit(IdInitializerNode item) throws SemanticException {
 		item.id.accept(this);
 		if (item.expression != null) {
-			writer.print("=");
+			addAssign();
 			item.expression.accept(this);
 		}
 		return null;
@@ -178,7 +178,7 @@ public class ToyToCVisitor implements Visitor {
 				//copied into the current function return struct 
 				if(Utils.isFunctionWithMultipleReturns(returnList.get(i))){
 					String structName = functionStructNames.pop();
-					for (int j = 0; j < returnList.get(i).typeList.size(); j++) {
+					for (int j = 0; j < returnList.get(i).size(); j++) {
 						writer.print(variableName + ".p_" + current_index++ + " = " + structName + ".p_" + j);
 						addSemicolonAndNewline();
 					}
@@ -218,16 +218,14 @@ public class ToyToCVisitor implements Visitor {
 	 * For example: it's possible to execute functions originally placed inside the write statement before calling it
 	 */
 	public Object visit(WriteStatement item) throws SemanticException {
-		clearStack();
-		writeFunctionStruct(item.expressionList);
-		reverseStack();
+		handleFunctionCalls(item.expressionList);
 
 		writer.print("printf");
 		openRoundBracket();
 
 		writer.print("\"");
 		for (ExpressionNode currentExpressionNode : item.expressionList) {
-			if (currentExpressionNode.typeList.size() > 1) {
+			if (currentExpressionNode.size() > 1) {
 				for (Integer type : currentExpressionNode.typeList)
 					writer.print(ToyToCUtils.getPlaceholder(type));
 			} else
@@ -239,14 +237,14 @@ public class ToyToCVisitor implements Visitor {
 		// Handle variable list
 		for (int i = 0; i < item.expressionList.size(); i++) {
 			ExpressionNode currentExpressionNode = item.expressionList.get(i);
-			if (currentExpressionNode.typeList.size() > 1) {
+			if (currentExpressionNode.size() > 1) {
 				CallProcedureExpression callProcedureExpression = (CallProcedureExpression) currentExpressionNode;
 				// String structName = variableNames[count++]; // Get the name from list
 				String structName = functionStructNames.pop(); // Get the name from list
 
-				for (int j = 0; j < callProcedureExpression.typeList.size(); j++) {
+				for (int j = 0; j < callProcedureExpression.size(); j++) {
 					writer.print(structName + ".p_" + j);
-					if (j < callProcedureExpression.typeList.size() - 1)
+					if (j < callProcedureExpression.size() - 1)
 						addComma();
 				}
 			} 
@@ -266,15 +264,13 @@ public class ToyToCVisitor implements Visitor {
 	}
 
 	public Object visit(AssignStatement item) throws SemanticException {
-		clearStack();
-		writeFunctionStruct(item.expressionList);
-		reverseStack();
+		handleFunctionCalls(item.expressionList);
 
 		int i = 0;
 		for (ExpressionNode e : item.expressionList) {
-			if (e.typeList.size() > 1) {
+			if (e.size() > 1) {
 				String variableName = functionStructNames.pop();
-				for (int j = 0; j < e.typeList.size(); j++) {
+				for (int j = 0; j < e.size(); j++) {
 					item.idList.get(i).accept(this);
 					addAssign();
 					writer.print(variableName + ".p_" + j);
@@ -363,9 +359,7 @@ public class ToyToCVisitor implements Visitor {
 	}
 
 	public Object visit(CallProcedureStatement item) throws SemanticException {
-		clearStack();
-		writeFunctionStruct(item.expressionList);
-		reverseStack();
+		handleFunctionCalls(item.expressionList);
 
 		
 		String variableName = null;
@@ -379,13 +373,13 @@ public class ToyToCVisitor implements Visitor {
 		openRoundBracket();
 		for (int i = 0; i < item.expressionList.size(); i++) {
 			ExpressionNode expressionNode = item.expressionList.get(i);
-				if (expressionNode.typeList.size() > 1) {
+				if (expressionNode.size() > 1) {
 					CallProcedureExpression callProcedureExpression = (CallProcedureExpression) expressionNode;
 					String structName = functionStructNames.pop(); // Get the name from list
 	
-					for (int j = 0; j < callProcedureExpression.typeList.size(); j++) {
+					for (int j = 0; j < callProcedureExpression.size(); j++) {
 						writer.print(structName + ".p_" + j);
-						if (j < callProcedureExpression.typeList.size() - 1)
+						if (j < callProcedureExpression.size() - 1)
 							addComma();
 					}
 				}
@@ -412,13 +406,13 @@ public class ToyToCVisitor implements Visitor {
 		openRoundBracket();
 		for (int i = 0; i < item.expressionList.size(); i++) {
 			ExpressionNode expressionNode = item.expressionList.get(i);
-				if (expressionNode.typeList.size() > 1) {
+				if (expressionNode.size() > 1) {
 					CallProcedureExpression callProcedureExpression = (CallProcedureExpression) expressionNode;
 					String structName = functionStructNames.pop(); // Get the name from list
 	
-					for (int j = 0; j < callProcedureExpression.typeList.size(); j++) {
+					for (int j = 0; j < callProcedureExpression.size(); j++) {
 						writer.print(structName + ".p_" + j);
-						if (j < callProcedureExpression.typeList.size() - 1)
+						if (j < callProcedureExpression.size() - 1)
 							addComma();
 					}
 				}
@@ -478,10 +472,24 @@ public class ToyToCVisitor implements Visitor {
 	}
 
 	/**
-	 * Write procedure calls with multiple parameters and assign those to unique-identified variables
-	 * This is needed because multiple call to the same function can occour in the same code block
+	 * Utily to call WriteFunctionStruct, reverting the stack before to return
+	 * @param expressionNodes
+	 * @throws SemanticException
+	 */
+	public void handleFunctionCalls(List<ExpressionNode> expressionNodes) throws SemanticException{
+		clearStack();
+		writeFunctionStruct(expressionNodes);
+		reverseStack();
+	}
+
+	/**
+	 * Recursively explore an expressionList looking for call procedures with multiple returns and make a bottom-up visit
+	 * to each callProcedureNode found, initializing a stack with the struct variable names for each call procedure
+	 * This function handle the case where function calls are nested
 	 * @param expressionList
 	 * @return the generated names for all function calls
+	 * @return the functionStructNames stack is also initialized with the names of the struct variable used to capture the returns of the found functions, with the 
+	 * last one
 	 * @throws SemanticException
 	 */
 	public void writeFunctionStruct(List<ExpressionNode> expressionList) throws SemanticException {
@@ -489,7 +497,7 @@ public class ToyToCVisitor implements Visitor {
 			if (e instanceof CallProcedureExpression){
 				CallProcedureExpression callProcedureExpression = (CallProcedureExpression) e;
 				writeFunctionStruct(callProcedureExpression.expressionList);
-				if (e.typeList.size() > 1 ) {
+				if (e.size() > 1 ) {
 					functionStructNames.push((String)callProcedureExpression.accept(this));
 					addSemicolonAndNewline();
 				}

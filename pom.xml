@@ -36,7 +36,7 @@
   <build>
     <plugins>
 
-      <plugin>
+      <!-- <plugin>
         <groupId>de.jflex</groupId>
         <artifactId>jflex-maven-plugin</artifactId>
         <version>1.8.2</version>
@@ -75,7 +75,7 @@
           <symbolsName>Symbols</symbolsName>
           <packageName>parser</packageName>
         </configuration>
-      </plugin>
+      </plugin> -->
 
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>

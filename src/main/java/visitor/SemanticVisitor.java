@@ -50,15 +50,15 @@ public class SemanticVisitor implements Visitor {
 		if (item.expression != null) {
 			item.expression.accept(this);
 
-			if (item.expression.typeList.size() > 1)
+			if (Utils.hasMultipleReturns(item.expression))
 				throw new InvalidAssignmentException("Too many values returned from expression",item.expression.left);
 
-			if (TypeCheck.checkType(Symbols.ASSIGN, item.typeList.get(0), item.expression.typeList.get(0)) == -1)
-				throw new TypeMismatch("Invalid assignment of " + Symbols.terminalNames[item.expression.typeList.get(0)]
-						+ " to " + Symbols.terminalNames[item.typeList.get(0)],item.id.left);
+			if (TypeCheck.checkType(Symbols.ASSIGN, item.getType(), item.expression.getType()) == -1)
+				throw new TypeMismatch("Invalid assignment of " + Symbols.terminalNames[item.expression.getType()]
+						+ " to " + Symbols.terminalNames[item.getType()],item.id.left);
 
 		}
-		stack.addId(new Symbol(item.id.value, SymbolTypes.VAR, item.typeList.get(0)));
+		stack.addId(new Symbol(item.id.value, SymbolTypes.VAR, item.getType()));
 
 		return null;
 	}
@@ -70,11 +70,11 @@ public class SemanticVisitor implements Visitor {
 			throw new MultipleDeclarationException("Procedure " + item.id.value + " has been already declared",item.id.left.getLine());
 
 		item.typeList = item.returnTypes;
-		if(item.typeList.size() > 1 && item.typeList.contains(Symbols.VOID))
+		if(item.size() > 1 && item.containsType(Symbols.VOID))
 			throw new InvalidReturnTypeException("Cannot have VOID with multiple return types",item.id.left.getLine());
 			
 		List<Integer> paramTypeList = item.paramList.stream()
-				.map(p -> p.idList.stream().map(id -> p.typeList.get(0)).collect(Collectors.toList()))
+				.map(p -> p.idList.stream().map(id -> p.getType()).collect(Collectors.toList()))
 				.flatMap(list -> list.stream()).collect(Collectors.toList());
 		functionSymbol = new Symbol(item.id.value, paramTypeList, item.returnTypes);
 		stack.addId(functionSymbol);
@@ -84,14 +84,14 @@ public class SemanticVisitor implements Visitor {
 			e.accept(this);
 		
 		item.procBody.accept(this);
-		if (item.procBody.typeList.size() != item.returnTypes.size())
+		if (item.procBody.size() != item.returnTypes.size())
 			throw new MisnumberedArgumentsException(
-					"Attempting to make the procedure " + item.id.value + " return " + item.procBody.typeList.size()
+					"Attempting to make the procedure " + item.id.value + " return " + item.procBody.size()
 							+ " arguments." + " Expecting " + item.returnTypes.size() + " elements to be returned",item.id.left.getLine());
 		for (int i = 0; i < item.returnTypes.size(); i++)
-			if (TypeCheck.checkType(Symbols.CORP, item.procBody.typeList.get(i), item.returnTypes.get(i)) == -1)
+			if (TypeCheck.checkType(Symbols.CORP, item.procBody.getType(i), item.returnTypes.get(i)) == -1)
 				throw new TypeMismatch("Error under " + item.id.value + " on returned element number " + (i + 1)
-						+ ": type " + Symbols.terminalNames[item.procBody.typeList.get(i)] + " incompatible with "
+						+ ": type " + Symbols.terminalNames[item.procBody.getType(i)] + " incompatible with "
 						+ Symbols.terminalNames[item.returnTypes.get(i)],item.procBody.exprList.get(i).left);
 
 		stack.exitScope();
@@ -103,7 +103,7 @@ public class SemanticVisitor implements Visitor {
 		for (IdentifierExpression id : item.idList){
 			if (stack.probe(id.value))
 				throw new MultipleDeclarationException("Redefinition of parameter " + id.value,id.left);
-			id.typeList.add(item.getType());
+			id.addType(item.getType());
 			stack.addId(new Symbol(id.value, SymbolTypes.VAR,id.getType()));
 		}
 
@@ -123,7 +123,7 @@ public class SemanticVisitor implements Visitor {
 			returnTypes.addAll(e.typeList);
 		}
 		if (returnTypes.size() == 0)
-			item.typeList.add(Symbols.VOID);
+			item.addType(Symbols.VOID);
 		else
 			item.typeList = returnTypes;
 
@@ -162,8 +162,8 @@ public class SemanticVisitor implements Visitor {
 					"Attempting to assign " + item.idList.size() + " arguments to " + expressionTypes.size(),item.idList.get(0).left);
 
 		for (int i = 0; i < expressionTypes.size(); i++)
-			if (TypeCheck.checkType(Symbols.ASSIGN, item.idList.get(i).typeList.get(0), expressionTypes.get(i)) == -1)
-				throw new TypeMismatch("Trying to assign " + Symbols.terminalNames[item.idList.get(i).typeList.get(0)]
+			if (TypeCheck.checkType(Symbols.ASSIGN, item.idList.get(i).getType(), expressionTypes.get(i)) == -1)
+				throw new TypeMismatch("Trying to assign " + Symbols.terminalNames[item.idList.get(i).getType()]
 						+ " to " + Symbols.terminalNames[expressionTypes.get(i)],item.idList.get(i).left);
 
 		return null;
@@ -178,9 +178,9 @@ public class SemanticVisitor implements Visitor {
 		for (StatementNode statement : item.bodyStatementList)
 			statement.accept(this);
 
-		if (item.conditionExpression.typeList.size() != 1 || item.conditionExpression.typeList.get(0) != Symbols.BOOL)
+		if (item.conditionExpression.size() != 1 || item.conditionExpression.getType() != Symbols.BOOL)
 			throw new InvalidConditionException("Condition error: type is "
-					+ Symbols.terminalNames[item.conditionExpression.typeList.get(0)] + ", expected BOOLEAN", item.conditionExpression.left);
+					+ Symbols.terminalNames[item.conditionExpression.getType()] + ", expected BOOLEAN", item.conditionExpression.left);
 		return null;
 	}
 
@@ -189,9 +189,9 @@ public class SemanticVisitor implements Visitor {
 
 		item.conditionExpression.accept(this);
 
-		if (item.conditionExpression.typeList.get(0) != Symbols.BOOL)
+		if (item.conditionExpression.getType() != Symbols.BOOL)
 			throw new InvalidConditionException("Condition error: type is "
-					+ Symbols.terminalNames[item.conditionExpression.typeList.get(0)] + ", expected BOOLEAN",item.conditionExpression.left);
+					+ Symbols.terminalNames[item.conditionExpression.getType()] + ", expected BOOLEAN",item.conditionExpression.left);
 
 		for (StatementNode e : item.ifBodyStatatementList)
 			e.accept(this);
@@ -208,9 +208,9 @@ public class SemanticVisitor implements Visitor {
 
 		item.expression.accept(this);
 
-		if (item.expression.typeList.get(0) != Symbols.BOOL)
+		if (item.expression.getType() != Symbols.BOOL)
 			throw new InvalidConditionException("Condition error: type is "
-					+ Symbols.terminalNames[item.expression.typeList.get(0)] + ", expected BOOLEAN",item.expression.left);
+					+ Symbols.terminalNames[item.expression.getType()] + ", expected BOOLEAN",item.expression.left);
 
 		for (StatementNode elif : item.elifBodyStatementList)
 			elif.accept(this);
@@ -224,17 +224,16 @@ public class SemanticVisitor implements Visitor {
 		item.leftExpression.accept(this);
 		item.rightExpression.accept(this);
 
-		if (item.leftExpression.typeList.size() > 1 || item.rightExpression.typeList.size() > 1)
+		if (item.leftExpression.size() > 1 || item.rightExpression.size() > 1)
 			throw new InvalidExpressionException(
 					"Cannot apply " + Symbols.terminalNames[item.operation] + " to more than one element",item.left);
 
-		Integer type = TypeCheck.checkType(item.operation, item.leftExpression.typeList.get(0),
-				item.rightExpression.typeList.get(0));
+		Integer type = TypeCheck.checkType(item.operation, item.leftExpression.getType(), item.rightExpression.getType());
 		if (type == -1)
 			throw new TypeMismatch("Cannot use the operation " + Symbols.terminalNames[item.operation] + " on "
-					+ Symbols.terminalNames[item.leftExpression.typeList.get(0)] + " and "
-					+ Symbols.terminalNames[item.rightExpression.typeList.get(0)],item.left);
-		item.typeList.add(type);
+					+ Symbols.terminalNames[item.leftExpression.getType()] + " and "
+					+ Symbols.terminalNames[item.rightExpression.getType()],item.left);
+		item.addType(type);
 
 		return null;
 	}
@@ -244,46 +243,46 @@ public class SemanticVisitor implements Visitor {
 
 		item.rightExpression.accept(this);
 
-		if (item.rightExpression.typeList.size() > 1)
+		if (item.rightExpression.size() > 1)
 			throw new InvalidExpressionException(
 					"Cannot apply " + Symbols.terminalNames[item.operation] + " to more than one element",item.left);
 
-		Integer type = TypeCheck.checkType(item.operation, item.rightExpression.typeList.get(0));
+		Integer type = TypeCheck.checkType(item.operation, item.rightExpression.getType());
 		if (type == -1)
 			throw new TypeMismatch("Cannot apply the unary operator " + Symbols.terminalNames[item.operation] + " to "
-					+ Symbols.terminalNames[item.rightExpression.typeList.get(0)],item.left);
-		item.typeList.add(type);
+					+ Symbols.terminalNames[item.rightExpression.getType()],item.left);
+		item.addType(type);
 
 		return null;
 	}
 
 	@Override
 	public Object visit(IntegerConstant item) throws SemanticException {
-		item.typeList.add(Symbols.INT);
+		item.addType(Symbols.INT);
 		return null;
 	}
 
 	@Override
 	public Object visit(FloatConstant item) throws SemanticException {
-		item.typeList.add(Symbols.FLOAT);
+		item.addType(Symbols.FLOAT);
 		return null;
 	}
 
 	@Override
 	public Object visit(StringConstant item) throws SemanticException {
-		item.typeList.add(Symbols.STRING);
+		item.addType(Symbols.STRING);
 		return null;
 	}
 
 	@Override
 	public Object visit(BooleanConstant item) throws SemanticException {
-		item.typeList.add(Symbols.BOOL);
+		item.addType(Symbols.BOOL);
 		return null;
 	}
 
 	@Override
 	public Object visit(NullConstant item) throws SemanticException {
-		item.typeList.add(Symbols.NULL);
+		item.addType(Symbols.NULL);
 		return null;
 	}
 

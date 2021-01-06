@@ -1,0 +1,17 @@
+#!/bin/bash
+usage(){
+	echo "USAGE: ./Toy2C.sh FILENAME"
+	exit 1
+}
+
+if [[ $# -lt 1 ]]
+then
+	usage
+fi
+
+toy_filename=$1
+filename=${toy_filename%.toy}
+c_filename=$filename.toy.c
+
+java -cp Toy2C.jar main.Driver $toy_filename
+clang $c_filename -o $filename -lm

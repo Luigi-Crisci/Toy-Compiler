@@ -1,0 +1,20 @@
+
+
+proc getChoise()int,int:
+	int a,b;
+	readln(a,b);
+	-> a,b
+corp;
+
+
+proc main()int:
+	int a,b,c;
+	while
+		a,b := getChoise();
+		->
+		a <> 0
+	do
+		write(b);
+	od;
+	-> 0
+corp;
