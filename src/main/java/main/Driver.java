@@ -21,15 +21,8 @@ public class Driver {
         }
 
         String filename = args[0];
-        // String filename = "whileWithMultipleReturns";
-        // // BufferedReader in = new BufferedReader(new FileReader(args[1]));
-        // BufferedReader in = new BufferedReader(new FileReader("/home/luigi/crisci-cuccurullo_es5_scg/examples/" + filename + ".toy")); //Home pc
-        BufferedReader in = new BufferedReader(new FileReader(filename)); //Home pc
-        // // BufferedReader in = new BufferedReader(new FileReader("/home/luigi/compilatori/crisci-cuccurullo_es5/examples/" + filename + ".toy"));
-        
-        // // BufferedReader in = new BufferedReader(new FileReader("/home/alecuc/crisci-cuccurullo_es5_scg/examples/" + filename + ".toy"));
+        BufferedReader in = new BufferedReader(new FileReader(filename));
 
-        
         ComplexSymbolFactory f = new ComplexSymbolFactory();
         Lexer l = new Lexer(in,f);
         Parser p = new Parser(l,f);

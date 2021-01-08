@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo "Deleting link..."
+sudo rm /usr/include/toy_functions.h
+sudo ldconfig
+
+echo "Toy functions successfully removed!!"
+exit 0

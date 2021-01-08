@@ -161,9 +161,7 @@ public class ToyToCVisitor implements Visitor {
 		for (StatementNode s : item.statementList)
 			s.accept(this);
 
-		clearStack();
-		writeFunctionStruct(item.exprList);
-		reverseStack();
+		handleFunctionCalls(item.exprList);
 		List<ExpressionNode> returnList = item.exprList;
 
 		// Handle multiple return types

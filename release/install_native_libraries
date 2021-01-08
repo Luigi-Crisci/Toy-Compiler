@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Creating symbolic link..."
+echo "Creating link..."
 sudo ln ../src/main/resources/native/toy_functions.h /usr/include/toy_functions.h
 sudo ldconfig
 

@@ -4,7 +4,7 @@
     int n := 0;
 
 proc multipleReturns(int a)int,int,int:
-    -> 1,2,3
+    -> a,a,a
 corp;
 
 proc sum(int a,b,c)int:
@@ -12,7 +12,7 @@ proc sum(int a,b,c)int:
 corp;
 
 proc omegasum(int a,b,c,d,e,f)int:
-    -> 0
+    -> sum(a,b,c) + sum(d,e,f)
 corp;
     
 proc factorial(int n)int:
@@ -27,9 +27,7 @@ proc factorial(int n)int:
 corp;
 
 proc main()int:
-    sum(sum(multipleReturns(sum(multipleReturns(sum(1,2,3))))),sum(1,2,3),sum(1,2,3));
-    write(1);
-    write(omegasum(multipleReturns(1),multipleReturns(1)));
-    write(factorial(6),"\n",multipleReturns(10),"\n",sum(sum(multipleReturns(sum(multipleReturns(sum(1,2,3))))),sum(1,2,3),sum(1,2,3)),"\n",multipleReturns(1));
+    /* 120 + 9 + (120 * 3) */ 
+    write(sum(factorial(5),omegasum(multipleReturns(1),multipleReturns(2)),sum(multipleReturns(factorial(5)))),"\n");
     -> 0
 corp;
