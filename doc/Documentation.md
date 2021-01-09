@@ -15,6 +15,7 @@ A compiler for the Toy language, made with Java CUP and JFlex. This implementati
 
 - Java 11
 - Maven
+- Clang
 
 ### Build instructions
 
