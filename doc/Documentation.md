@@ -51,14 +51,13 @@ This compiler translates a .toy program into a Clang-compliant C program. The ge
 
 ### Differences with the assignment
 
-#TODO: Aggiungi duplicazione callProcedureStatement
-
 This implementation doesn't go that far from the assignment. Although, some variations have been made by the authors:  
 - The token MAIN has been introduced;  
 - The productions *"Main ::= PROC MAIN ..."* have been added, slightly changing the syntax of the language. These productions, along with the *ProcList*, make every Toy program syntactically compliant when the procedure *Main*:  
 	- appears one single time,  
 	- is the last one in the file,  
-	- returns an INT.  
+	- returns an INT.    
+- The production "CallProcedureStatement" has been duplicated in the production "CallProcedureExpression" because of a parsing problem derived from our class configuration
 
 # Lexical analysis
 
@@ -373,9 +372,23 @@ $$\frac{\Gamma \vdash cnd\_expr : \bm{boolean} \;\;\; \Gamma \vdash then\_stmt\,
 
 # Translating to the C language
 
-#TODO: Abbiamo fatto un visitor ed abbiamo una libreria di appoggio
+As the previous phases, a visitor has been implemented to translate the AST into a valid C program.  
+To do so, a simple library called `toy_functions.h` has been written to handle some functions in a more easy way. It is composed of the following methods:  
+- `char* readln()`: read a sequence of character from `stdin` until the `\n` character and return the corresponding string;  
+- `int string_to_int(char* s)`: a `strtol()` alias that also deallocates the input string; 
+- `int string_to_floar(char* s)`: a `strtof()` alias that also deallocates the input string; 
+- `int string_to_bool(char* s)`: convert *"true"* to `1` and *"false"* to `0` and deallocates the input string.
 
+The reason why these functions are needed is explained [here](#memory-allocation-for-strings).  
 
+An important feature of this visitor is that insert a predefined *prefix* `__t2c__` at every identifier found during the AST traversal: this is needed for 2 reasons:  
+- Every generated names during translation does not have the *prefix*, ensuring that no conflicts could emerge with other identifiers;  
+- To avoid conflicts with *C names*  
+```
+	For example, in Toy is possible to declare a function named exit(), even if it is forbidden in C 
+```
+
+## Notably differences between Toy and C
 The two languages differ in various aspects. Notably:  
 
 - Toy allows the programmer to write a function with multiple return types, while C doesn't;  
@@ -383,7 +396,9 @@ The two languages differ in various aspects. Notably:
 - Toy doesn't require the programmer to explicitly allocate memory when declaring a new string variable;  
 - Toy allows the programmer to open and close a string on two different lines of code.  
 
-## Multiple return types
+For each of them, the solution is explained below.  
+
+### Multiple return types
 
 This is a simple Toy function that returns three integer variables.
 
@@ -443,26 +458,26 @@ Lastly, the filled `struct` is returned and it's used as follows:
 ```
 
 
-## Memory allocation for strings
-Toy doesn't requier the programmer to explicitly indicate the length of a string. Of course this is a huge problem when translating to C. In order to solve this issue, a tiny C library was defined. It defines the funcion `readln`, named after the Toy function, which reads characters from `stdin` and allocate enough memory to store the string read.
-#TODO: Ridefinisci dato che sta scritto all'inizio della libreria
+### Memory allocation for strings
+Toy doesn't requier the programmer to explicitly indicate the length of a string. Of course this is a huge problem when translating to C. In order to solve this issue, the funcion `readln` has been defined which reads characters from `stdin` and allocate enough memory to store the string read.
 
-### An important flaw
-We are aware of a huge problem in this implementation: **no string gets deallocated**. The ones that shouldn't are function parameters and those that get returned to the calling function. Although it seems easy to discriminate between these, there are cases in which this operation is impracticable with a single visit of the Syntactic Tree (i.e. nesting callProcedure statements in a return statement).  
-#TODO: Pulisci munnezza
 
-## Strings spanning on multiple lines
+**An important flaw:**     We are aware of a huge problem in this implementation: **no string gets deallocated**.  
+With a single visit to the AST is impossible to determine for all strings if a certain string can be deallocated or *when* it can be deallocated.   
+To solve this issue, a ***Garbage collector*** fits perfectly but its implementation was beyond the scope of this project.
+
+### Strings spanning on multiple lines
 Notably, C doesn't allow string delimiters to be on two distinct lines of code.
 
 ```c
 //This doesn't work
 char *str ="C doesn't like 
-enjambment";
+enjambement";
 ```
 
 On the other hand, Toy has no strict rule in that regard. For example, the following string is perfectly correct:
 
-```language
+```
 string fullName := " First name
 Last name";
 ```
@@ -474,7 +489,7 @@ char *fullName = "First name \n Last name";
 ```
 
 
-## Boolean shenanigans
+### Boolean shenanigans
 
 Toy handles boolean variables as "true" and "false", but C does not. In order to actually print these variables, a simple trick has been used. Supposing the compiler runs into a `write` statement that contains a boolean variable, the translation of such block of code would look something like this:
 

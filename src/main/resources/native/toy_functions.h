@@ -2,10 +2,6 @@
 #include<stdlib.h>
 #include<string.h>
 
-
-/**
- * Read a bunch of characters from standard input
- */
 char* readln(){
 	char c;
 	int size = 40;
