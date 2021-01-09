@@ -348,7 +348,7 @@ The following tables describe each and every inference rule required to the type
 
 These are the inference rules implemented in the *SemanticVisitor* class.
 
-- TypeCheck rules
+- Expressions
 $$ \frac{(expr:\tau)\in\Gamma}{\Gamma \vdash expr:\tau} $$
 
 - Binary operation
@@ -358,22 +358,22 @@ $$ \frac{\Gamma \vdash expr_1 : \tau_1 \;\;\;\Gamma \vdash expr_2 : \tau_2 \;\;\
 $$ \frac{\Gamma \vdash expr : \tau_1 \;\;\; \Gamma \vdash unary\_op(unOp,\tau_1)=\tau}{\Gamma \vdash (unOp\;expr):\tau} $$
 
 - Call procedure
-  $$ \frac{\Gamma \vdash proc:\tau\,_i^{i\in\mathbb{N}} \rightarrow \tau\,_j^{j\in\mathbb{N}} \;\;\; \Gamma \vdash par_i^{i\in\mathbb{N}}:\tau\,_i}{\Gamma \vdash proc(par_i^{i\in\mathbb{N}}):\tau\,_j^{j\in\mathbb{N}}} $$
+  $$ \frac{\Gamma \vdash proc:\tau\,_i^{i\in\,0...n} \rightarrow \tau\,_j^{j\in\,0...m} \;\;\; \Gamma \vdash par_i^{i\in\,0...n}:\tau\,_i}{\Gamma \vdash proc(par_i^{i\in\,0...n}):\tau\,_j^{j\in\,0...m}} $$
 
 - While statement
-$$\frac{\Gamma \vdash cnd\_expr : \bm{boolean} \;\;\; \Gamma \vdash while\_stmt\,_i^{i\in\mathbb{N}\setminus\{0\}}\;\;\;\Gamma \vdash   do\_stmt\,_j^{j\in\mathbb{N}}}{\Gamma \vdash \bm{while} \; (while\_stmt\,_i^{i\in\mathbb{N}\setminus\{0\}}) \; \bm{do} \; (do\_stmt\,_j^{j\in\mathbb{N}})\;\bm{od}}$$
+$$\frac{\Gamma \vdash cnd\_expr : \bm{boolean} \;\;\; \Gamma \vdash while\_stmt\,_i^{i\in\,1...n}\;\;\;\Gamma \vdash   do\_stmt\,_j^{j\in\,0...n}}{\Gamma \vdash \bm{while} \; (while\_stmt\,_i^{i\in\,1...n}) \; \bm{do} \; (do\_stmt\,_j^{j\in\,0...n})\;\bm{od}}$$
 
 - Assign statement
-$$\frac{(x\,_i^{i\in\mathbb{N}\setminus\{0\}}:\tau\,_i)\in \Gamma\;\;\;\Gamma\vdash (expr\,_j^{j\in\mathbb{N}\setminus\{0\}}) \rightarrow \tau\,_i^{i\in\mathbb{N}\setminus\{0\}}}{\Gamma \vdash x\,_i^{i\in\mathbb{N}\setminus\{0\}}=expr\,_j^{j\in\mathbb{N}\setminus\{0\}}}$$  
+$$\frac{(x\,_i^{i\in\,1...n}:\tau\,_i)\in \Gamma\;\;\;\Gamma\vdash (expr\,_j^{j\in\,1...n}) \rightarrow \tau\,_i^{i\in\,1...n}}{\Gamma \vdash x\,_i^{i\in\,1...n}=expr\,_j^{j\in\,1...n}}$$  
 
 - If statement
-$$\frac{\Gamma \vdash cnd\_expr : \bm{boolean} \;\;\; \Gamma \vdash then\_stmt\,_x^{x\in\mathbb{N}}\;\; \Gamma \vdash elif\_stmt\,_y^{y\in\mathbb{N}} \;\; \Gamma \vdash else\_stmt\,_z^{z\in\mathbb{N}}}{\Gamma \vdash \bm{if} \; cnd\_expr \; \bm{then} \; (then\_stmt\,_x^{x\in\mathbb{N}}) \; \bm{elif}\; (elif\_smt\,_y^{y\in\mathbb{N}}) \; \bm{else} \; (else\_stmt\,_z^{z\in\mathbb{N}})\;\bm{fi}}$$
+$$\frac{\Gamma \vdash cnd\_expr : \bm{boolean} \;\;\; \Gamma \vdash then\_stmt\,_x^{x\in\,0...n}\;\; \Gamma \vdash elif\_stmt\,_y^{y\in\,0...n} \;\; \Gamma \vdash else\_stmt\,_z^{z\in\,0...n}}{\Gamma \vdash \bm{if} \; cnd\_expr \; \bm{then} \; (then\_stmt\,_x^{x\in\,0...n}) \; \bm{elif}\; (elif\_smt\,_y^{y\in\,0...n}) \; \bm{else} \; (else\_stmt\,_z^{z\in\,0...n})\;\bm{fi}}$$
 
 - Write statement  
-$$\frac{\Gamma \vdash expr_i \, : \, \tau_i^{i\,\in\,1...n}}{\Gamma \vdash \bm{write}(expr_i^{i\,\in\,1...n})}$$
+$$\frac{\Gamma \vdash expr_i \, : \, \tau_i^{i\,\in\,0...n}}{\Gamma \vdash \bm{write}(expr_i^{i\,\in\,0...n})}$$
 
 - Read statement
-$$\frac{\Gamma \vdash x_i \, : \, \tau_i^{i\,\in\,1...n}}{\Gamma \vdash \bm{readln}(x_i^{i\,\in\,1...n})}$$
+$$\frac{(x_i \, : \, \tau_i^{i\,\in\,0...n}) \in \Gamma}{\Gamma \vdash \bm{readln}(x_i^{i\,\in\,0...n})}$$
 
 # Translating to the C language
 
