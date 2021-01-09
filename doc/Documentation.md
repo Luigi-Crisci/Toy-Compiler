@@ -31,6 +31,7 @@ A compiled version of this compiler can be found under the `release/` directory.
 - ***Toy2C.jar***: a pre-compiled version of this software
 - ***Toy2C***: an executable script that, given a .toy file, compiles it into a .c file and then call `clang` to output a machine-code executable
 - ***install_native_libraries***: an executable script that create a hard link under `/usr/local` directory for the `toy_functions.h` library, a native library needed in the compilation phase.  
+- ***uninstall_native_libraries***: an executable script that remove the hard link under `/usr/local` created by ***install_native_libraries***.
 
 An example of the *Toy2C* usage:
 
@@ -363,12 +364,16 @@ $$ \frac{\Gamma \vdash expr : \tau_1 \;\;\; \Gamma \vdash unary\_op(unOp,\tau_1)
 $$\frac{\Gamma \vdash cnd\_expr : \bm{boolean} \;\;\; \Gamma \vdash while\_stmt\,_i^{i\in\mathbb{N}\setminus\{0\}}\;\;\;\Gamma \vdash   do\_stmt\,_j^{j\in\mathbb{N}}}{\Gamma \vdash \bm{while} \; (while\_stmt\,_i^{i\in\mathbb{N}\setminus\{0\}}) \; \bm{do} \; (do\_stmt\,_j^{j\in\mathbb{N}})\;\bm{od}}$$
 
 - Assign statement
-$$\frac{(x\,_i^{i\in\mathbb{N}\setminus\{0\}}:\tau\,_i)\in \Gamma\;\;\;\Gamma\vdash (expr\,_j^{j\in\mathbb{N}\setminus\{0\}}) \rightarrow \tau\,_i^{i\in\mathbb{N}\setminus\{0\}}}{\Gamma \vdash x\,_i^{i\in\mathbb{N}\setminus\{0\}}=expr\,_j^{j\in\mathbb{N}\setminus\{0\}}}$$
+$$\frac{(x\,_i^{i\in\mathbb{N}\setminus\{0\}}:\tau\,_i)\in \Gamma\;\;\;\Gamma\vdash (expr\,_j^{j\in\mathbb{N}\setminus\{0\}}) \rightarrow \tau\,_i^{i\in\mathbb{N}\setminus\{0\}}}{\Gamma \vdash x\,_i^{i\in\mathbb{N}\setminus\{0\}}=expr\,_j^{j\in\mathbb{N}\setminus\{0\}}}$$  
 
 - If statement
 $$\frac{\Gamma \vdash cnd\_expr : \bm{boolean} \;\;\; \Gamma \vdash then\_stmt\,_x^{x\in\mathbb{N}}\;\; \Gamma \vdash elif\_stmt\,_y^{y\in\mathbb{N}} \;\; \Gamma \vdash else\_stmt\,_z^{z\in\mathbb{N}}}{\Gamma \vdash \bm{if} \; cnd\_expr \; \bm{then} \; (then\_stmt\,_x^{x\in\mathbb{N}}) \; \bm{elif}\; (elif\_smt\,_y^{y\in\mathbb{N}}) \; \bm{else} \; (else\_stmt\,_z^{z\in\mathbb{N}})\;\bm{fi}}$$
 
+- Write statement  
+$$\frac{\Gamma \vdash expr_i \, : \, \tau_i^{i\,\in\,1...n}}{\Gamma \vdash \bm{write}(expr_i^{i\,\in\,1...n})}$$
 
+- Read statement
+$$\frac{\Gamma \vdash x_i \, : \, \tau_i^{i\,\in\,1...n}}{\Gamma \vdash \bm{readln}(x_i^{i\,\in\,1...n})}$$
 
 # Translating to the C language
 
