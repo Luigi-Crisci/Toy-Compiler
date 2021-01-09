@@ -1,6 +1,6 @@
 #!/bin/bash
 usage(){
-	echo "USAGE: ./Toy2C.sh FILENAME"
+	echo "USAGE: ./Toy2C FILENAME"
 	exit 1
 }
 
